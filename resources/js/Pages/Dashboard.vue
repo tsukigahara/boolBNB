@@ -1,6 +1,9 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+defineProps({
+    apartments: Array,
+});
 </script>
 
 <template>
@@ -13,9 +16,11 @@ import { Head } from '@inertiajs/vue3';
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">You're logged in!</div>
-                </div>
+                <ul>
+                    <li v-for="(item, index) in apartments" :key="index">
+                        <span class="text-success">{{ item.title }}</span> - {{ item.address }}
+                    </li>
+                </ul>
             </div>
         </div>
     </AuthenticatedLayout>
