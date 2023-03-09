@@ -42,20 +42,15 @@ class Apartment extends Model
         return $this->hasMany(Message::class);
     }
 
-    // IMAGE
-    public function images()
-    {
-        return $this->hasMany(Image::class);
-    }
-
-
     // SPONSORSHIP
-    public function sponsorships(){
-        return $this -> belongsToMany(Sponsorship::class) -> withTimestamps();
+    public function sponsorships()
+    {
+        return $this->belongsToMany(Sponsorship::class)->withTimestamps();
     }
 
     // SERVICE
-    public function services(){
-        return $this -> belongsToMany(Service::class) -> withTimestamps();;
+    public function services()
+    {
+        return $this->belongsToMany(Service::class)->withTimestamps();;
     }
 }
