@@ -49,26 +49,26 @@ export default {
                             <!-- SPONSORSHIP LIST -->
                     <table class="table">
                     <thead>
-                        <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Nome Abbonamento</th>
-                        <th scope="col">Prezzo</th>
-                        <th scope="col">Durata</th>
+                        <tr class="table-dark">
+                            <th scope="col"></th>
+                            <th scope="col">Nome Abbonamento</th>
+                            <th scope="col">Prezzo</th>
+                            <th scope="col">Durata</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in sponsorship" :key="index">
-                        <th scope="row">
-                            <input type="radio" name="sposnorship" :value="item.id" v-model="form.sponsorship"> 
-                        </th>
-                        
-                        <td>
-                            <label :for="item.name">
-                                {{ item.name }}
-                            </label>
-                        </td>
-                        <td>{{ item.price }} &euro;</td>
-                        <td>{{ item.duration }}</td>
+                            <th scope="row">
+                                <input type="radio" name="sposnorship" :value="item.id" v-model="form.sponsorship"> 
+                            </th>
+                            
+                            <td>
+                                <label :for="item.name">
+                                    {{ item.name }}
+                                </label>
+                            </td>
+                            <td>{{ item.price }} &euro;</td>
+                            <td>{{ item.duration }}</td>
                         </tr>
                     
                     </tbody>
