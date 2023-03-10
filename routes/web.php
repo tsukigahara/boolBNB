@@ -27,8 +27,6 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/', [ApartmentController::class, 'index']);
-
 Route::get(
     '/dashboard',
     [ApartmentController::class, function () {
