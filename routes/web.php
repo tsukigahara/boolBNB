@@ -26,6 +26,9 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+Route::get('/', [ApartmentController::class, 'index']);
+
 Route::get(
     '/dashboard',
     [ApartmentController::class, function () {

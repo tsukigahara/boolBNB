@@ -6,6 +6,7 @@ defineProps({
     canRegister: Boolean,
     laravelVersion: String,
     phpVersion: String,
+    apartments: Array,
 });
 </script>
 
@@ -54,16 +55,14 @@ defineProps({
         </nav>
 
         <div class="d-flex flex-wrap overflow-y-auto">
-
-            <div class="card_appa pt-2">
+            <div class="card_appa pt-2" v-for="apartment in apartments">
                 <img src="./img/dl_a01597558.jpg" alt="">
                 <div class="pt-3">
-                    <div class="fw-semibold">Title</div>
-                    <div>Address</div>
-                    <div>Price</div>
+                    <div class="fw-semibold">{{ apartment.title }}</div>
+                    <div>{{ apartment.address }}</div>
+                    <div>€ {{ apartment.price }}</div>
                 </div>
             </div>
-
         </div>
     </div>
 </template>
