@@ -13,13 +13,12 @@ defineProps({
 <template>
     <Head title="Boolbnb" />
 
-    <div class="container special">
+    <div class="container h-100 vh-100">
 
-        <nav class="py-3">
+        <nav class="p-3">
             <div class="d-flex justify-content-between">
                 <a href="#">
-                    <!-- da inserire logo immagine -->
-                    logo
+                    <img class="logo" src="./img/580b57fcd9996e24bc43c513.png" alt="">
                 </a>
 
                 <form class="d-flex" role="search">
@@ -29,7 +28,7 @@ defineProps({
 
                 <div class="dropdown">
                     <button id="btn_user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        User
+                        user
                     </button>
                     <ul class="dropdown-menu">
                         <div v-if="canLogin">
@@ -44,13 +43,13 @@ defineProps({
                             <li>
                                 <a class="dropdown-item" href="#">
                                     <Link :href="route('register')">
-                                    Register</Link>
+                                    Registrati</Link>
                                 </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="#">
                                     <Link :href="route('login')">
-                                    Log in</Link>
+                                    Accedi</Link>
                                 </a>
                             </li>
                         </template>
@@ -59,9 +58,9 @@ defineProps({
             </div>
         </nav>
 
-        <div class="d-flex flex-wrap overflow-y-auto">
+        <div class="d-flex flex-wrap overflow-y-auto ms_padding">
             <div class="card_appa pt-2" v-for="apartment in apartments">
-                <img src="./img/dl_a01597558.jpg" alt="">
+                <img class="img" src="./img/dl_a01597558.jpg" alt="">
                 <div class="pt-3">
                     <div class="fw-semibold">{{ apartment.title }}</div>
                     <div>{{ apartment.adress }}</div>
@@ -77,12 +76,8 @@ defineProps({
 @use "../../scss/app.scss" as *;
 @use "../../scss/general.scss" as *;
 
-.special {
-    height: 100vh;
-}
-
-.ms_navbar {
-    position: fixed;
+.logo {
+    width: 100px;
 }
 
 #btn_user {
@@ -97,7 +92,7 @@ defineProps({
     border-radius: 40px;
 }
 
-img {
+.img {
     border-radius: 10px;
     width: 300px;
     height: 300px;
