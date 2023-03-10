@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\ApartmentController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Apartment;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,15 +42,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/dashboard/apartments', [ApartmentController::class, 'index'])
+    Route::get('/dashboard/apartments', [DashboardController::class, 'indexMyApartments'])
         ->name('dashboard.apartments');
-
-    Route::get('/dashboard/apartments/{id}', [ApartmentController::class, 'edit'])
-        ->name('dashboard.apartments.edit');
-
     Route::get('/dashboard/apartments/create', [ApartmentController::class, 'create'])
         ->name('dashboard.apartments.create');
 
+    Route::get('/dashboard/apartments/{id}', [ApartmentController::class, 'edit'])
+        ->name('dashboard.apartments.edit');
     Route::post('/dashboard/apartments/{id}', [ApartmentController::class, 'update'])
         ->name('dashboard.apartments.update');
 
