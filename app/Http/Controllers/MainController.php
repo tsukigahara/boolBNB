@@ -27,7 +27,7 @@ class MainController extends Controller
         // SHOW
     public function countView($id){
         $views = View::where('apartment_id', $id) -> count();
-        var_dump($views);
+        
         return Inertia::render('Dashboard/View', [
             'views' => $views
         ]);
@@ -37,16 +37,75 @@ class MainController extends Controller
         ////////////////// SPONSORSHIP ////////////////////
 
         // view
-        public function showSponsorship($id){
-            $sponsorship= Sponsorship::all();
-            return Inertia::render('Dashboard/Sponsorship' ,[
-                'sponsorship' => $sponsorship,
-                'id'=> $id
-            ]);
-        }
+        // public function showSponsorship($id){
+        //     $sponsorship= Sponsorship::all();
 
+        //     $this->sponsorshipDate($id);
+
+        //     return Inertia::render('Dashboard/Sponsorship' ,[
+        //         'sponsorship' => $sponsorship,
+        //         'id'=> $id
+        //     ]);
+        // }
+        public function showSponsorship($id)
+{
+    // ottiene tutte le sponsorship
+    $sponsorshipAll = Sponsorship::all();
+
+    // ottiene l'ultima sponsorship attiva per l'appartamento
+    $sponsorship = optional(
+        Apartment::find($id)->sponsorships()
+        ->withPivot('sponsorship_id', 'created_at')
+        ->orderBy('pivot_created_at', 'desc')
+        ->first()
+    );
+
+    // verifica che il valore non sia null
+    if (optional($sponsorship)->pivot) {
+        // ottiene l'id della sponsorship
+        $sponsorshipId = optional($sponsorship)->pivot->sponsorship_id;
+
+        // ottiene la data di inizio sponsorship
+        $startDate = optional($sponsorship)->pivot->created_at;
+
+        // calcola la data di fine sponsorship
+        $duration = Sponsorship::find($sponsorshipId)->duration;
+        $endDate = Carbon::parse($startDate)->addHours($duration);
+
+        // verifica se la sponsorship è ancora attiva
+        $isExpired = Carbon::now()->greaterThan($endDate);
+
+        if ($isExpired) {
+            // la sponsorship è scaduta
+            return Inertia::render('Dashboard/Sponsorship', [
+                'sponsorship' => $sponsorshipAll,
+                'id' => $id,
+                'date' => $sponsorship,
+                'sponsorshipBool' => false
+            ]);
+        } else {
+            // la sponsorship è ancora attiva
+            return Inertia::render('Dashboard/Sponsorship', [
+                'sponsorship' => $sponsorshipAll,
+                'id' => $id,
+                'date' => null,
+                'sponsorshipBool' => true
+            ]);
+        }  
+    } else {
+        // non ci sono sponsorship attive per l'appartamento
+        return Inertia::render('Dashboard/Sponsorship', [
+            'sponsorship' => $sponsorshipAll,
+            'id' => $id,
+            'date' => null,
+            'sponsorshipBool' => true
+        ]);
+    }
+}
+
+            
         public function storeSposnosrship(Request $request){
-            // var_dump($request);
+           
             $data= $request -> validate([
                 'id' => 'required',
                 'sponsorship' => 'required'
@@ -58,6 +117,12 @@ class MainController extends Controller
 
             return redirect() -> route('dashboard.apartments');
         }
-        
+        public function verificateSponsorship(){
+            $apartment= Apartment::find(1) ->get();
+            $sposnsorshipId = $apartment->sponsorship()->where('id', );
+            return Inertia::render('Dashboard/Sponsorship' ,[
+                
+            ]); 
+        }
 
 }
