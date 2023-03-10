@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApartmentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Apartment;
 use Illuminate\Foundation\Application;
@@ -57,8 +58,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/dashboard/apartments/{id}', [ApartmentController::class, 'update'])
         ->name('dashboard.apartments.update');
 
+    // MESSAGE
+    Route::get('/message/{apartment}', [MainController::class, 'showMessage'])-> name('dasbord.apartment.message');
+    // VIEW
+    Route::get('/view/{apartment}', [MainController::class, 'countView'])-> name('dasbord.apartment.view');
 
-
+    // SPONSORSHIP
+    Route::get('/apartment/sponsorship/{apartment}',[MainController::class, 'showSponsorship']) -> name('dashbord.apartment.sponsorship');
+    Route::post('/apartment/sponsorship/store', [MainController::class, 'storeSposnosrship']) -> name('dashbord.apartment.sponsorship.store');
 
 
     Route::get(
