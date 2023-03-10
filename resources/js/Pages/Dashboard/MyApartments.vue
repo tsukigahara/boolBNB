@@ -23,6 +23,7 @@ defineProps({
                             role="button">Button</a>
                         <a class="btn btn-primary" role="button" :href="route('dasbord.apartment.message', item.id)">MESSAGE</a>
                         <a class="btn btn-primary" role="button" :href="route('dasbord.apartment.view', item.id)">VIEW</a>
+                        <a class="btn btn-primary" role="button" :href="route('dashbord.apartment.sponsorship', item.id)">SPONSORSHIP</a>
                     </li>
                     
                 </ul>

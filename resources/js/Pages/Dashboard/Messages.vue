@@ -7,7 +7,7 @@ defineProps({
 </script>
 
 <template>
-    <Head title="Messagies" />
+    <Head title="Messages" />
 
     <AuthenticatedLayout>
         <template #header>

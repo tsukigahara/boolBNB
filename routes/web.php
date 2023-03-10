@@ -50,7 +50,9 @@ Route::middleware('auth')->group(function () {
     // VIEW
     Route::get('/view/{apartment}', [MainController::class, 'countView'])-> name('dasbord.apartment.view');
 
-
+    // SPONSORSHIP
+    Route::get('/apartment/sponsorship/{apartment}',[MainController::class, 'showSponsorship']) -> name('dashbord.apartment.sponsorship');
+    Route::post('/apartment/sponsorship/{apartment}', [MainController::class, 'storeSposnosrship']) -> name('dashbord.apartment.sponsorship.store');
 
 
     Route::get(
