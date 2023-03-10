@@ -10,28 +10,54 @@ defineProps({
 </script>
 
 <template>
-    <Head title="Welcome" />
-    <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100
-                            dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
-        <div v-if="canLogin" class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
-            <Link v-if="$page.props.auth.user" :href="route('dashboard')"
-                class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-            Dashboard</Link>
+    <Head title="Boolbnb" />
 
-            <template v-else>
-                <Link :href="route('login')"
-                    class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                Log in</Link>
+    <div class="container">
 
-                <Link v-if="canRegister" :href="route('register')"
-                    class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-                Register</Link>
-            </template>
-        </div>
+        <nav class="pt-3">
 
-        <div class="max-w-7xl mx-auto p-6 lg:p-8">
-        </div>
+            <div v-if="canLogin">
+                <Link v-if="$page.props.auth.user" :href="route('dashboard')">
+                Dashboard</Link>
+
+                <template v-else>
+                    <div class="d-flex justify-content-between">
+                        <a href="#">
+                            <!-- da inserire logo immagine -->
+                            logo
+                        </a>
+
+                        <div class="dropdown">
+                            <button id="btn_user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                User
+                            </button>
+
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">
+                                        <Link :href="route('login')">
+                                        Log in</Link>
+                                    </a></li>
+                                <li><a class="dropdown-item" href="#">
+                                        <Link v-if="canRegister" :href="route('register')">
+                                        Register</Link>
+                                    </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </nav>
     </div>
+    <hr>
 </template>
 
-<style></style>
+<style lang="scss">
+@use "../../scss/app.scss" as *;
+@use "../../scss/general.scss" as *;
+
+#btn_user {
+    padding: 5px;
+    border-radius: 40px;
+    border: 1px solid grey;
+}
+</style>
