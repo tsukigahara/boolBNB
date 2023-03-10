@@ -16,6 +16,7 @@ defineProps({
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <a class="btn btn-dark my-3" role="button" href="javascript: history.back()">Go back</a>
                 <ul>
                     <li v-for="(item, index) in messages" :key="index">
                         <h2>{{ item.name }}</h2>
@@ -23,7 +24,7 @@ defineProps({
                         {{ item.message }}
                         <hr>
                     </li>
-                    
+
                 </ul>
             </div>
         </div>

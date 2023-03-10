@@ -10,18 +10,18 @@ const props = defineProps({
 
 const form = useForm({
     title: props.apartment.title,
-    rooms:props.apartment.rooms,
-    beds:props.apartment.beds,
-    bathrooms:props.apartment.bathrooms,
-    square_meters:props.apartment.square_meters,
-    address:props.apartment.address,
-    latitude:props.apartment.latitude,
-    longitude:props.apartment.longitude,
-    main_image:props.apartment.main_image,
+    rooms: props.apartment.rooms,
+    beds: props.apartment.beds,
+    bathrooms: props.apartment.bathrooms,
+    square_meters: props.apartment.square_meters,
+    address: props.apartment.address,
+    latitude: props.apartment.latitude,
+    longitude: props.apartment.longitude,
+    main_image: props.apartment.main_image,
     visible: props.apartment.visible,
-    price:props.apartment.price,
+    price: props.apartment.price,
     description: props.apartment.description,
-    services_id:props.apartment.services,
+    services_id: props.apartment.services,
 });
 
 const apartmentHasService = (serviceId) => {
@@ -29,10 +29,10 @@ const apartmentHasService = (serviceId) => {
     props.apartment.services.forEach(element => {
 
         if (element.id == serviceId) {
-            
+
             present = true;
-            
-        } 
+
+        }
     });
 
     return present;
@@ -42,18 +42,18 @@ const apartmentHasService = (serviceId) => {
 
 
 const pushId = (serviceId) => {
-  const serviceIndex = form.services_id.findIndex((service) => service.id === serviceId);
-  if (serviceIndex !== -1) {
-    form.services_id.splice(serviceIndex, 1);
-  } else {
-    form.services_id.push({ id: serviceId });
-  }
+    const serviceIndex = form.services_id.findIndex((service) => service.id === serviceId);
+    if (serviceIndex !== -1) {
+        form.services_id.splice(serviceIndex, 1);
+    } else {
+        form.services_id.push({ id: serviceId });
+    }
 };
 
 
 
 const submit = () => {
-    
+
     form.post(route('dashboard.apartments.update', props.apartment.id), {
         onFinish: () => form.reset(),
     });
@@ -72,6 +72,7 @@ const submit = () => {
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <a class="btn btn-dark my-3" role="button" href="javascript: history.back()">Go back</a>
                 <form class="d-flex" @submit.prevent="submit">
                     <div class="col">
                         <div class="mb-3">
@@ -132,17 +133,17 @@ const submit = () => {
                         <div class="mb-3">
                             <label class="form-check-label" for="">SERVICES</label>
                             <div class="form-check">
-                               <div class="mb-3" v-for="service in services" :key="service.id">
-                                    <input
-                                        class="form-check-input" type="checkbox" :value="service.id" id=""
-                                        name="services_id[]" @click="pushId(service.id)"  :checked="apartmentHasService(service.id)"  >
+                                <div class="mb-3" v-for="service in services" :key="service.id">
+                                    <input class="form-check-input" type="checkbox" :value="service.id" id=""
+                                        name="services_id[]" @click="pushId(service.id)"
+                                        :checked="apartmentHasService(service.id)">
                                     <label class="form-check-label" for="">{{ service.name }}</label>
                                 </div>
                             </div>
                         </div>
                         <div class="mb-3">
-                            <button type="submit" class="btn btn-primary">Add</button>
-                            <button type="reset" class="btn btn-warning">Reset</button>
+                            <button type="submit" class="btn btn-primary mr-3">Update</button>
+                            <button type="reset" class="btn btn-warning mr-3">Reset</button>
                         </div>
                     </div>
                 </form>
