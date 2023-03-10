@@ -158,7 +158,7 @@ class ApartmentController extends Controller
         if (array_key_exists('services_id', $data)) {
 
             $services = Service::find($data['services_id']);
-            $apartment->tags()->sync($services);
+            $apartment->services()->sync($services);
         }
 
         return redirect()->route('dashboard.apartments');

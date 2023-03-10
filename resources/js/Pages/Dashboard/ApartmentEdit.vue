@@ -8,7 +8,6 @@ const props = defineProps({
 });
 
 
-
 const form = useForm({
     title: props.apartment.title,
     rooms:props.apartment.rooms,
@@ -22,11 +21,40 @@ const form = useForm({
     visible: props.apartment.visible,
     price:props.apartment.price,
     description: props.apartment.description,
-    services_id:props.apartment.services_id,
+    services_id:props.apartment.services,
 });
 
+const apartmentHasService = (serviceId) => {
+    let present = false;
+    props.apartment.services.forEach(element => {
+
+        if (element.id == serviceId) {
+            
+            present = true;
+            
+        } 
+    });
+
+    return present;
+
+};
+
+
+
+const pushId = (serviceId) => {
+  const serviceIndex = form.services_id.findIndex((service) => service.id === serviceId);
+  if (serviceIndex !== -1) {
+    form.services_id.splice(serviceIndex, 1);
+  } else {
+    form.services_id.push({ id: serviceId });
+  }
+};
+
+
+
 const submit = () => {
-    form.post(route('dashboard.apartments.store'), {
+    
+    form.post(route('dashboard.apartments.update', props.apartment.id), {
         onFinish: () => form.reset(),
     });
 };
@@ -104,9 +132,10 @@ const submit = () => {
                         <div class="mb-3">
                             <label class="form-check-label" for="">SERVICES</label>
                             <div class="form-check">
-                                <div class="mb-3" v-for="service in services">
-                                    <input v-for="item in apartment.services" :checked="item.id == service.id ? false : true" class="form-check-input" type="checkbox" :value="service.id" id=""
-                                        name="services_id[]" v-model="form.services_id">
+                               <div class="mb-3" v-for="service in services" :key="service.id">
+                                    <input
+                                        class="form-check-input" type="checkbox" :value="service.id" id=""
+                                        name="services_id[]" @click="pushId(service.id)"  :checked="apartmentHasService(service.id)"  >
                                     <label class="form-check-label" for="">{{ service.name }}</label>
                                 </div>
                             </div>
