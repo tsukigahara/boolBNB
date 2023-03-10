@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Apartment;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -40,6 +41,38 @@ class SearchController extends Controller
         }
 
 
+    }
+    public function filterApartments($criteria) {
+
+        $apartments = Apartment::all();
+        $filteredApartments = [];
+        $filterCriteria = $this -> geocode($criteria);
+        $filterLat = $filterCriteria -> original['lat'];
+        $filterLong = $filterCriteria -> original['lon'];
+
+        foreach ($apartments as $apartment) {
+            $apartmentLat = $apartment -> latitude;
+            $apartmentLong = $apartment -> longitude;
+
+            $distance = $this -> haversine($filterLat, $filterLong, $apartmentLat, $apartmentLong);
+            
+            if ($distance <= 20) {
+                array_push($filteredApartments, $apartment);
+            }
+                
+            
+            
+
+        }
+
+        return response()->json([
+            "success" => true,
+            "response" => [
+                "data" => [
+                    "filteredApartments" => $filteredApartments,
+                ],
+            ]
+        ]);
     }
 
 

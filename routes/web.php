@@ -70,7 +70,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/api/geocode/{query}',[SearchController::class, 'geocode']) -> name('geocode');
-
+    Route::get('/api/apartments/{criteria}', [SearchController::class, 'filterApartments'])->name('filterApartments');
 
     Route::get(
         '/dashboard',
