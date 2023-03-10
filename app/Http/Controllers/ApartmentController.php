@@ -14,11 +14,10 @@ class ApartmentController extends Controller
     // show all apartments with paginations (12 elementi alla volta)
     public function index()
     {
-        $user = User::find(auth()->user()->id);
-        $apartments = $user->apartments()->orderBy('created_at', 'desc')->get();
-        $apartments->load('sponsorships');
+        $apartments = Apartment :: all();
 
-        return Inertia::render('Dashboard/MyApartments', [
+
+        return Inertia::render('Welcome', [
             'apartments' => $apartments
         ]);
     }
