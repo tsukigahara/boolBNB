@@ -6,6 +6,7 @@ use App\Models\Apartment;
 use App\Models\Message;
 use App\Models\Sponsorship;
 use App\Models\View;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -45,16 +46,18 @@ class MainController extends Controller
         }
 
         public function storeSposnosrship(Request $request){
-            // $data= $request -> validate([
-            //     'id' => 'required',
-            //     'ps' => 'required'
-            // ]);
-            // $apartment= Apartment::find($data['id']);
-            // $sponsorship= Sponsorship::make($data['ps']);
-            // $sponsorship -> apartment() -> associate($apartment);
-            // $sponsorship -> save();
+            // var_dump($request);
+            $data= $request -> validate([
+                'id' => 'required',
+                'sponsorship' => 'required'
+            ]);
+            $apartment= Apartment::find($data['id']);
+            $sponsorship= Sponsorship::find($data['sponsorship']);
 
-            return route('dasbord.apartment.view');
+            $apartment->sponsorships()->attach($sponsorship, ['created_at' => Carbon::now()]);
+
+            return redirect() -> route('dashboard.apartments');
         }
+        
 
 }

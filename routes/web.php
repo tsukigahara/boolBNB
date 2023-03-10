@@ -52,7 +52,7 @@ Route::middleware('auth')->group(function () {
 
     // SPONSORSHIP
     Route::get('/apartment/sponsorship/{apartment}',[MainController::class, 'showSponsorship']) -> name('dashbord.apartment.sponsorship');
-    Route::post('/apartment/sponsorship/{apartment}', [MainController::class, 'storeSposnosrship']) -> name('dashbord.apartment.sponsorship.store');
+    Route::post('/apartment/sponsorship/store', [MainController::class, 'storeSposnosrship']) -> name('dashbord.apartment.sponsorship.store');
 
 
     Route::get(

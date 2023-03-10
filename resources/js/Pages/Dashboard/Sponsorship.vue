@@ -1,25 +1,30 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
-defineProps({
+import { Head, useForm } from '@inertiajs/vue3';
+const props = defineProps({
     sponsorship: Array,
     id: String
 });
-
+const form = useForm({
+    id: props.id,
+    sponsorship: '',
+});
+const submit = () => {
+    form.post(route('dashbord.apartment.sponsorship.store'), {
+        onFinish: () => form.reset(),
+    });
+    // console.log(form);
+};
 </script>
 
 <script>
 export default {
     data() {
         return {
-            output: ''
+
         }
     }, methods: {
-        store(e) {
-            e.preventDefault();
 
-
-        }
     },
 }
 </script>
@@ -35,16 +40,16 @@ export default {
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                Sponsorship
-               {{ output }}
-                <form action="/" >
+                <form action="/" @submit.prevent="submit">
                     
                     <template v-for="(item, index) in sponsorship" :key="index">
                             <!-- SPONSORSHIP LIST -->
-                        <input type="radio" name="sposnorship" :value="item.name" v-model="output"> 
+                        <input type="radio" name="sposnorship" :value="item.id" v-model="form.sponsorship"> 
                         <label :for="item.name">{{ item.name }} </label><br>
                         
                     </template>
-                    <button @click="store" class="btn btn-primary mt-2">SEND</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                    <!-- <button @click="store" class="btn btn-primary mt-2">SEND</button> -->
                     <!-- <a :href="route('dashbord.apartment.sponsorship.store', output, item.id)" class="btn btn-primary mt-3">Send</a> -->
                 </form>
             </div>
