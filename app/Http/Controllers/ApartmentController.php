@@ -61,13 +61,8 @@ class ApartmentController extends Controller
     {
         $services = Service::all();
 
-        return response()->json([
-            "success" => true,
-            "response" => [
-                "data" => [
-                    "services" => $services
-                ],
-            ]
+        return Inertia::render('Dashboard/ApartmentCreate', [
+            "services" => $services,
         ]);
     }
 

@@ -16,6 +16,9 @@ defineProps({
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <!-- bottone per creare nuovo apartament -->
+                <a name="" id="" class="btn btn-primary" :href="route('dashboard.apartments.create')" role="button">Public
+                    new apartment</a>
                 <ul>
                     <li v-for="(item, index) in apartments" :key="index">
                         <span class="text-success">{{ item.title }}</span> - {{ item.address }}
