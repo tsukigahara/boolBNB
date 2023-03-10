@@ -14,8 +14,7 @@ class ApartmentController extends Controller
     // show all apartments with paginations (12 elementi alla volta)
     public function index()
     {
-        $apartments = Apartment :: all();
-
+        $apartments = Apartment::all();
 
         return Inertia::render('Welcome', [
             'apartments' => $apartments
@@ -41,19 +40,23 @@ class ApartmentController extends Controller
     }
 
     // delete apartment (and it will delete all relations)
-    public function destroy(Apartment $apartment)
+    public function destroy($id)
     {
+        $apartment = Apartment::find($id);
+
+        //blocks other user to delete
+        if ($apartment->user_id != auth()->user()->id) {
+            return abort('403');
+        }
+
         $apartment->user()->dissociate();
         $apartment->views()->delete();
         $apartment->messages()->delete();
-        $apartment->images()->delete();
         $apartment->sponsorships()->sync([]);
         $apartment->services()->sync([]);
         $apartment->delete();
 
-        return response()->json([
-            'success' => true
-        ]);
+        return redirect()->route('dashboard.apartments');
     }
 
     // create apartment (for create form page)
@@ -112,6 +115,12 @@ class ApartmentController extends Controller
     public function edit($id)
     {
         $apartment = Apartment::find($id);
+
+        //blocks other user to edit 
+        if ($apartment->user_id != auth()->user()->id) {
+            return abort('403');
+        }
+
         $apartment->load('services');
         $services = Service::all();
 
@@ -125,6 +134,11 @@ class ApartmentController extends Controller
     public function update(Request $request, $id)
     {
         $apartment = Apartment::find($id);
+
+        //blocks other user to update 
+        if ($apartment->user_id != auth()->user()->id) {
+            return abort('403');
+        }
 
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|min:0|max:128',

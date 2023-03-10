@@ -11,12 +11,15 @@ defineProps({
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Messages</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Views</h2>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-               NUMBER OF VIEW : {{ views }}
+                <a class="btn btn-dark my-3" role="button" href="javascript: history.back()">Go back</a>
+                <div>
+                    NUMBER OF VIEW : {{ views }}
+                </div>
             </div>
         </div>
     </AuthenticatedLayout>

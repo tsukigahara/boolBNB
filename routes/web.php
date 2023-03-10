@@ -21,6 +21,8 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 |
 */
 
+//Welcome page (GUEST ROUTES)
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -29,20 +31,20 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-Route::get(
-    '/dashboard',
-    [ApartmentController::class, function () {
-        return Inertia::render('Dashboard/Dashboard');
-    }]
-)->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', [ApartmentController::class, 'index'])->name('welcome');
 
 
-
+//PRIVATE ROUTES
 Route::middleware('auth')->group(function () {
+
+    //profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    //DASHBOARD////////
+
+    //backoffice apartments
     Route::get('/dashboard/apartments', [DashboardController::class, 'indexMyApartments'])
         ->name('dashboard.apartments');
 
@@ -58,14 +60,18 @@ Route::middleware('auth')->group(function () {
     Route::post('/dashboard/apartments/{id}', [ApartmentController::class, 'update'])
         ->name('dashboard.apartments.update');
 
+    Route::delete('/dashboard/apartments/{id}', [ApartmentController::class, 'destroy'])
+        ->name('dashboard.apartments.destroy');
+
     // MESSAGE
-    Route::get('/message/{apartment}', [MainController::class, 'showMessage'])-> name('dasbord.apartment.message');
+    Route::get('/message/{apartment}', [MainController::class, 'showMessage'])->name('dasbord.apartment.message');
+
     // VIEW
-    Route::get('/view/{apartment}', [MainController::class, 'countView'])-> name('dasbord.apartment.view');
+    Route::get('/view/{apartment}', [MainController::class, 'countView'])->name('dasbord.apartment.view');
 
     // SPONSORSHIP
-    Route::get('/apartment/sponsorship/{apartment}',[MainController::class, 'showSponsorship']) -> name('dashbord.apartment.sponsorship');
-    Route::post('/apartment/sponsorship/store', [MainController::class, 'storeSposnosrship']) -> name('dashbord.apartment.sponsorship.store');
+    Route::get('/apartment/sponsorship/{apartment}', [MainController::class, 'showSponsorship'])->name('dashbord.apartment.sponsorship');
+    Route::post('/apartment/sponsorship/store', [MainController::class, 'storeSposnosrship'])->name('dashbord.apartment.sponsorship.store');
 
 
     Route::get(

@@ -37,6 +37,7 @@ const submit = () => {
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <a class="btn btn-dark my-3" role="button" href="javascript: history.back()">Go back</a>
                 <form class="d-flex" @submit.prevent="submit">
                     <div class="col">
                         <div class="mb-3">
@@ -105,8 +106,8 @@ const submit = () => {
                             </div>
                         </div>
                         <div class="mb-3">
-                            <button type="submit" class="btn btn-primary">Add</button>
-                            <button type="reset" class="btn btn-warning">Reset</button>
+                            <button type="submit" class="btn btn-primary mr-3">Publish</button>
+                            <button type="reset" class="btn btn-warning mr-3">Reset</button>
                         </div>
                     </div>
                 </form>

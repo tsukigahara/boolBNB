@@ -39,14 +39,17 @@ export default {
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-               Sponsorship
+                <a class="btn btn-dark my-3" role="button" href="javascript: history.back()">Go back</a>
+                <h3>
+                    Sponsorship
+                </h3>
                 <form action="/" @submit.prevent="submit">
-                    
+
                     <template v-for="(item, index) in sponsorship" :key="index">
-                            <!-- SPONSORSHIP LIST -->
-                        <input type="radio" name="sposnorship" :value="item.id" v-model="form.sponsorship"> 
+                        <!-- SPONSORSHIP LIST -->
+                        <input type="radio" name="sposnorship" :value="item.id" v-model="form.sponsorship">
                         <label :for="item.name">{{ item.name }} </label><br>
-                        
+
                     </template>
                     <button type="submit" class="btn btn-primary">Add</button>
                     <!-- <button @click="store" class="btn btn-primary mt-2">SEND</button> -->
