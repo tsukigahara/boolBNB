@@ -33,6 +33,8 @@ Route::get('/', function () {
 });
 Route::get('/', [ApartmentController::class, 'index'])->name('welcome');
 
+Route::get('show{id}', [ApartmentController::class, 'show'])->name('show');
+
 
 //PRIVATE ROUTES
 Route::middleware('auth')->group(function () {
