@@ -30,7 +30,7 @@ function destroy(id) {
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8 shadow bg-body rounded">
                 <!-- bottone per creare nuovo apartament -->
                 <a name="" id="" class="btn btn-primary" :href="route('dashboard.apartments.create')" role="button">Public
                     new apartment</a>
@@ -52,11 +52,11 @@ function destroy(id) {
                             <td>{{ apartment.description }}</td>
                             <td>€{{ apartment.price }}</td>
                             <td style="white-space: nowrap;">
-                                <a class="btn btn-success mx-2" :href="route('dashboard.apartments.edit', apartment.id)"
+                                <a class="btn btn-primary mx-2" :href="route('dashboard.apartments.edit', apartment.id)"
                                     role="button">Edit</a>
-                                <a class="btn btn-primary mx-2" role="button"
+                                <a class="btn btn-dark mx-2" role="button"
                                     :href="route('dasbord.apartment.message', apartment.id)">Messages</a>
-                                <a class="btn btn-primary mx-2" role="button"
+                                <a class="btn btn-dark mx-2" role="button"
                                     :href="route('dasbord.apartment.view', apartment.id)">Views</a>
                                 <a class="btn btn-warning mx-2" role="button"
                                     :href="route('dashbord.apartment.sponsorship', apartment.id)">Sponsorships</a>
