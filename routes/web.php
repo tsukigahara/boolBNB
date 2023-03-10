@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApartmentController;
+use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Apartment;
 use Illuminate\Foundation\Application;
@@ -44,6 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/apartments/{id}', [ApartmentController::class, 'edit'])->name('dashboard.apartments.edit');
     Route::post('/dashboard/apartments/{id}', [ApartmentController::class, 'update'])->name('dashboard.apartments.update');
 
+    // MESSAGE
+    Route::get('/message/{apartment}', [MainController::class, 'showMessage'])-> name('dasbord.apartment.message');
 
 
 

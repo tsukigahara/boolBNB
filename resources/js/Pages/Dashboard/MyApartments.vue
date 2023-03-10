@@ -21,7 +21,9 @@ defineProps({
                         <span class="text-success">{{ item.title }}</span> - {{ item.address }}
                         <a name="" id="" class="btn btn-primary" :href="route('dashboard.apartments.edit', item.id)"
                             role="button">Button</a>
+                        <a class="btn btn-primary" role="button" :href="route('dasbord.apartment.message', item.id)">MESSAGE</a>
                     </li>
+                    
                 </ul>
             </div>
         </div>
