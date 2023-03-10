@@ -61,7 +61,7 @@ defineProps({
         <div class="d-flex flex-wrap overflow-y-auto ms_padding">
             <div class="card_appa pt-2" v-for="apartment in apartments">
                 <a href="">
-                    <Link href="">
+                    <Link :href="route('show', apartment.id)">
                         <div class="pt-3">
                             <img class="img" src="./img/dl_a01597558.jpg" alt="">
                             <div class="fw-semibold">{{ apartment.title }}</div>

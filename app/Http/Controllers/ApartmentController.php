@@ -22,21 +22,20 @@ class ApartmentController extends Controller
     }
 
     // show single apartment by id with relations
-    public function show(Apartment $apartment)
+    public function show($id)
     {
-        $apartment->load('user');
-        $apartment->load('images');
-        $apartment->load('services');
-        $apartment->load('sponsorships');
+        $apartment = Apartment::find($id);
 
-        return response()->json([
-            "success" => true,
-            "response" => [
-                "data" => [
-                    "apartments" => $apartment
-                ],
-            ]
-        ]);
+        $apartment->load('services');
+        $apartment->load('user');
+        
+        $user = User :: all();
+        $services = Service::all();
+
+        return Inertia::render('SingleApartment', [
+            "apartment" => $apartment,
+            "services" => $services,
+            "user" => $user,        ]);
     }
 
     // delete apartment (and it will delete all relations)
