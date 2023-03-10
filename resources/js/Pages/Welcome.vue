@@ -12,9 +12,9 @@ defineProps({
 <template>
     <Head title="Boolbnb" />
 
-    <div class="container">
+    <div class="container special">
 
-        <nav class="pt-3">
+        <nav class="py-3">
 
             <div v-if="canLogin">
                 <Link v-if="$page.props.auth.user" :href="route('dashboard')">
@@ -26,6 +26,11 @@ defineProps({
                             <!-- da inserire logo immagine -->
                             logo
                         </a>
+
+                        <form class="d-flex" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
 
                         <div class="dropdown">
                             <button id="btn_user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -47,17 +52,46 @@ defineProps({
                 </template>
             </div>
         </nav>
+
+        <div class="d-flex flex-wrap overflow-y-auto">
+            <div class="card_appa pt-2">
+                <img src="./img/dl_a01597558.jpg" alt="">
+                <div class="pt-3">
+                    <div>Title</div>
+                    <div>Address</div>
+                    <div>Price</div>
+                </div>
+            </div>
+        </div>
     </div>
-    <hr>
 </template>
 
 <style lang="scss">
 @use "../../scss/app.scss" as *;
 @use "../../scss/general.scss" as *;
 
+.special {
+    height: 100vh;
+}
+
+.ms_navbar {
+    position: fixed;
+}
+
 #btn_user {
     padding: 5px;
     border-radius: 40px;
     border: 1px solid grey;
+}
+
+.card_appa {
+    width: calc((100% / 4) - 10px);
+    margin: 5px;
+    border-radius: 40px;
+}
+
+img {
+    width: 100%;
+    border-radius: 10px;
 }
 </style>
