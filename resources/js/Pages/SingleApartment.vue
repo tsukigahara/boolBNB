@@ -30,7 +30,7 @@ defineProps({
         <h2>Proprietario: {{ apartment.user.name }}</h2>
 
 
-
+        <Link :href="route('message.create', apartment.id)">Create Message</Link>
 
 
     </template>

@@ -35,6 +35,10 @@ Route::get('/', [ApartmentController::class, 'index'])->name('welcome');
 
 Route::get('show{id}', [ApartmentController::class, 'show'])->name('show');
 
+Route::get('message/create/{id}', [MainController::class, 'messageCreate'])->name('message.create');
+Route::post('message/create', [MainController::class, 'messageStore'])->name('message.store');
+
+
 
 //PRIVATE ROUTES
 Route::middleware('auth')->group(function () {

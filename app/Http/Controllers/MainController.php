@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Apartment;
 use App\Models\Message;
+use App\Models\Service;
+use App\Models\User;
 use App\Models\Sponsorship;
 use App\Models\View;
 use Carbon\Carbon;
@@ -21,6 +23,19 @@ class MainController extends Controller
         return Inertia::render('Dashboard/Messages', [
             'messages' => $messages
         ]);
+    }
+
+    public function messageCreate($id)
+    {
+        $apartment = Apartment::find($id);
+
+        $apartment->load('user');
+        
+        $user = User :: all();
+
+        return Inertia::render('MessageCreate', [
+            "apartment" => $apartment,
+            "user" => $user,        ]);
     }
 
 
