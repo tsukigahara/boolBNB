@@ -70,9 +70,6 @@ class ApartmentController extends Controller
     //  store apartment
     public function store(Request $request)
     {
-        $data = $request->all();
-
-
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|min:0|max:128',
             'rooms' => 'required|integer|min:0',
@@ -87,7 +84,6 @@ class ApartmentController extends Controller
             'price' => 'required|integer|min:0',
             'description' => 'string',
             'services_id' => 'nullable|array',
-            'user_id' => 'required|integer',
         ]);
 
         if ($validator->fails()) {
@@ -98,8 +94,9 @@ class ApartmentController extends Controller
 
         $apartment = Apartment::make($data);
 
+
         // one to many
-        $user = User::find($data['user_id']);
+        $user = User::find(auth()->user()->id);
         $apartment->user()->associate($user);
         $apartment->save();
 
@@ -109,11 +106,7 @@ class ApartmentController extends Controller
             $apartment->services()->sync($services);
         }
 
-        return response()->json([
-            'success' => true,
-            'response' => $apartment,
-            'data' => $request->all()
-        ]);
+        return redirect()->route('dashboard.apartments');
     }
 
 

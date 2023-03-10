@@ -44,11 +44,16 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard/apartments', [DashboardController::class, 'indexMyApartments'])
         ->name('dashboard.apartments');
+
     Route::get('/dashboard/apartments/create', [ApartmentController::class, 'create'])
         ->name('dashboard.apartments.create');
 
+    Route::post('/dashboard/apartments', [ApartmentController::class, 'store'])
+        ->name('dashboard.apartments.store');
+
     Route::get('/dashboard/apartments/{id}', [ApartmentController::class, 'edit'])
         ->name('dashboard.apartments.edit');
+
     Route::post('/dashboard/apartments/{id}', [ApartmentController::class, 'update'])
         ->name('dashboard.apartments.update');
 
