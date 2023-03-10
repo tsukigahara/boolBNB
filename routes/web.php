@@ -4,6 +4,7 @@ use App\Http\Controllers\ApartmentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SearchController;
 use App\Models\Apartment;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -66,6 +67,9 @@ Route::middleware('auth')->group(function () {
     // SPONSORSHIP
     Route::get('/apartment/sponsorship/{apartment}',[MainController::class, 'showSponsorship']) -> name('dashbord.apartment.sponsorship');
     Route::post('/apartment/sponsorship/store', [MainController::class, 'storeSposnosrship']) -> name('dashbord.apartment.sponsorship.store');
+
+
+    Route::get('/api/geocode/{query}',[SearchController::class, 'geocode']) -> name('geocode');
 
 
     Route::get(
