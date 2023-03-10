@@ -1,73 +1,38 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
-
-const props = defineProps({
-    apartment: Object,
+defineProps({
     services: Array,
 });
-
-
 const form = useForm({
-    title: props.apartment.title,
-    rooms:props.apartment.rooms,
-    beds:props.apartment.beds,
-    bathrooms:props.apartment.bathrooms,
-    square_meters:props.apartment.square_meters,
-    address:props.apartment.address,
-    latitude:props.apartment.latitude,
-    longitude:props.apartment.longitude,
-    main_image:props.apartment.main_image,
-    visible: props.apartment.visible,
-    price:props.apartment.price,
-    description: props.apartment.description,
-    services_id:props.apartment.services,
+    title: '',
+    rooms: 0,
+    beds: 0,
+    bathrooms: 0,
+    square_meters: 0,
+    address: '',
+    latitude: '',
+    longitude: '',
+    main_image: '',
+    visible: true,
+    price: 0,
+    description: '',
+    services_id: [],
 });
-
-const apartmentHasService = (serviceId) => {
-    let present = false;
-    props.apartment.services.forEach(element => {
-
-        if (element.id == serviceId) {
-            
-            present = true;
-            
-        } 
-    });
-
-    return present;
-
-};
-
-
-
-const pushId = (serviceId) => {
-  const serviceIndex = form.services_id.findIndex((service) => service.id === serviceId);
-  if (serviceIndex !== -1) {
-    form.services_id.splice(serviceIndex, 1);
-  } else {
-    form.services_id.push({ id: serviceId });
-  }
-};
-
-
-
 const submit = () => {
-    
-    form.post(route('dashboard.apartments.update', props.apartment.id), {
+    form.post(route('dashboard.apartments.store'), {
         onFinish: () => form.reset(),
     });
 };
+// console.log(apartment);
 </script>
 
-
-
 <template>
-    <Head title="My apartments" />
+    <Head title="New apartment" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">My apartments</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Public new apartment</h2>
         </template>
 
         <div class="py-12">
@@ -132,10 +97,9 @@ const submit = () => {
                         <div class="mb-3">
                             <label class="form-check-label" for="">SERVICES</label>
                             <div class="form-check">
-                               <div class="mb-3" v-for="service in services" :key="service.id">
-                                    <input
-                                        class="form-check-input" type="checkbox" :value="service.id" id=""
-                                        name="services_id[]" @click="pushId(service.id)"  :checked="apartmentHasService(service.id)"  >
+                                <div class="mb-3" v-for="service in services">
+                                    <input class="form-check-input" type="checkbox" :value="service.id" id=""
+                                        name="services_id[]" v-model="form.services_id">
                                     <label class="form-check-label" for="">{{ service.name }}</label>
                                 </div>
                             </div>

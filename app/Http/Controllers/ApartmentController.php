@@ -14,10 +14,10 @@ class ApartmentController extends Controller
     // show all apartments with paginations (12 elementi alla volta)
     public function index()
     {
-        $apartments = auth()->user()->apartments()->orderBy('created_at', 'desc')->get();
-        $apartments->load('sponsorships');
+        $apartments = Apartment :: all();
 
-        return Inertia::render('Dashboard/MyApartments', [
+
+        return Inertia::render('Welcome', [
             'apartments' => $apartments
         ]);
     }
@@ -61,22 +61,14 @@ class ApartmentController extends Controller
     {
         $services = Service::all();
 
-        return response()->json([
-            "success" => true,
-            "response" => [
-                "data" => [
-                    "services" => $services
-                ],
-            ]
+        return Inertia::render('Dashboard/ApartmentCreate', [
+            "services" => $services,
         ]);
     }
 
     //  store apartment
     public function store(Request $request)
     {
-        $data = $request->all();
-
-
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|min:0|max:128',
             'rooms' => 'required|integer|min:0',
@@ -91,7 +83,6 @@ class ApartmentController extends Controller
             'price' => 'required|integer|min:0',
             'description' => 'string',
             'services_id' => 'nullable|array',
-            'user_id' => 'required|integer',
         ]);
 
         if ($validator->fails()) {
@@ -102,8 +93,9 @@ class ApartmentController extends Controller
 
         $apartment = Apartment::make($data);
 
+
         // one to many
-        $user = User::find($data['user_id']);
+        $user = User::find(auth()->user()->id);
         $apartment->user()->associate($user);
         $apartment->save();
 
@@ -113,11 +105,7 @@ class ApartmentController extends Controller
             $apartment->services()->sync($services);
         }
 
-        return response()->json([
-            'success' => true,
-            'response' => $apartment,
-            'data' => $request->all()
-        ]);
+        return redirect()->route('dashboard.apartments');
     }
 
 
@@ -169,7 +157,7 @@ class ApartmentController extends Controller
         if (array_key_exists('services_id', $data)) {
 
             $services = Service::find($data['services_id']);
-            $apartment->tags()->sync($services);
+            $apartment->services()->sync($services);
         }
 
         return redirect()->route('dashboard.apartments');

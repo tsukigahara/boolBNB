@@ -1,11 +1,14 @@
 <?php
 
 use App\Http\Controllers\ApartmentController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Apartment;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,12 +43,29 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/dashboard/apartments', [ApartmentController::class, 'index'])->name('dashboard.apartments');
-    Route::get('/dashboard/apartments/{id}', [ApartmentController::class, 'edit'])->name('dashboard.apartments.edit');
-    Route::post('/dashboard/apartments/{id}', [ApartmentController::class, 'update'])->name('dashboard.apartments.update');
+    Route::get('/dashboard/apartments', [DashboardController::class, 'indexMyApartments'])
+        ->name('dashboard.apartments');
 
+    Route::get('/dashboard/apartments/create', [ApartmentController::class, 'create'])
+        ->name('dashboard.apartments.create');
 
+    Route::post('/dashboard/apartments', [ApartmentController::class, 'store'])
+        ->name('dashboard.apartments.store');
 
+    Route::get('/dashboard/apartments/{id}', [ApartmentController::class, 'edit'])
+        ->name('dashboard.apartments.edit');
+
+    Route::post('/dashboard/apartments/{id}', [ApartmentController::class, 'update'])
+        ->name('dashboard.apartments.update');
+
+    // MESSAGE
+    Route::get('/message/{apartment}', [MainController::class, 'showMessage'])-> name('dasbord.apartment.message');
+    // VIEW
+    Route::get('/view/{apartment}', [MainController::class, 'countView'])-> name('dasbord.apartment.view');
+
+    // SPONSORSHIP
+    Route::get('/apartment/sponsorship/{apartment}',[MainController::class, 'showSponsorship']) -> name('dashbord.apartment.sponsorship');
+    Route::post('/apartment/sponsorship/store', [MainController::class, 'storeSposnosrship']) -> name('dashbord.apartment.sponsorship.store');
 
 
     Route::get(
