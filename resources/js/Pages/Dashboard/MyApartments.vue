@@ -45,7 +45,7 @@ function destroy(id) {
                             <th scope="col">Options</th>
                         </tr>
                     </thead>
-                    <tbody class="table-group-divider">
+                    <tbody class="">
                         <tr v-for="apartment in apartments">
                             <th scope="row">{{ apartment.title }}</th>
                             <td>{{ apartment.address }}</td>

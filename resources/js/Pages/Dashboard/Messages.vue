@@ -17,15 +17,27 @@ defineProps({
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <a class="btn btn-dark my-3" role="button" href="javascript: history.back()">Go back</a>
-                <ul>
-                    <li v-for="(item, index) in messages" :key="index">
-                        <h2>{{ item.name }}</h2>
-                        <h3>{{ item.email }}</h3>
-                        {{ item.message }}
-                        <hr>
-                    </li>
+                <table class="table table-striped table-bordered my-12">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">From</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Message</th>
+                            <th scope="col">Options</th>
 
-                </ul>
+                        </tr>
+                    </thead>
+                    <tbody class="">
+                        <tr v-for="message in messages">
+                            <th scope="row">{{ message.name }}</th>
+                            <td>{{ message.email }}</td>
+                            <td>{{ message.message }}</td>
+                            <td style="white-space: nowrap;">
+                                options here
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </AuthenticatedLayout>
