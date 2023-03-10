@@ -54,14 +54,16 @@ defineProps({
         </nav>
 
         <div class="d-flex flex-wrap overflow-y-auto">
+
             <div class="card_appa pt-2">
                 <img src="./img/dl_a01597558.jpg" alt="">
                 <div class="pt-3">
-                    <div>Title</div>
+                    <div class="fw-semibold">Title</div>
                     <div>Address</div>
                     <div>Price</div>
                 </div>
             </div>
+
         </div>
     </div>
 </template>
@@ -91,7 +93,9 @@ defineProps({
 }
 
 img {
-    width: 100%;
     border-radius: 10px;
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
 }
 </style>
