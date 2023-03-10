@@ -22,6 +22,7 @@ defineProps({
                         <a name="" id="" class="btn btn-primary" :href="route('dashboard.apartments.edit', item.id)"
                             role="button">Button</a>
                         <a class="btn btn-primary" role="button" :href="route('dasbord.apartment.message', item.id)">MESSAGE</a>
+                        <a class="btn btn-primary" role="button" :href="route('dasbord.apartment.view', item.id)">VIEW</a>
                     </li>
                     
                 </ul>

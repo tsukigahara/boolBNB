@@ -47,6 +47,8 @@ Route::middleware('auth')->group(function () {
 
     // MESSAGE
     Route::get('/message/{apartment}', [MainController::class, 'showMessage'])-> name('dasbord.apartment.message');
+    // VIEW
+    Route::get('/view/{apartment}', [MainController::class, 'countView'])-> name('dasbord.apartment.view');
 
 
 
