@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ApartmentController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Apartment;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -24,15 +26,33 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+Route::get(
+    '/dashboard',
+    [ApartmentController::class, function () {
+        return Inertia::render('Dashboard/Dashboard');
+    }]
+)->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
-require __DIR__.'/auth.php';
+    Route::get('/dashboard/apartments', [ApartmentController::class, 'index'])->name('dashboard.apartments');
+    Route::get('/dashboard/apartments/{id}', [ApartmentController::class, 'edit'])->name('dashboard.apartments.edit');
+    Route::post('/dashboard/apartments/{id}', [ApartmentController::class, 'update'])->name('dashboard.apartments.update');
+
+
+
+
+
+    Route::get(
+        '/dashboard',
+        [ApartmentController::class, function () {
+            return Inertia::render('Dashboard/Dashboard');
+        }]
+    )->name('dashboard');
+});
+require __DIR__ . '/auth.php';
