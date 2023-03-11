@@ -20,6 +20,21 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function dashboard()
+    {
+        $user = User::find(auth()->user()->id);
+        $apartments = $user->apartments()->orderBy('updated_at', 'desc')->get();
+        $apartments->load('sponsorships');
+        $apartments->load(['messages' => function ($query) {
+            $query->orderBy('created_at', 'desc');
+        }]);
+
+        return Inertia::render('Dashboard/Dashboard', [
+            'user' => $user,
+            'apartments' => $apartments
+        ]);
+    }
+
     // // create apartment (for create form page)
     // public function createNewApartment()
     // {

@@ -21,7 +21,7 @@ const showingNavigationDropdown = ref(false);
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('welcome')">
-                                <ApplicationLogo class="block h-9 w-auto fill-current text-gray-800" />
+                                    <img class="logo" src="../pages/img/580b57fcd9996e24bc43c513.png" alt="">
                                 </Link>
                             </div>
 
@@ -130,3 +130,13 @@ const showingNavigationDropdown = ref(false);
         </div>
     </div>
 </template>
+
+<style lang="scss" >
+@use "../../scss/app.scss" as *;
+@use "../../scss/general.scss" as *;
+
+.logo {
+    width: 100px;
+}
+
+</style>

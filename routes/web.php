@@ -72,11 +72,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/apartment/sponsorship/store', [MainController::class, 'storeSposnosrship'])->name('dashbord.apartment.sponsorship.store');
 
 
-    Route::get(
-        '/dashboard',
-        [ApartmentController::class, function () {
-            return Inertia::render('Dashboard/Dashboard');
-        }]
-    )->name('dashboard');
+    // Route::get(
+    //     '/dashboard',
+    //     [ApartmentController::class, function () {
+    //         return Inertia::render('Dashboard/Dashboard');
+    //     }]
+    // )->name('dashboard');
+
+    Route::get('/dashboard',[DashboardController::class , 'dashboard'])->name('dashboard');
+    
 });
 require __DIR__ . '/auth.php';
