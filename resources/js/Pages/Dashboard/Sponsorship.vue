@@ -41,39 +41,40 @@ export default {
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-               <div v-if="!sponsorshipBool">
-                <h3>L'abbonamento {{ sponsorship.name }} per questo appartamento &egrave; gi&aacute; attivo</h3>
-               </div>
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8 shadow bg-body rounded">
+                <a class="btn btn-dark mb-3 mr-3" role="button" href="javascript: history.back()">Go back</a>
+                <div v-if="!sponsorshipBool">
+                    <h3>L'abbonamento {{ sponsorship.name }} per questo appartamento &egrave; gi&aacute; attivo</h3>
+                </div>
                 <form action="/" @submit.prevent="submit" v-else>
-                            <!-- SPONSORSHIP LIST -->
+                    <!-- SPONSORSHIP LIST -->
                     <table class="table">
-                    <thead>
-                        <tr class="table-dark">
-                            <th scope="col"></th>
-                            <th scope="col">Nome Abbonamento</th>
-                            <th scope="col">Prezzo</th>
-                            <th scope="col">Durata</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(item, index) in sponsorship" :key="index">
-                            <th scope="row">
-                                <input type="radio" name="sposnorship" :value="item.id" v-model="form.sponsorship"> 
-                            </th>
-                            
-                            <td>
-                                <label :for="item.name">
-                                    {{ item.name }}
-                                </label>
-                            </td>
-                            <td>{{ item.price }} &euro;</td>
-                            <td>{{ item.duration }}</td>
-                        </tr>
-                    
-                    </tbody>
+                        <thead>
+                            <tr class="table-dark">
+                                <th scope="col"></th>
+                                <th scope="col">Nome Abbonamento</th>
+                                <th scope="col">Prezzo</th>
+                                <th scope="col">Durata</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(item, index) in sponsorship" :key="index">
+                                <th scope="row">
+                                    <input type="radio" name="sposnorship" :value="item.id" v-model="form.sponsorship">
+                                </th>
+
+                                <td>
+                                    <label :for="item.name">
+                                        {{ item.name }}
+                                    </label>
+                                </td>
+                                <td>{{ item.price }} &euro;</td>
+                                <td>{{ item.duration }}</td>
+                            </tr>
+
+                        </tbody>
                     </table>
-                      
+
                     <button type="submit" class="btn btn-primary">Add</button>
                     <!-- <button @click="store" class="btn btn-primary mt-2">SEND</button> -->
                     <!-- <a :href="route('dashbord.apartment.sponsorship.store', output, item.id)" class="btn btn-primary mt-3">Send</a> -->

@@ -28,14 +28,15 @@ class ApartmentController extends Controller
 
         $apartment->load('services');
         $apartment->load('user');
-        
-        $user = User :: all();
+
+        $user = User::all();
         $services = Service::all();
 
         return Inertia::render('SingleApartment', [
             "apartment" => $apartment,
             "services" => $services,
-            "user" => $user,        ]);
+            "user" => $user,
+        ]);
     }
 
     // delete apartment (and it will delete all relations)
@@ -71,7 +72,7 @@ class ApartmentController extends Controller
     //  store apartment
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $data = $request->validate([
             'title' => 'required|string|min:0|max:128',
             'rooms' => 'required|integer|min:0',
             'beds' => 'required|integer|min:0',
@@ -83,15 +84,9 @@ class ApartmentController extends Controller
             'main_image' => 'required|string|min:0|max:128',
             'visible' => 'required|boolean',
             'price' => 'required|integer|min:0',
-            'description' => 'string',
+            'description' => 'nullable|string',
             'services_id' => 'nullable|array',
         ]);
-
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
-        }
-
-        $data = $request->all();
 
         $apartment = Apartment::make($data);
 
@@ -139,7 +134,7 @@ class ApartmentController extends Controller
             return abort('403');
         }
 
-        $validator = Validator::make($request->all(), [
+        $data = $request->validate([
             'title' => 'required|string|min:0|max:128',
             'rooms' => 'required|integer|min:0',
             'beds' => 'required|integer|min:0',
@@ -151,16 +146,9 @@ class ApartmentController extends Controller
             'main_image' => 'required|string|min:0|max:128',
             'visible' => 'required|boolean',
             'price' => 'required|integer|min:0',
-            'description' => 'string',
+            'description' => 'nullable|string',
             'services_id' => 'nullable|array',
         ]);
-
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
-        }
-
-        $data = $request->all();
-
 
         $user = auth()->user();
         $apartment->update($data);
