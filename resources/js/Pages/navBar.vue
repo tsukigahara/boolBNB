@@ -1,4 +1,7 @@
 <script>
+
+import { Head, Link } from '@inertiajs/vue3';
+
 export default {
 }
 </script>
@@ -22,18 +25,18 @@ export default {
                 <ul class="dropdown-menu">
                     <div v-if="$page.props.auth.user">
                         <li>
-                            <Link class="dropdown-item" :href="route('dashboard')">
-                            Dashboard</Link>
+                            <a class="dropdown-item" :href="route('dashboard')">
+                            Dashboard</a>
                         </li>
                     </div>
                     <template v-else>
                         <li>
-                            <Link class="dropdown-item" :href="route('register')">
-                            Register</Link>
+                            <a class="dropdown-item" :href="route('register')">
+                            Register</a>
                         </li>
                         <li>
-                            <Link class="dropdown-item" :href="route('login')">
-                            Login</Link>
+                            <a class="dropdown-item" :href="route('login')">
+                            Login</a>
                         </li>
                     </template>
                 </ul>
