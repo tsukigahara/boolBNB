@@ -7,6 +7,7 @@ defineProps({
 });
 </script>
 
+
 <template>
     <Head title="Boolbnb" />
 
