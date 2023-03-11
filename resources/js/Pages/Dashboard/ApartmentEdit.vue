@@ -132,8 +132,8 @@ const submit = () => {
                         </div>
                         <div class="mb-3">
                             <label class="form-check-label" for="">SERVICES</label>
-                            <div class="form-check">
-                                <div class="mb-3" v-for="service in services" :key="service.id">
+                            <div class="mb-3">
+                                <div class="form-check form-check-inline" v-for="service in services" :key="service.id">
                                     <input class="form-check-input" type="checkbox" :value="service.id" id=""
                                         name="services_id[]" @click="pushId(service.id)"
                                         :checked="apartmentHasService(service.id)">
