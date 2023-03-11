@@ -6,7 +6,7 @@ export default {
 <template>
     <nav class="p-3">
         <div class="d-flex justify-content-between">
-            <a href="#">
+            <a :href="route('welcome')">
                 <img class="logo" src="./img/580b57fcd9996e24bc43c513.png" alt="">
             </a>
 
