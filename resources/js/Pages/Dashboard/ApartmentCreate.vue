@@ -3,6 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 defineProps({
     services: Array,
+    errors: Object,
 });
 const form = useForm({
     title: '',
@@ -13,18 +14,15 @@ const form = useForm({
     address: '',
     latitude: '',
     longitude: '',
-    main_image: '',
+    main_image: 'default.jpeg',
     visible: true,
     price: 0,
     description: '',
     services_id: [],
 });
 const submit = () => {
-    form.post(route('dashboard.apartments.store'), {
-        onFinish: () => form.reset(),
-    });
+    form.post(route('dashboard.apartments.store'));
 };
-// console.log(apartment);
 </script>
 
 <template>
@@ -43,57 +41,75 @@ const submit = () => {
                         <div class="mb-3">
                             <label for="" class="form-label">Title</label>
                             <input type="text" name="title" id="" class="form-control" placeholder=""
-                                aria-describedby="helpId" v-model="form.title" required>
+                                aria-describedby="helpId" v-model="form.title">
+                            <div v-if="form.errors.title" class="text-sm text-red-600">{{ form.errors.title }}</div>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Rooms</label>
                             <input type="number" name="rooms" id="" class="form-control" placeholder=""
-                                aria-describedby="helpId" v-model="form.rooms" required>
+                                aria-describedby="helpId" v-model="form.rooms">
+                            <div v-if="form.errors.rooms" class="text-sm text-red-600">{{ form.errors.rooms }}</div>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Beds</label>
                             <input type="number" name="beds" id="" class="form-control" placeholder=""
-                                aria-describedby="helpId" v-model="form.beds" required>
+                                aria-describedby="helpId" v-model="form.beds">
+                            <div v-if="form.errors.beds" class="text-sm text-red-600">{{ form.errors.beds }}</div>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Bathrooms</label>
                             <input type="number" name="bathrooms" id="" class="form-control" placeholder=""
-                                aria-describedby="helpId" v-model="form.bathrooms" required>
+                                aria-describedby="helpId" v-model="form.bathrooms">
+                            <div v-if="form.errors.bathrooms" class="text-sm text-red-600">{{ form.errors.bathrooms }}</div>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Square meters</label>
                             <input type="number" name="square_meters" id="" class="form-control" placeholder=""
-                                aria-describedby="helpId" v-model="form.square_meters" required>
+                                aria-describedby="helpId" v-model="form.square_meters">
+                            <div v-if="form.errors.square_meters" class="text-sm text-red-600">{{ form.errors.square_meters
+                            }}</div>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Address</label>
                             <input type="text" name="address" id="" class="form-control" placeholder=""
-                                aria-describedby="helpId" v-model="form.address" required>
+                                aria-describedby="helpId" v-model="form.address">
+                            <div v-if="form.errors.address" class="text-sm text-red-600">{{ form.errors.address
+                            }}</div>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">latitude</label>
                             <input type="text" name="latitude" id="" class="form-control" placeholder=""
-                                aria-describedby="helpId" v-model="form.latitude" required>
+                                aria-describedby="helpId" v-model="form.latitude">
+                            <div v-if="form.errors.latitude" class="text-sm text-red-600">{{ form.errors.latitude
+                            }}</div>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">longitude</label>
                             <input type="text" name="longitude" id="" class="form-control" placeholder=""
-                                aria-describedby="helpId" v-model="form.longitude" required>
+                                aria-describedby="helpId" v-model="form.longitude">
+                            <div v-if="form.errors.longitude" class="text-sm text-red-600">{{ form.errors.longitude
+                            }}</div>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Main image</label>
                             <input type="text" name="main_image" id="" class="form-control" placeholder=""
-                                aria-describedby="helpId" v-model="form.main_image" required>
+                                aria-describedby="helpId" v-model="form.main_image">
+                            <div v-if="form.errors.main_image" class="text-sm text-red-600">{{ form.errors.main_image
+                            }}</div>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">price</label>
                             <input type="number" name="price" id="" class="form-control" placeholder=""
-                                aria-describedby="helpId" v-model="form.price" required>
+                                aria-describedby="helpId" v-model="form.price">
+                            <div v-if="form.errors.price" class="text-sm text-red-600">{{ form.errors.price
+                            }}</div>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Description</label>
                             <textarea name="description" id="" class="form-control" placeholder="" aria-describedby="helpId"
                                 v-model="form.description"></textarea>
+                            <div v-if="form.errors.description" class="text-sm text-red-600">{{ form.errors.description
+                            }}</div>
                         </div>
                         <div class="mb-3">
                             <label class="form-check-label" for="">SERVICES</label>
