@@ -2,10 +2,6 @@
 import { Head, Link } from '@inertiajs/vue3';
 
 defineProps({
-    canLogin: Boolean,
-    canRegister: Boolean,
-    laravelVersion: String,
-    phpVersion: String,
     apartments: Array,
 });
 </script>
@@ -28,46 +24,39 @@ defineProps({
 
                 <div class="dropdown">
                     <button id="btn_user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        user
+                        menu
                     </button>
                     <ul class="dropdown-menu">
-                        <div v-if="canLogin">
+                        <div v-if="$page.props.auth.user">
                             <li>
-                                <a class="dropdown-item" href="#">
-                                    <Link v-if="$page.props.auth.user" :href="route('dashboard')">
-                                    Dashboard</Link>
-                                </a>
+                                <Link class="dropdown-item" :href="route('dashboard')">
+                                Dashboard</Link>
                             </li>
                         </div>
                         <template v-else>
                             <li>
-                                <a class="dropdown-item" href="#">
-                                    <Link :href="route('register')">
-                                    Registrati</Link>
-                                </a>
+                                <Link class="dropdown-item" :href="route('register')">
+                                Register</Link>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">
-                                    <Link :href="route('login')">
-                                    Accedi</Link>
-                                </a>
+                                <Link class="dropdown-item" :href="route('login')">
+                                Login</Link>
                             </li>
                         </template>
                     </ul>
                 </div>
             </div>
         </nav>
-
         <div class="d-flex flex-wrap overflow-y-auto ms_padding">
             <div class="card_appa pt-2" v-for="apartment in apartments">
                 <a href="">
                     <Link :href="route('show', apartment.id)">
-                        <div class="pt-3">
-                            <img class="img" src="./img/dl_a01597558.jpg" alt="">
-                            <div class="fw-semibold">{{ apartment.title }}</div>
-                            <div>{{ apartment.adress }}</div>
-                            <div>€ {{ apartment.price }}</div>
-                        </div>
+                    <div class="pt-3">
+                        <img class="img" src="./img/dl_a01597558.jpg" alt="">
+                        <div class="fw-semibold">{{ apartment.title }}</div>
+                        <div>{{ apartment.adress }}</div>
+                        <div>€ {{ apartment.price }}</div>
+                    </div>
                     </Link>
                 </a>
             </div>

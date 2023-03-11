@@ -23,14 +23,6 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 //Welcome page (GUEST ROUTES)
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
 Route::get('/', [ApartmentController::class, 'index'])->name('welcome');
 
 Route::get('show{id}', [ApartmentController::class, 'show'])->name('show');
