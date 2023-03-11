@@ -23,9 +23,11 @@ defineProps({
 
         <div class="row">
             <div class="col-8">
-                <h1 class="pt-4">{{ apartment.title }} - Host: {{ apartment.user.name }}</h1>
+                <h1 class="pt-4 ">{{ apartment.title }} - Host: {{ apartment.user.name }}</h1>
                 <div> {{ apartment.address }}</div>
                 <hr>
+
+                <!-- sezione detttagli appartamento -->
                 <div>
                     <span>
                         {{ apartment.beds }} Ospiti -
@@ -43,6 +45,7 @@ defineProps({
 
                 <hr>
 
+                <!-- sezione air cover -->
                 <div>
                     <img class="logo" src="./img/54e427bb-9cb7-4a81-94cf-78f19156faad.webp" alt="">
 
@@ -52,6 +55,8 @@ defineProps({
                     </div>
                 </div>
                 <hr>
+
+                <!-- stampa servizi in card -->
                 <div>
                     Servizi:
                 </div>
@@ -69,6 +74,8 @@ defineProps({
                     </p>
                 </div>
             </div>
+
+            <!-- colonna messaggi -->
             <div class="col-4">
                 <div class="card mt-4 p-4">
                     <div class="pb-3">
@@ -83,7 +90,9 @@ defineProps({
 
 
 
-                <div class="pt-3 text-center">
+
+
+                    <div class="pt-3 text-center">
                         non riceverai alcun addebito in questa fase
                     </div>
                     <hr>
@@ -94,9 +103,9 @@ defineProps({
             </div>
         </div>
 
-        <!-- <h2>latitude: {{ apartment.latitude }}</h2>
-                                                                                                                                                        <h2>longitude: {{ apartment.longitude }}</h2>
-                                                                                                                                                        <h2>visible: {{ apartment.visible }}</h2> -->
+        <!-- <h2>latitude: {{ apartment.latitude }}</h2> -->
+        <!-- <h2>longitude: {{ apartment.longitude }}</h2> -->
+        <!-- <h2>visible: {{ apartment.visible }}</h2> -->
 
     </div>
 </template>
@@ -108,7 +117,7 @@ defineProps({
 .ms_img {
     margin: 0 auto;
     margin-top: 20px;
-    width: 60%;
+    width: 45%;
 }
 
 h1 {
@@ -125,6 +134,18 @@ h1 {
 
 .logo {
     width: 20%;
+}
+
+.btn-primary {
+    color: white;
+}
+
+a {
+    color: white;
+
+    &:hover {
+        color: white;
+    }
 }
 </style>
     
