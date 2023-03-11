@@ -1,41 +1,81 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
+import navBar from './navBar.vue'
 
 defineProps({
-    
+
     apartment: Object,
     services: Array,
     user: Array,
 
 });
 </script>
+ 
+<template>
+    <div class="container">
+        <navBar />
 
-    
-    <template>
-        <h1>Title:{{apartment.title}}</h1>
-        <h2>Rooms: {{ apartment.rooms }}</h2>
-        <h2>Beds: {{ apartment.beds }}</h2>
-        <h2>bathrooms: {{ apartment.bathrooms }}</h2>
-        <h2>square_meters: {{ apartment.square_meters }}</h2>
-        <h2>address: {{ apartment.address }}</h2>
+        <!-- tag corretto -->
+        <!-- <img src="{{ apartment.main_image }}" alt="no.img"> -->
+
+        <!-- tag di prova -->
+        <img class="img" src="./img/dl_a01597558.jpg" alt="">
+
+        <div class="row">
+            <div class="col-8">
+                <h1 class="pt-4">{{ apartment.title }} - Host: {{ apartment.user.name }}</h1>
+                <div> {{ apartment.address }}</div>
+                <hr>
+                <span>
+                    {{ apartment.beds }} Ospiti
+                </span>
+                <span>
+                    {{ apartment.rooms }} camere da letto
+                </span>
+                <span>
+                    {{ apartment.bathrooms }} Bagni
+                </span>
+                <span>
+                    {{ apartment.square_meters }} Metri quadri
+                </span>
+
+                <hr>
+            </div>
+            <div class="col-4">
+
+            </div>
+        </div>
+
         <h2>latitude: {{ apartment.latitude }}</h2>
         <h2>longitude: {{ apartment.longitude }}</h2>
-        <h2>main_image: {{ apartment.main_image }}</h2>
-        <h2>visible: {{ apartment.visible }}</h2>
+
+        <!-- <h2>visible: {{ apartment.visible }}</h2> -->
         <h2>price: {{ apartment.price }}</h2>
         <h2>description: {{ apartment.description }}</h2>
         <h2>Servizi:
             <span v-for="service in apartment.services">{{ service.name }} /</span>
         </h2>
-        <h2>Proprietario: {{ apartment.user.name }}</h2>
+        <h2>Proprietario: </h2>
 
 
         <Link :href="route('message.create', apartment.id)">Create Message</Link>
-
-
-    </template>
+    </div>
+</template>
     
+<style lang="scss">
+@use "../../scss/app.scss" as *;
+@use "../../scss/general.scss" as *;
 
+.img {
+    margin: 0 auto;
+    padding-top: 20px;
+    width: 40%;
+}
+
+h1 {
+    font-size: 25px;
+}
+</style>
     
 
 
