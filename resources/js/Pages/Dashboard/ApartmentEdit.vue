@@ -156,7 +156,7 @@ const submit = () => {
                         </div>
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary mr-3">Update</button>
-                            <button type="reset" class="btn btn-warning mr-3">Reset</button>
+                            <button type="submit" class="btn btn-warning mr-3" @click="form.reset()">Undo</button>
                         </div>
                     </div>
                 </form>
