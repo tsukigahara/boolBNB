@@ -42,15 +42,28 @@ defineProps({
                 <hr>
             </div>
             <div class="col-4">
+                <div class="card mt-4 p-4">
+                    <div class="pb-3">
+                        € {{ apartment.price }} notte
+                    </div>
+                    <button class="btn btn-primary">Invi aun Messaggio</button>
 
+                <div class="pt-3 text-center">
+                    non riceverai alcun addebito in questa fase
+                    </div>
+                    <hr>
+                    <div>
+                        Totale: € {{ apartment.price }}
+                    </div>
+                </div>
             </div>
         </div>
 
-        <h2>latitude: {{ apartment.latitude }}</h2>
-        <h2>longitude: {{ apartment.longitude }}</h2>
+        <!-- <h2>latitude: {{ apartment.latitude }}</h2>
+                    <h2>longitude: {{ apartment.longitude }}</h2>
 
-        <!-- <h2>visible: {{ apartment.visible }}</h2> -->
-        <h2>price: {{ apartment.price }}</h2>
+                    <h2>visible: {{ apartment.visible }}</h2> -->
+
         <h2>description: {{ apartment.description }}</h2>
         <h2>Servizi:
             <span v-for="service in apartment.services">{{ service.name }} /</span>
