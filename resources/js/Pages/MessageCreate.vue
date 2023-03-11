@@ -13,7 +13,7 @@ const form = useForm({
     apartment_id: props.apartment.id,
 });
 const submit = () => {
-    form.post(route('message.store'), {
+    form.post(route('message.store', props.apartment.id), {
         onFinish: () => form.reset(),
     });
 };

@@ -7,6 +7,7 @@ use App\Models\Message;
 use App\Models\Service;
 use App\Models\User;
 use App\Models\Sponsorship;
+use Illuminate\Support\Facades\Validator;
 use App\Models\View;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -38,6 +39,30 @@ class MainController extends Controller
             "user" => $user,        ]);
     }
 
+    public function messageStore(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|min:0|max:128',
+            'email' => 'required|string|min:0|max:128',
+            'message' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
+        $data = $request->all();
+
+        $message = Message::make($data);
+
+
+        // one to many
+        $apartment = Apartment::find($id);
+        $message->apartment()->associate($apartment);
+        $message->save();
+
+        return redirect()->route('show', $id);
+    }
 
     ////////////////// VIEWS ////////////////////
 
