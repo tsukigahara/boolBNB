@@ -4,7 +4,9 @@ import navBar from './navBar.vue'
 
 defineProps({
     apartments: Array,
+    sponsorshipArray: Array
 });
+
 </script>
 
 <template>
@@ -13,10 +15,25 @@ defineProps({
     <div class="container h-100 vh-100">
 
         <navBar />
+        <div class="d-flex flex-wrap overflow-y-auto ms_padding">
+            <template  v-for="apartment in apartments">
+                <a href="" class="card_appa pt-2" v-show="sponsorshipArray.includes(apartment.id)">
+                    <Link :href="route('show', apartment.id)">
+                    <div class="pt-3">
+                        <img class="img" src="./img/dl_a01597558.jpg" alt="">
+                        <div class="fw-semibold">{{ apartment.title }}</div>
+                        <div>{{ apartment.adress }}</div>
+                        <div>€ {{ apartment.price }}</div>
+                        <h3>sponsorizzato</h3>
+                    </div>
+                    </Link>
+                </a>
+            </template>
+        </div>
 
         <div class="d-flex flex-wrap overflow-y-auto ms_padding">
-            <div class="card_appa pt-2" v-for="apartment in apartments">
-                <a href="">
+            <template  v-for="apartment in apartments">
+                <a href="" class="card_appa pt-2" v-show="!sponsorshipArray.includes(apartment.id)">
                     <Link :href="route('show', apartment.id)">
                     <div class="pt-3">
                         <img class="img" src="./img/dl_a01597558.jpg" alt="">
@@ -26,7 +43,7 @@ defineProps({
                     </div>
                     </Link>
                 </a>
-            </div>
+            </template>
         </div>
     </div>
 </template>

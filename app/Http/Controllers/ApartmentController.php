@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Apartment;
 use App\Models\Service;
+use App\Models\Sponsorship;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
@@ -15,10 +17,130 @@ class ApartmentController extends Controller
     public function index()
     {
         $apartments = Apartment::all();
-
+               // Ottieni tutti gli id degli appartamenti nella cartella "Apartment"
+       $apartmentIds = Apartment::pluck('id')->toArray();
+       $sponsorshipArray = [];
+       
+         // ottiene tutte le sponsorship
+         $sponsorshipAll = Sponsorship::all();
+        foreach($apartmentIds as $i) { 
+            
+            // ottiene l'ultima sponsorship attiva per l'appartamento
+            $sponsorship = optional(
+                Apartment::find($i)->sponsorships()
+                ->withPivot('sponsorship_id', 'created_at')
+                ->orderBy('pivot_created_at', 'desc')
+                ->first()
+            );
+            
+            // verifica che il valore non sia null
+            if (optional($sponsorship)->pivot) {
+                // ottiene l'id della sponsorship
+                $sponsorshipId = optional($sponsorship)->pivot->sponsorship_id;
+                
+                // ottiene la data di inizio sponsorship
+                $startDate = optional($sponsorship)->pivot->created_at;
+                
+                // calcola la data di fine sponsorship
+                $duration = Sponsorship::find($sponsorshipId)->duration;
+                $endDate = Carbon::parse($startDate)->addHours($duration);
+                
+                // verifica se la sponsorship è ancora attiva
+                $isExpired = Carbon::now()->greaterThan($endDate);
+                
+                if ($isExpired) {
+                    
+                    $sponsorshipArray[]= $i;
+                    
+                } 
+            } 
+            
+        }
+        // var_dump($sponsorshipArray);
         return Inertia::render('Welcome', [
-            'apartments' => $apartments
+            'apartments' => $apartments,
+            'sponsorshipArray' => $sponsorshipArray 
         ]);
+    }
+    public function sponsorship(){
+       // Ottieni tutti gli id degli appartamenti nella cartella "Apartment"
+       $apartmentIds = Apartment::pluck('id')->toArray();
+       $sponsorshipArray = [];
+       
+         // ottiene tutte le sponsorship
+         $sponsorshipAll = Sponsorship::all();
+        foreach($apartmentIds as $i) { 
+            
+            // ottiene l'ultima sponsorship attiva per l'appartamento
+            $sponsorship = optional(
+                Apartment::find($i)->sponsorships()
+                ->withPivot('sponsorship_id', 'created_at')
+                ->orderBy('pivot_created_at', 'desc')
+                ->first()
+            );
+            
+            // verifica che il valore non sia null
+            if (optional($sponsorship)->pivot) {
+                // ottiene l'id della sponsorship
+                $sponsorshipId = optional($sponsorship)->pivot->sponsorship_id;
+                
+                // ottiene la data di inizio sponsorship
+                $startDate = optional($sponsorship)->pivot->created_at;
+                
+                // calcola la data di fine sponsorship
+                $duration = Sponsorship::find($sponsorshipId)->duration;
+                $endDate = Carbon::parse($startDate)->addHours($duration);
+                
+                // verifica se la sponsorship è ancora attiva
+                $isExpired = Carbon::now()->greaterThan($endDate);
+                
+                if ($isExpired) {
+                    
+                    $sponsorshipArray[]= $i;
+                    
+                } 
+            } 
+            
+        }
+    }
+    public function showSponsorship($id){
+        // ottiene tutte le sponsorship
+        $sponsorshipAll = Sponsorship::all();
+    
+        // ottiene l'ultima sponsorship attiva per l'appartamento
+        $sponsorship = optional(
+            Apartment::find($id)->sponsorships()
+            ->withPivot('sponsorship_id', 'created_at')
+            ->orderBy('pivot_created_at', 'desc')
+            ->first()
+        );
+    
+        // verifica che il valore non sia null
+        if (optional($sponsorship)->pivot) {
+            // ottiene l'id della sponsorship
+            $sponsorshipId = optional($sponsorship)->pivot->sponsorship_id;
+    
+            // ottiene la data di inizio sponsorship
+            $startDate = optional($sponsorship)->pivot->created_at;
+    
+            // calcola la data di fine sponsorship
+            $duration = Sponsorship::find($sponsorshipId)->duration;
+            $endDate = Carbon::parse($startDate)->addHours($duration);
+    
+            // verifica se la sponsorship è ancora attiva
+            $isExpired = Carbon::now()->greaterThan($endDate);
+    
+            if ($isExpired) {
+                // la sponsorship è scaduta
+                
+            } else {
+                // la sponsorship è ancora attiva
+                return $id;
+            }  
+        } else {
+            // non ci sono sponsorship attive per l'appartamento
+            
+        }
     }
 
     // show single apartment by id with relations
