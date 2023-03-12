@@ -19,10 +19,9 @@ class ApartmentController extends Controller
         $apartments = Apartment::all();
                // Ottieni tutti gli id degli appartamenti nella cartella "Apartment"
        $apartmentIds = Apartment::pluck('id')->toArray();
+            // array delle sponsorship ancora attive
        $sponsorshipArray = [];
        
-         // ottiene tutte le sponsorship
-         $sponsorshipAll = Sponsorship::all();
         foreach($apartmentIds as $i) { 
             
             // ottiene l'ultima sponsorship attiva per l'appartamento
@@ -49,100 +48,20 @@ class ApartmentController extends Controller
                 $isExpired = Carbon::now()->greaterThan($endDate);
                 
                 if ($isExpired) {
-                    
+                    // push nell'array degli apopartamenti sponsorizzati
                     $sponsorshipArray[]= $i;
                     
                 } 
             } 
             
         }
-        // var_dump($sponsorshipArray);
+       
         return Inertia::render('Welcome', [
             'apartments' => $apartments,
             'sponsorshipArray' => $sponsorshipArray 
         ]);
     }
-    public function sponsorship(){
-       // Ottieni tutti gli id degli appartamenti nella cartella "Apartment"
-       $apartmentIds = Apartment::pluck('id')->toArray();
-       $sponsorshipArray = [];
-       
-         // ottiene tutte le sponsorship
-         $sponsorshipAll = Sponsorship::all();
-        foreach($apartmentIds as $i) { 
-            
-            // ottiene l'ultima sponsorship attiva per l'appartamento
-            $sponsorship = optional(
-                Apartment::find($i)->sponsorships()
-                ->withPivot('sponsorship_id', 'created_at')
-                ->orderBy('pivot_created_at', 'desc')
-                ->first()
-            );
-            
-            // verifica che il valore non sia null
-            if (optional($sponsorship)->pivot) {
-                // ottiene l'id della sponsorship
-                $sponsorshipId = optional($sponsorship)->pivot->sponsorship_id;
-                
-                // ottiene la data di inizio sponsorship
-                $startDate = optional($sponsorship)->pivot->created_at;
-                
-                // calcola la data di fine sponsorship
-                $duration = Sponsorship::find($sponsorshipId)->duration;
-                $endDate = Carbon::parse($startDate)->addHours($duration);
-                
-                // verifica se la sponsorship è ancora attiva
-                $isExpired = Carbon::now()->greaterThan($endDate);
-                
-                if ($isExpired) {
-                    
-                    $sponsorshipArray[]= $i;
-                    
-                } 
-            } 
-            
-        }
-    }
-    public function showSponsorship($id){
-        // ottiene tutte le sponsorship
-        $sponsorshipAll = Sponsorship::all();
     
-        // ottiene l'ultima sponsorship attiva per l'appartamento
-        $sponsorship = optional(
-            Apartment::find($id)->sponsorships()
-            ->withPivot('sponsorship_id', 'created_at')
-            ->orderBy('pivot_created_at', 'desc')
-            ->first()
-        );
-    
-        // verifica che il valore non sia null
-        if (optional($sponsorship)->pivot) {
-            // ottiene l'id della sponsorship
-            $sponsorshipId = optional($sponsorship)->pivot->sponsorship_id;
-    
-            // ottiene la data di inizio sponsorship
-            $startDate = optional($sponsorship)->pivot->created_at;
-    
-            // calcola la data di fine sponsorship
-            $duration = Sponsorship::find($sponsorshipId)->duration;
-            $endDate = Carbon::parse($startDate)->addHours($duration);
-    
-            // verifica se la sponsorship è ancora attiva
-            $isExpired = Carbon::now()->greaterThan($endDate);
-    
-            if ($isExpired) {
-                // la sponsorship è scaduta
-                
-            } else {
-                // la sponsorship è ancora attiva
-                return $id;
-            }  
-        } else {
-            // non ci sono sponsorship attive per l'appartamento
-            
-        }
-    }
-
     // show single apartment by id with relations
     public function show($id)
     {
