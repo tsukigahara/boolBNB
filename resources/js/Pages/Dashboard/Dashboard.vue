@@ -39,13 +39,13 @@ onMounted(() => {
 
     <AuthenticatedLayout>
         <template #header>
-            <h1 class="font-semibold fs-3 text-gray-800 leading-tight mt-4">
-                Ti diamo il bentornato,
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Ti diamo il bentornato,
                 <span class="text-capitalize">
                     {{ user.name }}
                 </span>
-            </h1>
+            </h2>
         </template>
+
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8 shadow bg-body rounded">
