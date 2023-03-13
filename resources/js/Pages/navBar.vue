@@ -5,7 +5,6 @@ import { onMounted } from 'vue';
 import { store } from '../store';
 
 
-
 export default {
     name: "navBar",
     props: {
@@ -21,37 +20,14 @@ export default {
             const fullSearchAPI = `${store.searchAPI}/${element}/${range}`;
             axios.get(fullSearchAPI)
                 .then(res => {
-                    store.fApartments = res.data.response.data.filteredApartments.map(obj => ({
-                        ...obj, 
-                        passesFilter: true,
-                        serviceRelevancy: 0
-                    }));
+                    store.fApartments = res.data.response.data.filteredApartments;
+                    console.log(store.fApartments)
+                    console.log(fullSearchAPI)
+                    console.log(store.searchServices)
+                    console.log(store.searchBeds)
+                    console.log(store.searchRooms)
                 });
-
             store.filterApplied = true;
-            store.fApartments.forEach(element => {
-
-                if ( ( element.rooms < parseInt(store.searchRooms) ) || ( element.beds < parseInt(store.searchBeds) ) ) {
-
-                    element.passesFilter = false;
-                } 
-
-                else {
-                    
-                    element.services.forEach(service => {
-                        if ( store.searchServices.includes(service.id)) {
-                            element.serviceRelevancy++;
-                        }
-                    });
-                }
-
-                if ( element.serviceRelevancy < 1 ){
-                    element.passesFilter = false;
-                }
-            });
-            console.log(store.fApartments)
-            console.log(store.searchServices)
-
         },
     },
     mounted() {
@@ -61,7 +37,7 @@ export default {
 
             })
     }
-    
+
 }
 </script>
 <!-- Servizi DEF se 0 = any | numero di stanze se 0 = any | numero di letti se 0 = any
@@ -86,18 +62,32 @@ export default {
                     <option value="10000">10000km</option>
                 </select>
                 <div v-if="store.searchServices !== []">
-                    <div v-for="service in store.allServices" :key="service.id">
-                        <input type="checkbox" :id="'service-' + service.id" :value="service.id" v-model="store.searchServices">
-                        <label :for="'service-' + service.id">{{ service.name }}</label>
+                    <div class="dropdown">
+                        <button class="form-control dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Servizi
+                        </button>
+                        <ul class="dropdown-menu p-1">
+                            <li v-for="service in store.allServices" :key="service.id">
+                                <input type="checkbox" :id="'service-' + service.id" :value="service.id"
+                                    v-model="store.searchServices">
+                                <label :for="'service- ' + service.id">
+                                    {{ service.name }}
+                                </label>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                <input class="form-control me-2" type="number" placeholder="Rooms" aria-label="Rooms" v-model="store.searchRooms">
-                <input class="form-control me-2" type="number" placeholder="Beds" aria-label="Beds" v-model="store.searchBeds">
-                <button class="btn btn-outline-success" type="submit" @click.prevent="searchApartments(store.searchQuery, store.searchRadius)">Search</button>
+                <input class="form-control mx-2" type="number" placeholder="Camere" aria-label="Rooms"
+                    v-model="store.searchRooms">
+                <input class="form-control me-2" type="number" placeholder="Letti" aria-label="Beds"
+                    v-model="store.searchBeds">
+                <button class="btn btn-outline-success" type="submit"
+                    @click.prevent="searchApartments(store.searchQuery, store.searchRadius)">Search</button>
             </div>
 
             <div class="dropdown">
-                <button id="btn_user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn_user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     menu
                 </button>
                 <ul class="dropdown-menu">
@@ -128,10 +118,15 @@ export default {
     width: 100px;
 }
 
-#btn_user {
+.btn_user {
     padding: 5px;
     border-radius: 40px;
     border: 1px solid grey;
+}
+
+.ms_btn {
+    border: 1px solid grey;
+
 }
 </style>
 
