@@ -28,6 +28,7 @@ export default {
                     console.log(store.searchRooms)
                 });
             store.filterApplied = true;
+            
         },
     },
     mounted() {

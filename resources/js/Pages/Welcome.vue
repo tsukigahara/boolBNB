@@ -19,7 +19,7 @@ defineProps({
         <navBar />
         <div class="d-flex flex-wrap overflow-y-auto ms_padding">
             <template v-for="apartment in (store.filterApplied ? store.fApartments : apartments)">
-                <a href="" class="card_appa pt-2" :class="sponsorshipArray.includes(apartment.id) ? 'order-1' : 'order-2'">
+                <a href="" class="card_appa pt-2" :class="sponsorshipArray.includes(apartment.id) ? 'order-1' : 'order-2'" v-if="apartment.rooms >= store.searchRooms && apartment.beds >= store.searchBeds && store.searchServices ">
                     <Link :href="route('show', apartment.id)">
                     <div class="pt-3 prova">
                         <img class="img" src="./img/dl_a01597558.jpg" alt="">
@@ -30,7 +30,6 @@ defineProps({
                     </div>
                     </Link>
                 </a>
-
             </template>
         </div>
     </div>
@@ -68,3 +67,9 @@ defineProps({
     padding: 5px;
 }
 </style>
+
+
+
+
+
+
