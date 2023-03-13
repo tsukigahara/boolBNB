@@ -40,6 +40,7 @@ export default {
                 <input class="form-control" type="search" placeholder="Search" aria-label="Search"
                     v-model="store.searchQuery">
                 <select class="form-control mx-2" name="radius" id="radius-select" v-model="store.searchRadius">
+                    <option value="" disabled selected>Seleziona raggio</option>
                     <option value="20">20km</option>
                     <option value="50">50km</option>
                     <option value="100">100km</option>
