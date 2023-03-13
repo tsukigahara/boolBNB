@@ -5,6 +5,7 @@ import { onMounted } from 'vue';
 import { store } from '../store';
 
 
+
 export default {
     name: "navBar",
     props: {
@@ -50,6 +51,7 @@ export default {
             });
             console.log(store.fApartments)
             console.log(store.searchServices)
+
         },
     },
     mounted() {

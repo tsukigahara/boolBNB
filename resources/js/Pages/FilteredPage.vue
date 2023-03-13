@@ -20,39 +20,20 @@ defineProps({
         <div class="d-flex flex-wrap overflow-y-auto ms_padding">
 
 
-            <template v-if="store.filterApplied === false">
-                <template v-for="apartment in store.fApartments">
-                    <a href="" class="card_appa pt-2"
-                        :class="sponsorshipArray.includes(apartment.id) ? 'order-1' : 'order-2'"
-                        v-if="apartment.passesFilter">
-                        <Link :href="route('show', apartment.id)">
-                        <div class="pt-3 prova">
-                            <img class="img" src="./img/dl_a01597558.jpg" alt="">
-                            <div class="fw-semibold">{{ apartment.title }}</div>
-                            <div>{{ apartment.adress }}</div>
-                            <div>€ {{ apartment.price }}</div>
-                            <div class="sponsor" v-show="sponsorshipArray.includes(apartment.id)">sponsorizzato</div>
-                        </div>
-                        </Link>
-                    </a>
-                </template>
-            </template>
-            <template v-else>
-                <template v-for="apartment in apartments">
-                    <a href="" class="card_appa pt-2"
-                        :class="sponsorshipArray.includes(apartment.id) ? 'order-1' : 'order-2'">
-                        <Link :href="route('show', apartment.id)">
-                        <div class="pt-3 prova">
-                            <img class="img" src="./img/dl_a01597558.jpg" alt="">
-                            <div class="fw-semibold">{{ apartment.title }}</div>
-                            <div>{{ apartment.adress }}</div>
-                            <div>€ {{ apartment.price }}</div>
-                            <div class="sponsor" v-show="sponsorshipArray.includes(apartment.id)">sponsorizzato</div>
-                        </div>
-                        </Link>
-                    </a>
-                </template>
-            </template>
+        <template v-for="apartment in store.fApartments">
+            <a href="" class="card_appa pt-2" :class="sponsorshipArray.includes(apartment.id) ? 'order-1' : 'order-2'">
+                <Link :href="route('show', apartment.id)">
+                <div class="pt-3 prova">
+                    <img class="img" src="./img/dl_a01597558.jpg" alt="">
+                    <div class="fw-semibold">{{ apartment.title }}</div>
+                    <div>{{ apartment.adress }}</div>
+                    <div>€ {{ apartment.price }}</div>
+                    <div class="sponsor" v-show="sponsorshipArray.includes(apartment.id)">sponsorizzato</div>
+                </div>
+                </Link>
+            </a>
+    
+        </template>
 
         </div>
     </div>
