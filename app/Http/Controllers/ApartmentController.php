@@ -6,6 +6,7 @@ use App\Models\Apartment;
 use App\Models\Service;
 use App\Models\Sponsorship;
 use App\Models\User;
+use App\Models\View;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -63,7 +64,7 @@ class ApartmentController extends Controller
     }
     
     // show single apartment by id with relations
-    public function show($id)
+    public function show($id, )
     {
         $apartment = Apartment::find($id);
 
@@ -72,6 +73,21 @@ class ApartmentController extends Controller
 
         $user = User::all();
         $services = Service::all();
+        
+        // trova l'ip dell'utente
+        $ip_address = request()->ip();
+        $data=[
+            'ip_address' => $ip_address,
+        ];
+        // crea l'elemento in view
+        $views = View::make($data);
+        $views-> apartment()->associate($apartment);
+
+        // verifica se la view esiste giá 
+        $apartmentAssociate= View::where('apartment_id', $id)->where('ip_address', $ip_address)-> get() ;
+        if($apartmentAssociate->isEmpty()){
+            $views ->save();
+        }
 
         return Inertia::render('SingleApartment', [
             "apartment" => $apartment,
@@ -204,4 +220,5 @@ class ApartmentController extends Controller
 
         return redirect()->route('dashboard.apartments');
     }
+
 }
