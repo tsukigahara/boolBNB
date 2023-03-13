@@ -109,19 +109,13 @@ const submit = () => {
                             <label for="" class="form-label">Address</label>
                             <input type="text" name="address" id="" class="form-control" placeholder=""
                                 aria-describedby="helpId" v-model="form.address">
+                            <div class="form-text">
+                                GPS COORDINATES: {{ form.latitude }}, {{ form.longitude }}
+                            </div>
                             <div v-if="form.errors.address" class="text-sm text-red-600">{{ form.errors.address }}</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">latitude</label>
-                            <input type="text" name="latitude" id="" class="form-control" placeholder=""
-                                aria-describedby="helpId" v-model="form.latitude">
-                            <div v-if="form.errors.latitude" class="text-sm text-red-600">{{ form.errors.latitude }}</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">longitude</label>
-                            <input type="text" name="longitude" id="" class="form-control" placeholder=""
-                                aria-describedby="helpId" v-model="form.longitude">
-                            <div v-if="form.errors.longitude" class="text-sm text-red-600">{{ form.errors.longitude }}</div>
+                            <div v-if="$page.props.flash.TomTomError" class="text-sm text-red-600">{{
+                                $page.props.flash.TomTomError
+                            }}</div>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Main image</label>

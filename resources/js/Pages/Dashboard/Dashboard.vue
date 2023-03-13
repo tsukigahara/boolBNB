@@ -12,21 +12,21 @@ const props = defineProps({
 });
 
 const state = reactive({
-  messageArray: []
+    messageArray: []
 });
 
 
 onMounted(() => {
-  props.apartments.forEach(apartment => {
-    apartment.messages.forEach(message => {
-      const dateString = message.created_at;
-      const date = new Date(dateString);
-      const formattedDate = date.toLocaleString();
-      const apartmentMatch = props.apartments.find(a => a.id === message.apartment_id);
-      state.messageArray.push({ ...message, created_at: formattedDate, apartment: apartmentMatch });
+    props.apartments.forEach(apartment => {
+        apartment.messages.forEach(message => {
+            const dateString = message.created_at;
+            const date = new Date(dateString);
+            const formattedDate = date.toLocaleString();
+            const apartmentMatch = props.apartments.find(a => a.id === message.apartment_id);
+            state.messageArray.push({ ...message, created_at: formattedDate, apartment: apartmentMatch });
+        });
     });
-  });
-  state.messageArray.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    state.messageArray.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 });
 
 
@@ -39,23 +39,46 @@ onMounted(() => {
 
     <AuthenticatedLayout>
         <template #header>
-            <h1 class="font-semibold text-xxl text-gray-800 leading-tight mt-4">Ti diamo il bentornato, 
+            <h1 class="font-semibold fs-3 text-gray-800 leading-tight mt-4">
+                Ti diamo il bentornato,
                 <span class="text-capitalize">
-                    {{ user.name  }}
-                </span> 
+                    {{ user.name }}
+                </span>
             </h1>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8 shadow bg-body rounded">
-                <h2>
-                    I tuoi messaggi
-                </h2> 
-                <h3 v-for="message in state.messageArray">
-                   {{ message.name }} - {{ message.created_at }}
-                   <h4>Apartment: {{ message.apartment.title }}</h4>
-                </h3>
+                <div class="shadow bg-body rounded p-4">
 
+                    <h2>
+                        I tuoi messaggi
+                    </h2>
+                    <table class="table table-striped table-bordered my-2">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">Apartment</th>
+                                <th scope="col">From</th>
+                                <th scope="col">Message</th>
+                                <th scope="col">When</th>
+                                <th scope="col">Options</th>
+                            </tr>
+                        </thead>
+                        <tbody class="">
+                            <tr v-for="message in state.messageArray">
+                                <th scope="row">{{ message.apartment.title }}</th>
+                                <th scope="row">{{ message.name }}</th>
+                                <td>{{ message.message }}</td>
+                                <td>{{ message.created_at }}</td>
+                                <td>
+                                    <a name="" id="" class="btn btn-dark"
+                                        :href="`mailto:${message.email}?subject=[BoolBNB] Your beautiful journey at ${message.apartment.title}!&body=Thank you for contacting me ${message.name}, I'm ${user.name} of ${message.apartment.title}!`"
+                                        role="button">Reply</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </AuthenticatedLayout>
