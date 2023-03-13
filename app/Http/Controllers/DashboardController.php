@@ -13,7 +13,7 @@ class DashboardController extends Controller
     public function indexMyApartments()
     {
         $user = User::find(auth()->user()->id);
-        $apartments = $user->apartments()->orderBy('created_at', 'desc')->get();
+        $apartments = $user->apartments()->orderBy('updated_at', 'desc')->get();
         $apartments->load('sponsorships');
 
         return Inertia::render('Dashboard/MyApartments', [

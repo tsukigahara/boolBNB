@@ -12,8 +12,6 @@ const form = useForm({
     bathrooms: 0,
     square_meters: 0,
     address: '',
-    latitude: '',
-    longitude: '',
     main_image: 'default.jpeg',
     visible: true,
     price: 0,
@@ -75,19 +73,8 @@ const submit = () => {
                                 aria-describedby="helpId" v-model="form.address">
                             <div v-if="form.errors.address" class="text-sm text-red-600">{{ form.errors.address
                             }}</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">latitude</label>
-                            <input type="text" name="latitude" id="" class="form-control" placeholder=""
-                                aria-describedby="helpId" v-model="form.latitude">
-                            <div v-if="form.errors.latitude" class="text-sm text-red-600">{{ form.errors.latitude
-                            }}</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">longitude</label>
-                            <input type="text" name="longitude" id="" class="form-control" placeholder=""
-                                aria-describedby="helpId" v-model="form.longitude">
-                            <div v-if="form.errors.longitude" class="text-sm text-red-600">{{ form.errors.longitude
+                            <div v-if="$page.props.flash.TomTomError" class="text-sm text-red-600">{{
+                                $page.props.flash.TomTomError
                             }}</div>
                         </div>
                         <div class="mb-3">

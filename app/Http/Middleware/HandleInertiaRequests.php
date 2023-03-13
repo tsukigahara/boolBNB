@@ -39,6 +39,9 @@ class HandleInertiaRequests extends Middleware
                     'location' => $request->url(),
                 ]);
             },
+            'flash' => [
+                'TomTomError' => fn () => $request->session()->get('TomTomError')
+            ],
         ]);
     }
 }
