@@ -42,7 +42,7 @@ class SearchController extends Controller
 
 
     }
-    public function filterApartments($criteria) {
+    public function filterApartments($criteria, $radius) {
 
         $apartments = Apartment::all();
         $filteredApartments = [];
@@ -56,7 +56,7 @@ class SearchController extends Controller
 
             $distance = $this -> haversine($filterLat, $filterLong, $apartmentLat, $apartmentLong);
             
-            if ($distance <= 20) {
+            if ($distance <= $radius) {
                 array_push($filteredApartments, $apartment);
             }
                 

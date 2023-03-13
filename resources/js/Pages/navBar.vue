@@ -15,8 +15,8 @@ export default {
         }
     },
     methods: {
-        searchApartments(element){
-            const fullSearchAPI = store.searchAPI + element;
+        searchApartments(element, range){
+            const fullSearchAPI = `${store.searchAPI}/${element}/${range}`;
             axios.get(fullSearchAPI)
                 .then(res => {
                     store.fApartments = res.data.response.data.filteredApartments;
@@ -38,7 +38,14 @@ export default {
 
             <div class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" v-model="store.searchQuery">
-                <button class="btn btn-outline-success" type="submit" @click.prevent="searchApartments(store.searchQuery)">Search</button>
+                <select name="radius" id="radius-select" v-model="store.searchRadius">
+                    <option value="20">20km</option>
+                    <option value="50">50km</option>
+                    <option value="100">100km</option>
+                    <option value="300">300km</option>
+                    <option value="10000">10000km</option>
+                </select>
+                <button class="btn btn-outline-success" type="submit" @click.prevent="searchApartments(store.searchQuery, store.searchRadius)">Search</button>
             </div>
 
             <div class="dropdown">
