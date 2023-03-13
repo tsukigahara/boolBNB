@@ -46,6 +46,7 @@ class SearchController extends Controller
     public function filterApartments($criteria, $radius) {
 
         $apartments = Apartment::all();
+        $apartments -> load('services');
         $filteredApartments = [];
         $filterCriteria = $this -> geocode($criteria);
         $filterLat = $filterCriteria -> original['lat'];
