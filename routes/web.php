@@ -69,8 +69,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/apartment/sponsorship/store', [MainController::class, 'storeSposnosrship']) -> name('dashbord.apartment.sponsorship.store');
 
 
-    Route::get('/api/geocode/{query}',[SearchController::class, 'geocode']) -> name('geocode');
-    Route::get('/api/apartments/{criteria}', [SearchController::class, 'filterApartments'])->name('filterApartments');
+    
 
     Route::get(
         '/dashboard',
@@ -79,4 +78,7 @@ Route::middleware('auth')->group(function () {
         }]
     )->name('dashboard');
 });
+
+Route::get('/api/geocode/{query}', [SearchController::class, 'geocode'])->name('geocode');
+Route::get('/api/apartments/{criteria}', [SearchController::class, 'filterApartments'])->name('filterApartments');
 require __DIR__ . '/auth.php';
