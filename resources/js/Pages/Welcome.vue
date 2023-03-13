@@ -17,18 +17,19 @@ defineProps({
 
         <navBar />
         <div class="d-flex flex-wrap overflow-y-auto ms_padding">
-            <template  v-for="apartment in apartments">
-                <a href="" class="card_appa pt-2" :class="sponsorshipArray.includes(apartment.id) ? 'order-1' : 'order-2'" >
+            <template v-for="apartment in apartments">
+                <a href="" class="card_appa pt-2" :class="sponsorshipArray.includes(apartment.id) ? 'order-1' : 'order-2'">
                     <Link :href="route('show', apartment.id)">
-                    <div class="pt-3">
+                    <div class="pt-3 prova">
                         <img class="img" src="./img/dl_a01597558.jpg" alt="">
                         <div class="fw-semibold">{{ apartment.title }}</div>
                         <div>{{ apartment.adress }}</div>
                         <div>€ {{ apartment.price }}</div>
-                        <h3 v-show="sponsorshipArray.includes(apartment.id)">sponsorizzato</h3>
+                        <div class="sponsor" v-show="sponsorshipArray.includes(apartment.id)">sponsorizzato</div>
                     </div>
                     </Link>
                 </a>
+
             </template>
         </div>
     </div>
@@ -43,6 +44,7 @@ defineProps({
     width: calc((100% / 4) - 10px);
     margin: 5px;
     border-radius: 40px;
+    position: relative;
 }
 
 .img {
@@ -50,5 +52,18 @@ defineProps({
     width: 300px;
     height: 300px;
     object-fit: cover;
+}
+
+.prova {
+    position: relative;
+}
+
+.sponsor {
+    position: absolute;
+    top: 30px;
+    left: 5px;
+    background-color: gold;
+    border-radius: 10px;
+    padding: 5px;
 }
 </style>
