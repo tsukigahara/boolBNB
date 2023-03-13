@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApartmentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
 use App\Models\Apartment;
@@ -86,4 +87,5 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/api/geocode/{query}', [SearchController::class, 'geocode'])->name('geocode');
 Route::get('/api/apartments/{criteria}/{radius}', [SearchController::class, 'filterApartments'])->name('filterApartments');
+Route::get('/api/services', [SearchController::class, 'searchServices']);
 require __DIR__ . '/auth.php';

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Apartment;
 use Illuminate\Http\Request;
+use App\Models\Service;
 
 class SearchController extends Controller
 {
@@ -70,6 +71,18 @@ class SearchController extends Controller
             "response" => [
                 "data" => [
                     "filteredApartments" => $filteredApartments,
+                ],
+            ]
+        ]);
+    }
+    public function searchServices() {
+        $services = Service::all();
+
+        return response()->json([
+            "success" => true,
+            "response" => [
+                "data" => [
+                    "services" => $services,
                 ],
             ]
         ]);

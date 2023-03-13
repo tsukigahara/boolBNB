@@ -1,6 +1,7 @@
 <script>
 
 import { Head, Link } from '@inertiajs/vue3';
+import { onMounted } from 'vue';
 import { store } from '../store';
 
 
@@ -22,13 +23,26 @@ export default {
                     store.fApartments = res.data.response.data.filteredApartments;
                     console.log(store.fApartments)
                     console.log(fullSearchAPI)
+                    console.log(store.searchServices)
+                    console.log(store.searchBeds)
+                    console.log(store.searchRooms)
                 });
             store.filterApplied = true;
         },
+    },
+    mounted() {
+        axios.get(store.servicesAPI)
+            .then(res => {
+                store.allServices = res.data.response.data.services
+
+            })
     }
+    
 }
 </script>
+<!-- Servizi DEF se 0 = any | numero di stanze se 0 = any | numero di letti se 0 = any
 
+-->
 <template>
     <nav class="p-3">
         <div class="d-flex justify-content-between">
@@ -45,6 +59,14 @@ export default {
                     <option value="300">300km</option>
                     <option value="10000">10000km</option>
                 </select>
+                <div v-if="store.searchServices !== []">
+                    <div v-for="service in store.allServices" :key="service.id">
+                        <input type="checkbox" :id="'service-' + service.id" :value="service.id" v-model="store.searchServices">
+                        <label :for="'service-' + service.id">{{ service.name }}</label>
+                    </div>
+                </div>
+                <input class="form-control me-2" type="number" placeholder="Rooms" aria-label="Rooms" v-model="store.searchRooms">
+                <input class="form-control me-2" type="number" placeholder="Beds" aria-label="Beds" v-model="store.searchBeds">
                 <button class="btn btn-outline-success" type="submit" @click.prevent="searchApartments(store.searchQuery, store.searchRadius)">Search</button>
             </div>
 
