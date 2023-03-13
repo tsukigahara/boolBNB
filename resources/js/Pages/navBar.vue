@@ -5,6 +5,7 @@ import { onMounted } from 'vue';
 import { store } from '../store';
 
 
+
 export default {
     name: "navBar",
     props: {
@@ -20,14 +21,37 @@ export default {
             const fullSearchAPI = `${store.searchAPI}/${element}/${range}`;
             axios.get(fullSearchAPI)
                 .then(res => {
-                    store.fApartments = res.data.response.data.filteredApartments;
-                    console.log(store.fApartments)
-                    console.log(fullSearchAPI)
-                    console.log(store.searchServices)
-                    console.log(store.searchBeds)
-                    console.log(store.searchRooms)
+                    store.fApartments = res.data.response.data.filteredApartments.map(obj => ({
+                        ...obj, 
+                        passesFilter: true,
+                        serviceRelevancy: 0
+                    }));
                 });
+
             store.filterApplied = true;
+            store.fApartments.forEach(element => {
+
+                if ( ( element.rooms < parseInt(store.searchRooms) ) || ( element.beds < parseInt(store.searchBeds) ) ) {
+
+                    element.passesFilter = false;
+                } 
+
+                else {
+                    
+                    element.services.forEach(service => {
+                        if ( store.searchServices.includes(service.id)) {
+                            element.serviceRelevancy++;
+                        }
+                    });
+                }
+
+                if ( element.serviceRelevancy < 1 ){
+                    element.passesFilter = false;
+                }
+            });
+            console.log(store.fApartments)
+            console.log(store.searchServices)
+
         },
     },
     mounted() {

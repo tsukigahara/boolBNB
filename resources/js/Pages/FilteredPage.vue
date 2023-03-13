@@ -18,9 +18,9 @@ defineProps({
 
         <navBar />
         <div class="d-flex flex-wrap overflow-y-auto ms_padding">
-           
 
-        <template v-for="apartment in (store.filterApplied ? store.fApartments : apartments)" >
+
+        <template v-for="apartment in store.fApartments">
             <a href="" class="card_appa pt-2" :class="sponsorshipArray.includes(apartment.id) ? 'order-1' : 'order-2'">
                 <Link :href="route('show', apartment.id)">
                 <div class="pt-3 prova">
@@ -32,9 +32,9 @@ defineProps({
                 </div>
                 </Link>
             </a>
-        </template>
     
-            
+        </template>
+
         </div>
     </div>
 </template>

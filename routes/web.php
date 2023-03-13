@@ -32,7 +32,8 @@ Route::get('show{id}', [ApartmentController::class, 'show'])->name('show');
 Route::get('message/create/{id}', [MainController::class, 'messageCreate'])->name('message.create');
 Route::post('message/create/{id}', [MainController::class, 'messageStore'])->name('message.store');
 
-
+//pagina filtro
+Route::get('/filtered', [SearchController::class, 'filteredPage'])->name('filteredPage');
 
 //PRIVATE ROUTES
 Route::middleware('auth')->group(function () {
@@ -81,8 +82,7 @@ Route::middleware('auth')->group(function () {
     //     }]
     // )->name('dashboard');
 
-    Route::get('/dashboard',[DashboardController::class , 'dashboard'])->name('dashboard');
-    
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 });
 
 Route::get('/api/geocode/{query}', [SearchController::class, 'geocode'])->name('geocode');
