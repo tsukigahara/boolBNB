@@ -16,7 +16,7 @@ export default {
         }
     },
     methods: {
-        searchApartments(element, range){
+        searchApartments(element, range) {
             const fullSearchAPI = `${store.searchAPI}/${element}/${range}`;
             axios.get(fullSearchAPI)
                 .then(res => {
@@ -51,8 +51,10 @@ export default {
             </a>
 
             <div class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" v-model="store.searchQuery">
-                <select name="radius" id="radius-select" v-model="store.searchRadius">
+                <input class="form-control" type="search" placeholder="Search" aria-label="Search"
+                    v-model="store.searchQuery">
+                <select class="form-control mx-2" name="radius" id="radius-select" v-model="store.searchRadius">
+                    <option value="" disabled selected>Seleziona raggio</option>
                     <option value="20">20km</option>
                     <option value="50">50km</option>
                     <option value="100">100km</option>
@@ -78,17 +80,17 @@ export default {
                     <div v-if="$page.props.auth.user">
                         <li>
                             <a class="dropdown-item" :href="route('dashboard')">
-                            Dashboard</a>
+                                Dashboard</a>
                         </li>
                     </div>
                     <template v-else>
                         <li>
                             <a class="dropdown-item" :href="route('register')">
-                            Register</a>
+                                Register</a>
                         </li>
                         <li>
                             <a class="dropdown-item" :href="route('login')">
-                            Login</a>
+                                Login</a>
                         </li>
                     </template>
                 </ul>
