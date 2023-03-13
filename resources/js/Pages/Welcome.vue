@@ -1,6 +1,7 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
-import navBar from './navBar.vue'
+import navBar from './navBar.vue';
+import { store } from '../store';
 
 defineProps({
     apartments: Array,
@@ -17,7 +18,7 @@ defineProps({
 
         <navBar />
         <div class="d-flex flex-wrap overflow-y-auto ms_padding">
-            <template v-for="apartment in apartments">
+            <template v-for="apartment in (store.filterApplied ? store.fApartments : apartments)">
                 <a href="" class="card_appa pt-2" :class="sponsorshipArray.includes(apartment.id) ? 'order-1' : 'order-2'">
                     <Link :href="route('show', apartment.id)">
                     <div class="pt-3 prova">

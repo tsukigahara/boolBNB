@@ -56,7 +56,7 @@ class SearchController extends Controller
 
             $distance = $this -> haversine($filterLat, $filterLong, $apartmentLat, $apartmentLong);
             
-            if ($distance <= 10000) {
+            if ($distance <= 20) {
                 array_push($filteredApartments, $apartment);
             }
                 
