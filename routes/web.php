@@ -4,6 +4,7 @@ use App\Http\Controllers\ApartmentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SearchController;
 use App\Models\Apartment;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -82,4 +83,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard',[DashboardController::class , 'dashboard'])->name('dashboard');
     
 });
+
+Route::get('/api/geocode/{query}', [SearchController::class, 'geocode'])->name('geocode');
+Route::get('/api/apartments/{criteria}', [SearchController::class, 'filterApartments'])->name('filterApartments');
 require __DIR__ . '/auth.php';
