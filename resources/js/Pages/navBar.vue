@@ -20,7 +20,11 @@ export default {
             const fullSearchAPI = `${store.searchAPI}/${element}/${range}`;
             axios.get(fullSearchAPI)
                 .then(res => {
-                    store.fApartments = res.data.response.data.filteredApartments;
+                    store.fApartments = res.data.response.data.filteredApartments.map(obj => ({
+                        ...obj,
+                        passesFilter: true,
+                        serviceRelevancy: 0
+                    }));
                     console.log(store.fApartments)
                     console.log(fullSearchAPI)
                     console.log(store.searchServices)
@@ -28,6 +32,24 @@ export default {
                     console.log(store.searchRooms)
                 });
             store.filterApplied = true;
+            store.fApartments.forEach(element => {
+                if ((element.rooms < parseInt(store.searchRooms)) || (element.beds < parseInt(store.searchBeds))) {
+                    element.passesFilter = false;
+                }
+                else {
+
+                    element.services.forEach(service => {
+                        if (store.searchServices.includes(service.id)) {
+                            element.serviceRelevancy++;
+                        }
+                    });
+                }
+                if (element.serviceRelevancy < 1) {
+                    element.passesFilter = false;
+                }
+            });
+            console.log(store.fApartments)
+            console.log(store.searchServices)
         },
     },
     mounted() {
