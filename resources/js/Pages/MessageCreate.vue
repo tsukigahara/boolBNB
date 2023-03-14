@@ -25,29 +25,29 @@ const submit = () => {
     <h2>Proprietario {{ apartment.user.name }}</h2>
 
     <form class="d-flex" @submit.prevent="submit">
-                    <div class="col">
-                        <div class="mb-3">
-                            <label for="" class="form-label">Name</label>
-                            <input type="text" name="name" id="" class="form-control" placeholder=""
-                                aria-describedby="helpId" v-model="form.name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">email</label>
-                            <input type="email" name="email" id="" class="form-control" placeholder=""
-                                aria-describedby="helpId" v-model="form.email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">message</label>
-                            <input type="textarea" name="message" id="" class="form-control" placeholder=""
-                                aria-describedby="helpId" v-model="form.message" required>
-                        </div>
-                        <div class="mb-3">
-                                <button type="submit" class="btn btn-primary mr-3">Publish</button>
-                                <button type="reset" class="btn btn-warning mr-3">Reset</button>
-                        </div>
-                    </div>
-                    
-                </form>
+        <div class="col">
+            <div class="mb-3">
+                <label for="" class="form-label">Name</label>
+                <input type="text" name="name" id="" class="form-control" placeholder="" aria-describedby="helpId"
+                    v-model="form.name" required>
+            </div>
+            <div class="mb-3">
+                <label for="" class="form-label">email</label>
+                <input type="email" name="email" id="" class="form-control" placeholder="" aria-describedby="helpId"
+                    v-model="form.email" required>
+            </div>
+            <div class="mb-3">
+                <label for="" class="form-label">message</label>
+                <input type="textarea" name="message" id="" class="form-control" placeholder="" aria-describedby="helpId"
+                    v-model="form.message" required>
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary mr-3">Publish</button>
+                <button type="reset" class="btn btn-warning mr-3">Reset</button>
+            </div>
+        </div>
+
+    </form>
 </template>
 
     

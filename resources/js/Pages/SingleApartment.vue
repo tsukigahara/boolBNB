@@ -1,14 +1,28 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import navBar from './navBar.vue'
 
-defineProps({
+import { propsToAttrMap } from '@vue/shared';
 
+const props = defineProps({
     apartment: Object,
     services: Array,
     user: Array,
-
 });
+
+const form = useForm({
+    name: '',
+    email: '',
+    message: '',
+    sent: false,
+});
+
+const submit = () => {
+    form.post(route('message.store', props.apartment.id), {
+        onFinish: () => form.reset({ name: '', email: '', message: '' }),
+    });
+};
+
 </script>
  
 <template>
@@ -82,17 +96,34 @@ defineProps({
                         € {{ apartment.price }} notte
                     </div>
 
-                    <button class="btn btn-primary">
-                        <Link :href="route('message.create', apartment.id)">
-                        invia un messsaggio
-                        </Link>
-                    </button>
+                    <form class="d-flex" @submit="submit">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Nome</label>
+                                <input type="text" name="name" class="form-control" placeholder="" aria-describedby="helpId"
+                                    v-model="form.name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Email</label>
+                                <input type="email" name="email" class="form-control" placeholder=""
+                                    aria-describedby="helpId" v-model="form.email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Scrivi il tuo messaggio</label>
+                                <input type="textarea" name="message" class="form-control" placeholder=""
+                                    aria-describedby="helpId" v-model="form.message" required>
+                            </div>
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-primary me-3">Invia
+                                    messaggio</button>
+                                <button type="reset" class="btn btn-warning ">Cancella messaggio</button>
+                            </div>
+                        </div>
+                    </form>
 
+                    <hr>
 
-
-
-
-                    <div class="pt-3 text-center">
+                    <div class=" text-center">
                         non riceverai alcun addebito in questa fase
                     </div>
                     <hr>
