@@ -76,7 +76,7 @@ export default {
                 console.error("La verifica del metodo di pagamento ha fallito");
             }
         },
-        submit() {
+        showPAy() {
 
             this.showPayment = true
 
@@ -106,7 +106,8 @@ export default {
                         <h3>L'abbonamento {{ sponsorship.name }} per questo appartamento &egrave; gi&aacute; attivo</h3>
                     </div>
                     <form action="/" @submit.prevent="submit" v-else >
-      
+                        <div v-if="paymentShow">
+
                             <!-- SPONSORSHIP LIST -->
                             <table class="table">
                                 <thead>
@@ -134,21 +135,23 @@ export default {
                                     
                                 </tbody>
                             </table>
+                        </div>
 
-                            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8 shadow bg-body rounded" v-show="showPayment" v-if="paymentShow">
-                                <div id="dropin-container">
-                                </div>
-                                <button class="btn btn-primary" @click="requestPaymentMethod">Paga</button>
-                                <!-- <button @click="verifyPaymentMethod">Verifica metodo di pagamento</button> -->
+                            <div v-else>
+
+                                <h1>Il pagamento é andato a buon fine, concludi l'operazione </h1>
+                                <button type="submit" class="btn btn-primary" @click="storeSponsorship()">Concludi</button>
                             </div>
-                            
-                            <button class="btn btn-primary">Add</button>
-                            <!-- <button @click="store" class="btn btn-primary mt-2">SEND</button> -->
-                            <!-- <a :href="route('dashbord.apartment.sponsorship.store', output, item.id)" class="btn btn-primary mt-3">Send</a> -->
-
-                            <h1>Il pagamento é andato a buon fine, concludi l'operazione </h1>
-                            <button type="submit" class="btn btn-primary" @click="storeSponsorship">Concludi</button>
                     </form>
+                    <button class="btn btn-primary"  v-if="paymentShow" @click="showPAy">Add</button>
+                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8 shadow bg-body rounded" v-show="showPayment" v-if="paymentShow">
+                        <div id="dropin-container">
+                        </div>
+                        <button class="btn btn-primary" @click="requestPaymentMethod">Paga</button>
+                        <!-- <button @click="verifyPaymentMethod">Verifica metodo di pagamento</button> -->
+                    </div>
+                        
+                        
                 </div>
             </div>
 
