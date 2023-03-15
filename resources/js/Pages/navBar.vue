@@ -136,7 +136,7 @@ export default {
                     </div>
                 </div>
 
-                <select class="form-control" name="radius" id="radius-select" v-model="store.searchRadius"
+                <select class="form-control servizi mx-2" name="radius" id="radius-select" v-model="store.searchRadius"
                     v-if="store.isOnFiltered">
                     <option value="" disabled selected>raggio</option>
                     <option value="20">20km</option>
@@ -162,12 +162,12 @@ export default {
                         </ul>
                     </div>
                 </div>
-                <input class="form-control mx-2" type="number" placeholder="Camere" aria-label="Rooms"
+                <input class="form-control servizi mx-2" type="number" placeholder="Camere" aria-label="Rooms"
                     v-model="store.searchRooms" v-if="store.isOnFiltered">
-                <input class="form-control me-2" type="number" placeholder="Letti" aria-label="Beds"
+                <input class="form-control  servizi" type="number" placeholder="Letti" aria-label="Beds"
                     v-model="store.searchBeds" v-if="store.isOnFiltered">
                 <div>
-                    <button class="btn btn-outline-success mx-4" type="submit"
+                    <button class="btn btn-outline-success " type="submit"
                         @click.prevent="searchApartments(store.searchQuery, store.searchRadius)">Search</button>
                 </div>
 
@@ -238,6 +238,10 @@ export default {
 .pulsante:hover {
     background-color: rgb(217, 217, 217);
 
+}
+
+.servizi {
+    width: 50%;
 }
 </style>
 
