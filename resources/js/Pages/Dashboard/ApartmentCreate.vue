@@ -6,16 +6,16 @@ defineProps({
     errors: Object,
 });
 const form = useForm({
-    title: '',
-    rooms: 0,
-    beds: 0,
-    bathrooms: 0,
-    square_meters: 0,
-    address: '',
-    main_image: 'default.jpeg',
+    title: null,
+    rooms: null,
+    beds: null,
+    bathrooms: null,
+    square_meters: null,
+    address: null,
+    main_image: null,
     visible: true,
-    price: 0,
-    description: '',
+    price: null,
+    description: null,
     services_id: [],
 });
 const submit = () => {
@@ -79,8 +79,10 @@ const submit = () => {
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Main image</label>
-                            <input type="text" name="main_image" id="" class="form-control" placeholder=""
-                                aria-describedby="helpId" v-model="form.main_image">
+                            <input type="file" @input="form.main_image = $event.target.files[0]" class="form-control" />
+                            <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+                                {{ form.progress.percentage }}%
+                            </progress>
                             <div v-if="form.errors.main_image" class="text-sm text-red-600">{{ form.errors.main_image
                             }}</div>
                         </div>
