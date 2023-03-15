@@ -16,6 +16,7 @@ export default {
         }
     },
     methods: {
+
         searchApartments(element, range) {      
             store.advancedfApartments = [];
             const fullSearchAPI = `${store.searchAPI}/${element}/${range}`;
@@ -65,9 +66,38 @@ export default {
                 store.isOnFiltered = false
                 store.searchRadius = 20
             }
+        },
+        checkInputLength() {
+            if (this.shouldMakeApiCall) {
+                this.searchAutocomplete(store.searchQuery)
+            }
+        },
+        searchAutocomplete(element) {
+             const fullAutocompleteAPI = `${store.autocompleteAPI}/${element}`;
+             axios.get(fullAutocompleteAPI)
+                .then(res => {
+                    store.autocompleteArray = res.data.response.data
+                    console.log(store.autocompleteArray)
+                })
+                .catch(err => {
+                    console.log(err)
+                });
+        },
+        pickSuggestion(suggestion) {
+            store.searchQuery = suggestion;
+
+        },
+        test(elem) {
+            console.log(elem)
+        }
+
+
+    },
+    computed: {
+        shouldMakeApiCall() {
+            return store.searchQuery.length >= 5
         }
     },
-
     mounted() {
         axios.get(store.servicesAPI)
             .then(res => {
@@ -84,6 +114,7 @@ export default {
 
 -->
 <template>
+    <!-- <button @click="test(this.store.autocompleteArrayTemplate)">TEST</button> -->
     <nav class="p-3">
         <div class="d-flex justify-content-between">
             <a :href="route('welcome')">
@@ -92,7 +123,18 @@ export default {
 
             <div class="d-flex" role="search">
                 <input class="form-control" type="search" placeholder="Search" aria-label="Search"
-                    v-model="store.searchQuery">
+                    v-model="store.searchQuery"
+                    @input="checkInputLength()"
+                >
+                <div
+                    v-if="shouldMakeApiCall"
+                >
+                    <ul>
+                        <li v-for="elem in store.autocompleteArray.suggestions.results" @click="pickSuggestion(`${elem.address.freeformAddress}+${elem.address.countrySecondarySubdivision}+${elem.address.countrySubdivision}+${elem.address.country}`) ">
+                            {{ elem.address.freeformAddress }} | {{ elem.address.countrySecondarySubdivision }} | {{ elem.address.countrySubdivision }} | {{ elem.address.country }}
+                        </li>
+                    </ul>
+                </div>
                 <select class="form-control mx-2" name="radius" id="radius-select" v-model="store.searchRadius"
                     v-if="store.isOnFiltered"
                 >
