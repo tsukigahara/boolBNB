@@ -95,7 +95,7 @@ export default {
     },
     computed: {
         shouldMakeApiCall() {
-            return store.searchQuery.length >= 4
+            return store.searchQuery.length >= 5
         }
     },
     mounted() {
