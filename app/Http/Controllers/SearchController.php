@@ -134,4 +134,33 @@ class SearchController extends Controller
             'sponsorshipArray' => $sponsorshipArray
         ]);
     }
+    public function autocomplete($query)
+    {
+
+        $key = 'K5laxV5pEcYwFAsUYafGyEWiWJGmLw9f';
+        $apiURL = 'https://api.tomtom.com/search/2/search/' . $query . '.json?key=' . $key;
+
+
+        $context = stream_context_create([
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+            ]
+        ]);
+
+        $response = file_get_contents($apiURL, false, $context);
+
+        if ($response) {
+            $responseJson = json_decode($response, true);
+        }
+
+        return response()->json([
+            "success" => true,
+            "response" => [
+                "data" => [
+                    "suggestions" => $responseJson,
+                ],
+            ]
+        ]);
+    }
 }
