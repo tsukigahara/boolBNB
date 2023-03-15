@@ -154,8 +154,19 @@ class MainController extends Controller
             
         ]); 
     }
-    public function payment (){
-        return Inertia::render('Dashboard/Payment');
+    public function payment (Request $request){
+        $data = $request ->validate([
+            'id' => 'required',
+            'sponsorship' => 'required',
+
+        ]);
+        $sponsorship = Sponsorship::find($data['sponsorship']);
+
+        return Inertia::render('Dashboard/Payment',[
+            'id' => $data['id'],
+            'sponsorship'=> $data['sponsorship'],
+            'price' => $sponsorship
+        ]);
     }
 
     

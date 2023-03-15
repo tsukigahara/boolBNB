@@ -1,33 +1,164 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
+// import route from 'vendor/tightenco/ziggy/src/js';
+
 const props = defineProps({
     sponsorship: Array,
     id: String,
     date: Object,
     sponsorshipBool: Boolean
 });
+
 const form = useForm({
     id: props.id,
     sponsorship: '',
 });
+
 const submit = () => {
     form.post(route('dashbord.apartment.sponsorship.store'), {
         onFinish: () => form.reset(),
     });
-
 };
+
 </script>
 
 <script>
+
+
+import { client, hostedFields, paypalCheckout } from 'braintree-web';
+// import paypal from 'paypal-checkout';
+
+const today = new Date();
+const currentMonth = today.getMonth() + 1 < 10 ? "0" + (today.getMonth() + 1) : today.getMonth() + 1;
+const currentYear = today.getFullYear();
+
+const AUTH_KEY = "sandbox_x6d92nj4_dxm5bvfqp4vgjgxf";
+
 export default {
+
     data() {
         return {
-
+            amount: '',
+            nonce: "",
+            hostedFieldsInstance: false,
+            error: ""
         }
-    }, methods: {
+    },
+    computed: {
+        preventPaying() {
+            return !this.hostedFieldsInstance || isNaN(this.amount) || parseFloat(this.amount) <= 0 || !this.amount;
+        }
+    },
+    methods: {
+        pay() {
+            if (!this.preventPaying) {
+                this.error = "";
+                this.nonce = "";
 
-    }, created() {
+                let amount = parseFloat(this.amount);
+                this.hostedFieldsInstance.tokenize()
+                    .then(payload => {
+                        console.log(payload);
+                        this.nonce = payload.nonce;
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        if (typeof err.message !== 'undefined') {
+                            this.error = err.message;
+                        }
+                        else {
+                            this.error = "An error occurred while processing the payment.";
+                        }
+                    })
+            }
+        },
+        priceGet(value) {
+            this.amount = value
+        },
+        initBraintree() {
+            client.create({
+                authorization: AUTH_KEY
+            })
+                .then(clientInstance => {
+                    let options = {
+                        client: clientInstance,
+                        styles: {
+                            input: {
+                                'font-size': '14px',
+                                'font-family': 'Open Sans'
+                            }
+                        },
+                        fields: {
+                            number: {
+                                selector: '#creditCardNumber',
+                                placeholder: 'Enter Credit Card'
+                            },
+                            cvv: {
+                                selector: '#cvv',
+                                placeholder: 'Enter CVV'
+                            },
+                            expirationDate: {
+                                selector: '#expireDate',
+                                placeholder: currentMonth + ' / ' + currentYear
+                            }
+                        }
+                    }
+
+
+                    let promises = [];
+                    promises.push(hostedFields.create(options));
+                    // promises.push(paypalCheckout.create({ client: clientInstance }));
+
+                    return Promise.all(promises);
+                })
+                .then(instances => {
+                    this.hostedFieldsInstance = instances[0];
+                    //     const paypalInstance = instances[1];
+
+                    //     return paypal.Button.render({
+                    //         env: 'sandbox',
+                    //         style: {
+                    //             label: 'paypal',
+                    //             size: 'responsive',
+                    //             shape: 'rect'
+                    //         },
+                    //         payment: () => {
+                    //             return paypalInstance.createPayment({
+                    //                 flow: 'checkout',
+                    //                 intent: 'sale',
+                    //                 amount: this.amount ? this.amount : 10,
+                    //                 displayName: 'Braintree Testing',
+                    //                 currency: 'USD'
+                    //             })
+                    //         },
+                    //         onAuthorize: (data, options) => {
+                    //             return paypalInstance.tokenizePayment(options).then(payload => {
+                    //                 console.log(payload);
+                    //                 this.error = "";
+                    //                 this.nonce = payload.nonce;
+                    //             })
+                    //         },
+                    //         onCancel: (data) => {
+                    //             console.log(data);
+                    //             console.log("Payment Cancelled");
+                    //         },
+                    //         onError: (err) => {
+                    //             console.error(err);
+                    //             this.error = "An error occurred while processing the paypal payment.";
+                    //         }
+                    //     }, '#paypalButton')
+
+                })
+                .catch(err => {
+                    console.error(err);
+                    this.error = "An error occurred while creating the payment form.";
+                })
+        }
+    },
+    mounted() {
+        this.initBraintree();
+
     }
 }
 </script>
@@ -44,9 +175,20 @@ export default {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8 shadow bg-body rounded">
                 <a class="btn btn-dark mb-3 mr-3" role="button" href="javascript: history.back()">Go back</a>
                 <div v-if="!sponsorshipBool">
-                    <h3>L'abbonamento {{ sponsorship.name }} per questo appartamento &egrave; gi&aacute; attivo</h3>
+                    <h3>L'abbonamento per questo appartamento &egrave; gi&aacute; attivo</h3>
                 </div>
-                <form action="/" @submit.prevent="submit" v-else>
+                <div class="col-6 offset-3">
+            <div class="card bg-light" v-if="sponsorshipBool">
+                <div class="card-header">Informazioni di Pagamento</div>
+                <div class="card-body">
+                    <div class="alert alert-danger" v-if="error">
+                        {{ error }}
+                    </div>
+                    <div class="alert alert-success" v-if="nonce">
+                        Il pagamento &egrave; andato a buon fine!
+                    </div>
+                <form action="/"  v-else >
+
                     <!-- SPONSORSHIP LIST -->
                     <table class="table">
                         <thead>
@@ -60,7 +202,7 @@ export default {
                         <tbody>
                             <tr v-for="(item, index) in sponsorship" :key="index">
                                 <th scope="row">
-                                    <input type="radio" name="sposnorship" :value="item.id" v-model="form.sponsorship">
+                                    <input type="radio" name="sposnorship" :value="item.id" v-model="form.sponsorship" @click="priceGet(item.price)">
                                 </th>
 
                                 <td>
@@ -74,12 +216,42 @@ export default {
 
                         </tbody>
                     </table>
+ 
 
-                    <button type="submit" class="btn btn-primary">Add</button>
-                    <!-- <button @click="store" class="btn btn-primary mt-2">SEND</button> -->
-                    <!-- <a :href="route('dashbord.apartment.sponsorship.store', output, item.id)" class="btn btn-primary mt-3">Send</a> -->
-                </form>
+                        <div class="form-group">
+
+                           
+                            <div >Prezzo: {{ amount }} &euro;</div>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <label>Numero Carta di credito</label>
+                            <div id="creditCardNumber" class="form-control"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label>Data di scadenza</label>
+                                    <div id="expireDate" class="form-control"></div>
+                                </div>
+                                <div class="col-6">
+                                    <label>CVV</label>
+                                    <div id="cvv" class="form-control"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-primary btn-block mt-3" @click.prevent="pay" :disabled="preventPaying">Paga con carta di credito</button>
+                        </div>
+        
+                    </form>
+                    <button type="submit" class="btn btn-primary" @click="submit" v-if="nonce">Attiva abbonamento</button>
+                </div>
             </div>
         </div>
+    </div>
+               
+            </div>
+
     </AuthenticatedLayout>
 </template>

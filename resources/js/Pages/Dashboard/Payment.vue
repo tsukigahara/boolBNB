@@ -1,54 +1,21 @@
-<template>
-    <div class="container">
-        <div class="col-6 offset-3">
-            <div class="card bg-light">
-                <div class="card-header">Payment Information</div>
-                <div class="card-body">
-                    <div class="alert alert-danger" v-if="error">
-                        {{ error }}
-                    </div>
-                    <div class="alert alert-success" v-if="nonce">
-                        Nonce created successfully!
-                    </div>
-                    <form>
-                        <div class="form-group">
-                            <label for="amount">Amount</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend"><span class="input-group-text">$</span></div>
-                                <input type="number" v-model="amount" id="amount" class="form-control" placeholder="Enter Amount">
-                            </div>
-                        </div>
-                        <hr />
-                        <div class="form-group">
-                            <label>Credit Card Number</label>
-                            <div id="creditCardNumber" class="form-control"></div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-6">
-                                    <label>Expire Date</label>
-                                    <div id="expireDate" class="form-control"></div>
-                                </div>
-                                <div class="col-6">
-                                    <label>CVV</label>
-                                    <div id="cvv" class="form-control"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <button class="btn btn-primary btn-block" @click.prevent="pay" :disabled="preventPaying">Pay with Credit Card</button>
-                        </div>
-                        <hr />
-                        <!-- <div class="form-group text-center">
-                            <div id="paypalButton"></div>
-                        </div> -->
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</template>
+<script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Head, useForm } from '@inertiajs/vue3';
+const form = useForm({
+    id: props.id,
+    sponsorship: '',
+});
+const props = defineProps({
+    sponsorship: Array,
+    id: String,
+});
+const submit = () => {
+    form.post(route('dashbord.apartment.sponsorship.store'), {
+        onFinish: () => form.reset(),
+    });
+};
 
+</script>
 <script>
 
 import { client, hostedFields, paypalCheckout } from 'braintree-web';
@@ -61,9 +28,10 @@ const currentYear = today.getFullYear();
 const AUTH_KEY = "sandbox_x6d92nj4_dxm5bvfqp4vgjgxf";
 
 export default {
+
     data() {
         return {
-            amount: 100,
+            amount: 20,
             nonce: "",
             hostedFieldsInstance: false,
             error: ""
@@ -179,12 +147,71 @@ export default {
     },
     mounted() {
         this.initBraintree();
+
     }
 }
 </script>
+<template>
+    <Head  />
+
+    <AuthenticatedLayout>
+        <template #header>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Credit card payment</h2>
+        </template>
+    <div class="container mt-5">
+        <div class="col-6 offset-3">
+            <div class="card bg-light">
+                <div class="card-header">Payment Information</div>
+                <div class="card-body">
+                    <div class="alert alert-danger" v-if="error">
+                        {{ error }}
+                    </div>
+                    <div class="alert alert-success" v-if="nonce">
+                        Nonce created successfully!
+                    </div>
+                    <form>
+                        <div class="form-group">
+                            <label for="amount">Amount</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">&euro;</span></div>
+                                <input readonly type="number" v-model="amount" id="amount" class="form-control " placeholder="Enter Amount">
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <label>Credit Card Number</label>
+                            <div id="creditCardNumber" class="form-control"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label>Expire Date</label>
+                                    <div id="expireDate" class="form-control"></div>
+                                </div>
+                                <div class="col-6">
+                                    <label>CVV</label>
+                                    <div id="cvv" class="form-control"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-primary btn-block mt-3" @click.prevent="pay" :disabled="preventPaying">Pay with Credit Card</button>
+                        </div>
+                        <!-- <hr /> -->
+                        <!-- <div class="form-group text-center">
+                            <div id="paypalButton"></div>
+                        </div> -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </AuthenticatedLayout>
+</template>
+
 
 <style>
-    body {
-        padding: 20px;
+    .form-control, .input-group-text {
+        height: 3rem;
     }
 </style>

@@ -89,6 +89,5 @@ Route::get('/api/geocode/{query}', [SearchController::class, 'geocode'])->name('
 Route::get('/api/apartments/{criteria}/{radius}', [SearchController::class, 'filterApartments'])->name('filterApartments');
 Route::get('/api/services', [SearchController::class, 'searchServices']);
 
-Route::get('/payment', [MainController::class, 'payment'])-> name('payment');
 
 require __DIR__ . '/auth.php';
