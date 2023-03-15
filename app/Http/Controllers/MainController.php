@@ -154,6 +154,9 @@ class MainController extends Controller
             
         ]); 
     }
+    public function payment (){
+        return Inertia::render('Dashboard/Payment');
+    }
 
     
 }
