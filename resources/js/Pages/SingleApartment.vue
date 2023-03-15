@@ -18,9 +18,10 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('message.store', props.apartment.id), {
-        onFinish: () => form.reset({ name: '', email: '', message: '' }),
-    });
+    form.post(route('message.store', props.apartment.id));
+    form.name = '',
+        form.email = '',
+        form.message = '';
 };
 
 </script>
@@ -96,7 +97,7 @@ const submit = () => {
                         € {{ apartment.price }} notte
                     </div>
 
-                    <form class="d-flex" @submit="submit">
+                    <form class="d-flex" @submit.prevent="submit">
                         <div class="col">
                             <div class="mb-3">
                                 <label for="" class="form-label">Nome</label>
