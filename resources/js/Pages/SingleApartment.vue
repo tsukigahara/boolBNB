@@ -19,9 +19,11 @@ const form = useForm({
 
 const submit = () => {
     form.post(route('message.store', props.apartment.id));
-    form.name = '',
+    form.sent = true,
+        form.name = '',
         form.email = '',
         form.message = '';
+
 };
 
 </script>
@@ -97,7 +99,7 @@ const submit = () => {
                         € {{ apartment.price }} notte
                     </div>
 
-                    <form class="d-flex" @submit.prevent="submit">
+                    <form class="d-flex" @submit.prevent="submit" v-if="!form.sent">
                         <div class="col">
                             <div class="mb-3">
                                 <label for="" class="form-label">Nome</label>
@@ -121,7 +123,7 @@ const submit = () => {
                             </div>
                         </div>
                     </form>
-
+                    <div class="text-center message" v-if="form.sent">Messaggio inviato correttamente</div>
                     <hr>
 
                     <div class=" text-center">
@@ -178,6 +180,10 @@ a {
     &:hover {
         color: white;
     }
+}
+
+.message {
+    color: green;
 }
 </style>
     
