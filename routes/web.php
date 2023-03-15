@@ -88,4 +88,6 @@ Route::middleware('auth')->group(function () {
 Route::get('/api/geocode/{query}', [SearchController::class, 'geocode'])->name('geocode');
 Route::get('/api/apartments/{criteria}/{radius}', [SearchController::class, 'filterApartments'])->name('filterApartments');
 Route::get('/api/services', [SearchController::class, 'searchServices']);
+
+
 require __DIR__ . '/auth.php';
