@@ -16,26 +16,66 @@ export default {
         }
     },
     methods: {
-        searchApartments(element, range) {
+        searchApartments(element, range) {      
+            store.advancedfApartments = [];
             const fullSearchAPI = `${store.searchAPI}/${element}/${range}`;
             axios.get(fullSearchAPI)
                 .then(res => {
-                    store.fApartments = res.data.response.data.filteredApartments;
+                    store.fApartments = res.data.response.data.filteredApartments.map(obj => ({
+                        ...obj,
+                        passesFilter: true,
+                        serviceRelevancy: 0
+                    }));
+                    store.filterApplied = true;
+                    store.fApartments.forEach(element => {
+                        if ((element.rooms < parseInt(store.searchRooms)) || (element.beds < parseInt(store.searchBeds))) {
+                            element.passesFilter = false;
+                        }
+                        else {
+
+                            if (store.searchServices.length < 1) {
+                                element.serviceRelevancy++;
+                            }
+                            else {
+                                element.services.forEach(service => {
+                                    if (store.searchServices.includes(service.id)) {
+                                        element.serviceRelevancy++;
+                                    }
+                                });
+                            }
+
+                        }
+                        if (element.serviceRelevancy < 1) {
+                            element.passesFilter = false;
+                        }
+                        if (element.passesFilter == true) {
+                            store.advancedfApartments.push(element)
+                        }
+
+                    });
                     console.log(store.fApartments)
-                    console.log(fullSearchAPI)
-                    console.log(store.searchServices)
-                    console.log(store.searchBeds)
-                    console.log(store.searchRooms)
                 });
-            store.filterApplied = true;
         },
+        checkFiltered() {
+            let pageURL = this.$page.url
+
+            if (pageURL == '/filtered') {
+                store.isOnFiltered = true
+            } else {
+                store.isOnFiltered = false
+                store.searchRadius = 20
+            }
+        }
     },
+
     mounted() {
         axios.get(store.servicesAPI)
             .then(res => {
                 store.allServices = res.data.response.data.services
 
             })
+        this.checkFiltered()
+
     }
 
 }
@@ -53,7 +93,9 @@ export default {
             <div class="d-flex" role="search">
                 <input class="form-control" type="search" placeholder="Search" aria-label="Search"
                     v-model="store.searchQuery">
-                <select class="form-control mx-2" name="radius" id="radius-select" v-model="store.searchRadius">
+                <select class="form-control mx-2" name="radius" id="radius-select" v-model="store.searchRadius"
+                    v-if="store.isOnFiltered"
+                >
                     <option value="" disabled selected>Seleziona raggio</option>
                     <option value="20">20km</option>
                     <option value="50">50km</option>
@@ -61,7 +103,7 @@ export default {
                     <option value="300">300km</option>
                     <option value="10000">10000km</option>
                 </select>
-                <div v-if="store.searchServices !== []">
+                <div v-if="store.searchServices !== [] && store.isOnFiltered">
                     <div class="dropdown">
                         <button class="form-control dropdown-toggle" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -79,11 +121,21 @@ export default {
                     </div>
                 </div>
                 <input class="form-control mx-2" type="number" placeholder="Camere" aria-label="Rooms"
-                    v-model="store.searchRooms">
+                    v-model="store.searchRooms"
+                    v-if="store.isOnFiltered">
                 <input class="form-control me-2" type="number" placeholder="Letti" aria-label="Beds"
-                    v-model="store.searchBeds">
+                    v-model="store.searchBeds"
+                    v-if="store.isOnFiltered">
                 <button class="btn btn-outline-success" type="submit"
                     @click.prevent="searchApartments(store.searchQuery, store.searchRadius)">Search</button>
+                <!-- <button @click.prevent="advancedSearchApartments(store.searchQuery, store.searchRadius)" class="btn btn-outline-success">AdS</button> -->
+
+                <a :href="route('filteredPage')" 
+                    v-if="!store.isOnFiltered"
+                >
+                    <button class="btn btn-outline-success">Advanced Search</button>
+                </a> 
+                
             </div>
 
             <div class="dropdown">

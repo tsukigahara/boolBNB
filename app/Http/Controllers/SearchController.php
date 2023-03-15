@@ -129,7 +129,7 @@ class SearchController extends Controller
             }
         }
 
-        return Inertia::render('Welcome', [
+        return Inertia::render('FilteredPage', [
             'apartments' => $apartments,
             'sponsorshipArray' => $sponsorshipArray
         ]);
