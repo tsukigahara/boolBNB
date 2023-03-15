@@ -136,7 +136,7 @@ export default {
                     </div>
                 </div>
 
-                <select class="form-control " name="radius" id="radius-select" v-model="store.searchRadius"
+                <select class="form-control" name="radius" id="radius-select" v-model="store.searchRadius"
                     v-if="store.isOnFiltered">
                     <option value="" disabled selected>raggio</option>
                     <option value="20">20km</option>
