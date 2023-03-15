@@ -32,11 +32,17 @@ const submit = () => {
     <div class="container">
         <navBar />
 
+
         <!-- tag corretto -->
         <!-- <img src="{{ apartment.main_image }}" alt="no.img"> -->
 
         <!-- tag di prova -->
         <img class="ms_img" src="./img/dl_a01597558.jpg" alt="">
+
+
+
+
+
 
         <div class="row">
             <div class="col-8">
@@ -95,9 +101,11 @@ const submit = () => {
             <!-- colonna messaggi -->
             <div class="col-4">
                 <div class="card mt-4 p-4">
-                    <div class="pb-3">
-                        € {{ apartment.price }} notte
-                    </div>
+                    <h3 class="pb-3">
+                        € {{ apartment.price }} a notte
+                    </h3>
+
+                    <hr>
 
                     <form class="d-flex" @submit.prevent="submit" v-if="!form.sent">
                         <div class="col">
@@ -116,17 +124,17 @@ const submit = () => {
                                 <input type="textarea" name="message" class="form-control" placeholder=""
                                     aria-describedby="helpId" v-model="form.message" required>
                             </div>
-                            <div class="mb-3">
+                            <div class="text-center">
                                 <button type="submit" class="btn btn-primary me-3">Invia
                                     messaggio</button>
                                 <button type="reset" class="btn btn-warning ">Cancella messaggio</button>
                             </div>
                         </div>
                     </form>
-                    <div class="text-center message" v-if="form.sent">Messaggio inviato correttamente</div>
-                    <hr>
 
-                    <div class=" text-center">
+                    <h3 class="text-center message" v-if="form.sent">Messaggio inviato correttamente</h3>
+
+                    <div class=" text-center pt-2">
                         non riceverai alcun addebito in questa fase
                     </div>
                     <hr>
@@ -151,7 +159,7 @@ const submit = () => {
 .ms_img {
     margin: 0 auto;
     margin-top: 20px;
-    width: 45%;
+    width: 50%;
 }
 
 h1 {
