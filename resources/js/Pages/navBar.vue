@@ -95,7 +95,7 @@ export default {
     },
     computed: {
         shouldMakeApiCall() {
-            return store.searchQuery.length >= 5
+            return store.searchQuery.length >= 4
         }
     },
     mounted() {
@@ -130,7 +130,7 @@ export default {
                     v-if="shouldMakeApiCall"
                 >
                     <ul>
-                        <li v-for="elem in store.autocompleteArray.suggestions.results" @click="pickSuggestion(`${elem.address.freeformAddress}+${elem.address.countrySecondarySubdivision}+${elem.address.countrySubdivision}+${elem.address.country}`) ">
+                        <li v-for="elem in store.autocompleteArray.suggestions?.results" @click="pickSuggestion(`${elem.address.freeformAddress}+${elem.address.countrySecondarySubdivision}+${elem.address.countrySubdivision}+${elem.address.country}`) ">
                             {{ elem.address.freeformAddress }} | {{ elem.address.countrySecondarySubdivision }} | {{ elem.address.countrySubdivision }} | {{ elem.address.country }}
                         </li>
                     </ul>
