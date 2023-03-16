@@ -128,7 +128,7 @@ export default {
                     <div v-if="shouldMakeApiCall" class="campiRicerca">
                         <ul>
                             <li class="pulsante" v-for="elem in store.autocompleteArray.suggestions.results"
-                                @click="pickSuggestion(`${elem.address.freeformAddress}+${elem.address.countrySecondarySubdivision}+${elem.address.countrySubdivision}+${elem.address.country}`)">
+                                @click="pickSuggestion(`${elem.address.freeformAddress} ${elem.address.countrySecondarySubdivision} ${elem.address.countrySubdivision} ${elem.address.country}`)">
                                 {{ elem.address.freeformAddress }} | {{ elem.address.countrySecondarySubdivision }} | {{
                                     elem.address.countrySubdivision }} | {{ elem.address.country }}
                             </li>
