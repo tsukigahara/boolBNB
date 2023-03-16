@@ -16,7 +16,6 @@ export default {
         }
     },
     methods: {
-
         searchApartments(element, range) {
             store.advancedfApartments = [];
             const fullSearchAPI = `${store.searchAPI}/${element}/${range}`;
@@ -123,7 +122,7 @@ export default {
 
             <div class="d-flex" role="search">
                 <div class="position-relative">
-                    <input class="form-control search" type="search" placeholder="Search" aria-label="Search"
+                    <input class="form-control search mx-2" type="search" placeholder="Search" aria-label="Search"
                         v-model="store.searchQuery" @input="checkInputLength()">
                     <div v-if="shouldMakeApiCall" class="campiRicerca">
                         <ul>
@@ -146,7 +145,7 @@ export default {
                     <option value="10000">10000km</option>
                 </select>
                 <div v-if="store.searchServices !== [] && store.isOnFiltered">
-                    <div class="dropdown">
+                    <div class="dropdown mx-2">
                         <button class="form-control dropdown-toggle" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             Servizi
@@ -164,10 +163,10 @@ export default {
                 </div>
                 <input class="form-control servizi mx-2" type="number" placeholder="Camere" aria-label="Rooms"
                     v-model="store.searchRooms" v-if="store.isOnFiltered">
-                <input class="form-control  servizi" type="number" placeholder="Letti" aria-label="Beds"
+                <input class="form-control  servizi mx-2" type="number" placeholder="Letti" aria-label="Beds"
                     v-model="store.searchBeds" v-if="store.isOnFiltered">
                 <div>
-                    <button class="btn btn-outline-success " type="submit"
+                    <button class="btn btn-outline-success mx-2" type="submit"
                         @click.prevent="searchApartments(store.searchQuery, store.searchRadius)">Search</button>
                 </div>
 
@@ -178,6 +177,8 @@ export default {
                 </a>
 
             </div>
+
+
 
             <div class="dropdown">
                 <button class="btn_user" type="button" data-bs-toggle="dropdown" aria-expanded="false">
