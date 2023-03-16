@@ -7,13 +7,15 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
-///FONTAWESOME////////
+///FONTAWESOME setup////////
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { dom } from "@fortawesome/fontawesome-svg-core";
+dom.watch();
 
+///FONTAWESOME icon import////////
 import { faHatWizard } from '@fortawesome/free-solid-svg-icons'
 library.add(faHatWizard)
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
