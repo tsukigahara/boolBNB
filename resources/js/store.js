@@ -17,5 +17,6 @@ export const store = reactive({
     advancedfApartments: [],
     autocompleteAPI: "http://127.0.0.1:8000/api/autocomplete",
     autocompleteArray: [],
+    createAddress: "",
 
 }); 
