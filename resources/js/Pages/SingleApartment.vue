@@ -121,8 +121,9 @@ const submit = () => {
                             </div>
                             <div class="mb-3">
                                 <label for="" class="form-label">Scrivi il tuo messaggio</label>
-                                <input type="textarea" name="message" class="form-control" placeholder=""
+                                <textarea type="textarea" name="message" class="form-control" placeholder=""
                                     aria-describedby="helpId" v-model="form.message" required>
+                                    </textarea>
                             </div>
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary me-3">Invia
