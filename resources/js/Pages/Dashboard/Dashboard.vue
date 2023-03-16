@@ -3,6 +3,7 @@
 import { Head } from '@inertiajs/vue3';
 import dashboardSidebar from './dashboardSidebar.vue';
 import dashboardNavbar from './dashboardNavbar.vue';
+import dashboardMain from './dashboardMain.vue'
 
 
 const props = defineProps({
@@ -15,7 +16,7 @@ const props = defineProps({
 <template>
     <Head title="Dashboard" />
 
-    <div>
+    <div class="contenitore">
         <div>
             <dashboardNavbar />
         </div>
@@ -24,7 +25,7 @@ const props = defineProps({
                 <dashboardSidebar />
             </div>
             <div>
-                <!-- container main -->
+                <dashboardMain />
             </div>
         </div>
     </div>
@@ -33,4 +34,8 @@ const props = defineProps({
 <style lang="scss">
 @use "../../../scss/app.scss" as *;
 @use "../../../scss/general.scss" as *;
+
+.contenitore {
+    height: 100vh;
+}
 </style>
