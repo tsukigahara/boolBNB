@@ -1,5 +1,11 @@
 <script setup>
-
+import { ref } from 'vue';
+import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import Dropdown from '@/Components/Dropdown.vue';
+import DropdownLink from '@/Components/DropdownLink.vue';
+import NavLink from '@/Components/NavLink.vue';
+import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+import { Link } from '@inertiajs/vue3';
 
 // props
 defineProps({
@@ -9,8 +15,17 @@ defineProps({
 </script>
 
 <template>
-    <div class="sidebar">
-
+    <div class="sidebar px-3">
+        <div class="pt-3">
+            <a href="">
+                Dashboard
+            </a>
+        </div>
+        <div class="pt-3">
+            <a href="" class="fs-3">
+                My Apartments
+            </a>
+        </div>
     </div>
 </template>
 
