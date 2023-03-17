@@ -36,4 +36,8 @@ const showingNavigationDropdown = ref(false);
 .logo {
     width: 100px;
 }
+
+.contenitore {
+    height: 100vh;
+}
 </style>
