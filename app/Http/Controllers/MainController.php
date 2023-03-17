@@ -68,8 +68,15 @@ class MainController extends Controller
 
         // SHOW
     public function countView($id){
-        $views = View::where('apartment_id', $id) -> count();
-
+        $views =[];
+        for ($mese=1; $mese <= 3; $mese++) { 
+            $view = View::where('apartment_id', $id)
+                ->whereMonth('created_at', '=', $mese)
+                ->count();
+                $views[] = $view;
+        }
+        // $views = View::where('apartment_id', $id) -> count();
+        var_dump($views);
         return Inertia::render('Dashboard/View', [
             'views' => $views
         ]);
