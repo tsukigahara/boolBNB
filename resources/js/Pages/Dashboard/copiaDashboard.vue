@@ -1,10 +1,8 @@
 <script setup>
-
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { objectToString } from '@vue/shared';
 import { reactive, onMounted } from '@vue/runtime-core';
-import DashboardLayout from '@/Layouts/DashboardLayout.vue';
 
 
 const props = defineProps({
@@ -32,13 +30,14 @@ onMounted(() => {
 });
 
 
+
 </script>
 
 
 <template>
     <Head title="Dashboard" />
 
-    <DashboardLayout>
+    <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Ti diamo il bentornato,
                 <span class="text-capitalize">
@@ -82,14 +81,5 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-    </DashboardLayout>
+    </AuthenticatedLayout>
 </template>
-
-<style lang="scss">
-@use "../../../scss/app.scss" as *;
-@use "../../../scss/general.scss" as *;
-
-.contenitore {
-    height: 100vh;
-}
-</style>

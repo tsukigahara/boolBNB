@@ -13,8 +13,8 @@ import { dom } from "@fortawesome/fontawesome-svg-core";
 dom.watch();
 
 ///FONTAWESOME icon import////////
-import { faHatWizard } from '@fortawesome/free-solid-svg-icons'
-library.add(faHatWizard)
+import { faHatWizard, faDiagramProject, faBuilding } from '@fortawesome/free-solid-svg-icons'
+library.add(faHatWizard, faDiagramProject, faBuilding)
 
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';

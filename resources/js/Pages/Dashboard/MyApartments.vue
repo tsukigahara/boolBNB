@@ -2,6 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { useForm } from '@inertiajs/vue3';
+import DashboardLayout from '@/Layouts/DashboardLayout.vue';
 
 // props
 defineProps({
@@ -24,7 +25,7 @@ function destroy(id) {
 <template>
     <Head title="My apartments" />
 
-    <AuthenticatedLayout>
+    <DashboardLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">My apartments</h2>
         </template>
@@ -67,5 +68,5 @@ function destroy(id) {
                 </table>
             </div>
         </div>
-    </AuthenticatedLayout>
+    </DashboardLayout>
 </template>

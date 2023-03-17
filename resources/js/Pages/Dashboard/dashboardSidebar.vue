@@ -15,16 +15,14 @@ defineProps({
 </script>
 
 <template>
-    <div class="sidebar px-3">
-        <div class="pt-3 fs-3">
-            <a href="">
+    <div class="sidebar">
+        <div class="container">
+            <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                 Dashboard
-            </a>
-        </div>
-        <div class="pt-3">
-            <a href="" class="fs-3">
+            </NavLink>
+            <NavLink :href="route('dashboard.apartments')" :active="route().current('dashboard.apartments')">
                 My Apartments
-            </a>
+            </NavLink>
         </div>
     </div>
 </template>
@@ -36,6 +34,15 @@ defineProps({
 .sidebar {
     width: 300px;
     height: calc(100vh - 70px);
-    background-color: aquamarine;
+    background-color: #fd8ba0;
+    margin: 0 auto;
+}
+
+.white {
+    color: white;
+
+    &:hover {
+        color: red;
+    }
 }
 </style>
