@@ -100,21 +100,22 @@ class MainController extends Controller
 
         // calcola la data di fine sponsorship
         $duration = Sponsorship::find($sponsorshipId)->duration;
+        // prende solo l'ora
+        $numDuration =explode(':',$duration);
+        // converte il formato
         $endDateString = $startDate->format('Y-m-d H:i:s');
-        $endDate = Carbon::parse($endDateString)->addHours($duration);
+        // aggiunge le ore
+        $endDate = Carbon::parse($endDateString)->addHours($numDuration[0]);
 
         // verifica se la sponsorship è ancora attiva
         $isExpired = Carbon::now()->greaterThan($endDate);
-       var_dump($endDate);
-       var_dump($startDate->format('Y-m-d H:i:s'));
-       var_dump($duration);
-        
+
         if ($isExpired) {
             // la sponsorship è scaduta
             return Inertia::render('Dashboard/Sponsorship', [
                 'sponsorship' => $sponsorshipAll,
                 'id' => $id,
-                'endDate' => $endDate
+                'endDate' => ''
             ]);
         } else {
             // la sponsorship è ancora attiva
@@ -145,13 +146,16 @@ class MainController extends Controller
         $apartment= Apartment::find($data['id']);
         $sponsorship= Sponsorship::find($data['sponsorship']);
         
-        if($data['endDate'] != ''){
+        
+        if($data['endDate'] != ''){   
+            // converte il formato js nel formato per il db
             $date = explode('T',$data['endDate']);
-            
-            $apartment->sponsorships()->attach($sponsorship, ['created_at' => $date[0]]);
-        }
-        else{
+            $hour = explode('.', $date[1]);
+            $complate = $date[0]. ' '. $hour[0];
 
+            // imposta la data di fine come la data do creazione, postixcipando la data di fine
+            $apartment->sponsorships()->attach($sponsorship, ['created_at' => $complate]);
+        }else{
             $apartment->sponsorships()->attach($sponsorship, ['created_at' => Carbon::now()]);
         }
 
