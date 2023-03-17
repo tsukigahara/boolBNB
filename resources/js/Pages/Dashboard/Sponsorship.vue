@@ -6,13 +6,13 @@ import { Head, useForm } from '@inertiajs/vue3';
 const props = defineProps({
     sponsorship: Array,
     id: String,
-    date: Object,
-    sponsorshipBool: Boolean
+    endDate: String
 });
 
 const form = useForm({
     id: props.id,
     sponsorship: '',
+    endDate: props.endDate ? props.endDate : null,
 });
 
 const submit = () => {
@@ -20,6 +20,10 @@ const submit = () => {
         onFinish: () => form.reset(),
     });
 };
+
+const dataOfEndDate = props.endDate.split('T');
+// const hourOfEndDatre = dataOfEndDate[1].split('.');
+
 
 </script>
 
@@ -174,11 +178,10 @@ export default {
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8 shadow bg-body rounded">
                 <a class="btn btn-dark mb-3 mr-3" role="button" href="javascript: history.back()">Go back</a>
-                <div v-if="!sponsorshipBool">
-                    <h3>L'abbonamento per questo appartamento &egrave; gi&aacute; attivo</h3>
-                </div>
                 <div class="col-6 offset-3">
-            <div class="card bg-light" v-if="sponsorshipBool">
+            <div class="card bg-light" >
+                {{ endDate }}
+                <div >La data di scadenza é prevista per il {{ dataOfEndDate[0] }} {{ dataOfEndDate[1] }}</div>
                 <div class="card-header">Informazioni di Pagamento</div>
                 <div class="card-body">
                     <div class="alert alert-danger" v-if="error">
@@ -211,7 +214,7 @@ export default {
                                     </label>
                                 </td>
                                 <td>{{ item.price }} &euro;</td>
-                                <td>{{ item.duration }}</td>
+                                <td>{{ item.duration }} ore</td>
                             </tr>
 
                         </tbody>
@@ -255,3 +258,8 @@ export default {
 
     </AuthenticatedLayout>
 </template>
+<style>
+.form-control{
+    height: 3rem;
+}
+</style>

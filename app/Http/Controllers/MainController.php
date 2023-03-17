@@ -100,26 +100,28 @@ class MainController extends Controller
 
         // calcola la data di fine sponsorship
         $duration = Sponsorship::find($sponsorshipId)->duration;
-        $endDate = Carbon::parse($startDate)->addHours($duration);
+        $endDateString = $startDate->format('Y-m-d H:i:s');
+        $endDate = Carbon::parse($endDateString)->addHours($duration);
 
         // verifica se la sponsorship è ancora attiva
         $isExpired = Carbon::now()->greaterThan($endDate);
-
+       var_dump($endDate);
+       var_dump($startDate->format('Y-m-d H:i:s'));
+       var_dump($duration);
+        
         if ($isExpired) {
             // la sponsorship è scaduta
             return Inertia::render('Dashboard/Sponsorship', [
                 'sponsorship' => $sponsorshipAll,
                 'id' => $id,
-                'date' => $sponsorship,
-                'sponsorshipBool' => false
+                'endDate' => $endDate
             ]);
         } else {
             // la sponsorship è ancora attiva
             return Inertia::render('Dashboard/Sponsorship', [
                 'sponsorship' => $sponsorshipAll,
                 'id' => $id,
-                'date' => null,
-                'sponsorshipBool' => true
+                'endDate' => $endDate
             ]);
         }  
     } else {
@@ -127,8 +129,7 @@ class MainController extends Controller
         return Inertia::render('Dashboard/Sponsorship', [
             'sponsorship' => $sponsorshipAll,
             'id' => $id,
-            'date' => null,
-            'sponsorshipBool' => true
+            'endDate' => ''
         ]);
     }
 }
@@ -138,12 +139,21 @@ class MainController extends Controller
         
         $data= $request -> validate([
             'id' => 'required',
-            'sponsorship' => 'required'
+            'sponsorship' => 'required',
+            'endDate' => 'nullable'
         ]);
         $apartment= Apartment::find($data['id']);
         $sponsorship= Sponsorship::find($data['sponsorship']);
+        
+        if($data['endDate'] != ''){
+            $date = explode('T',$data['endDate']);
+            
+            $apartment->sponsorships()->attach($sponsorship, ['created_at' => $date[0]]);
+        }
+        else{
 
-        $apartment->sponsorships()->attach($sponsorship, ['created_at' => Carbon::now()]);
+            $apartment->sponsorships()->attach($sponsorship, ['created_at' => Carbon::now()]);
+        }
 
         return redirect() -> route('dashboard.apartments');
     }
@@ -154,6 +164,7 @@ class MainController extends Controller
             
         ]); 
     }
+    
     public function payment (Request $request){
         $data = $request ->validate([
             'id' => 'required',
