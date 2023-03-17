@@ -52,6 +52,8 @@ export default {
                             store.advancedfApartments.push(element)
                         }
 
+                        store.searchQuery = "";
+
                     });
                     console.log(store.fApartments)
                 });
@@ -94,7 +96,7 @@ export default {
     },
     computed: {
         shouldMakeApiCall() {
-            return store.searchQuery.length >= 5
+            return store.searchQuery.length >= 4
         }
     },
     mounted() {

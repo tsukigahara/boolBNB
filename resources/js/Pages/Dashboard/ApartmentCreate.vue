@@ -11,7 +11,7 @@ const form = useForm({
     beds: 0,
     bathrooms: 0,
     square_meters: 0,
-    address: '',
+    address: store.createAddress,
     main_image: 'default.jpeg',
     visible: true,
     price: 0,
@@ -21,6 +21,55 @@ const form = useForm({
 const submit = () => {
     form.post(route('dashboard.apartments.store'));
 };
+</script>
+<script>
+import { store } from '../../store';
+import axios from 'axios';
+
+export default {
+    name: "ApartmentCreate",
+    props: {
+    },
+    data() {
+        return {
+            store,
+
+        }
+    },
+    methods: {
+        checkInputLength() {
+            if (this.shouldMakeApiCall) {
+                this.searchAutocomplete(store.createAddress)
+            }
+        },
+        searchAutocomplete(element) {
+            element = element.replace(" ","+");
+            const fullAutocompleteAPI = `${store.autocompleteAPI}/${element}`;
+            axios.get(fullAutocompleteAPI)
+                .then(res => {
+                    store.autocompleteArray = res.data.response.data
+                    console.log(store.autocompleteArray)
+                })
+                .catch(err => {
+                    console.log(err)
+                });
+        },
+        pickSuggestion(suggestion) {
+            store.createAddress = suggestion;
+
+        },
+        test(elem) {
+            console.log(elem)
+        }
+
+
+    },
+    computed: {
+        shouldMakeApiCall() {
+            return store.createAddress.length >= 4
+        }
+    },
+}
 </script>
 
 <template>
@@ -70,7 +119,16 @@ const submit = () => {
                         <div class="mb-3">
                             <label for="" class="form-label">Address</label>
                             <input type="text" name="address" id="" class="form-control" placeholder=""
-                                aria-describedby="helpId" v-model="form.address">
+                                aria-describedby="helpId" v-model="store.createAddress" @input="checkInputLength()">
+                            <div v-if="shouldMakeApiCall" class="campiRicerca">
+                                <ul>
+                                    <li class="pulsante" v-for="elem in store.autocompleteArray?.suggestions?.results"
+                                        @click="pickSuggestion(`${elem.address.freeformAddress}+${elem.address.countrySecondarySubdivision}+${elem.address.countrySubdivision}+${elem.address.country}`)">
+                                        {{ elem.address.freeformAddress }} | {{ elem.address.countrySecondarySubdivision }} | {{
+                                            elem.address.countrySubdivision }} | {{ elem.address.country }}
+                                    </li>
+                                </ul> 
+                            </div>
                             <div v-if="form.errors.address" class="text-sm text-red-600">{{ form.errors.address
                             }}</div>
                             <div v-if="$page.props.flash.TomTomError" class="text-sm text-red-600">{{
