@@ -16,7 +16,7 @@ defineProps({
 
 <template>
     <div class="sidebar px-3">
-        <div class="pt-3">
+        <div class="pt-3 fs-3">
             <a href="">
                 Dashboard
             </a>
