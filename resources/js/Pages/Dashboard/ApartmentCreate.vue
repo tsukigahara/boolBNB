@@ -43,6 +43,7 @@ export default {
             }
         },
         searchAutocomplete(element) {
+            element = element.replace(" ","+");
             const fullAutocompleteAPI = `${store.autocompleteAPI}/${element}`;
             axios.get(fullAutocompleteAPI)
                 .then(res => {
