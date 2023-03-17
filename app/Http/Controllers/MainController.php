@@ -100,7 +100,12 @@ class MainController extends Controller
 
         // calcola la data di fine sponsorship
         $duration = Sponsorship::find($sponsorshipId)->duration;
-        $endDate = Carbon::parse($startDate)->addHours($duration);
+        // prende solo l'ora
+        $numDuration =explode(':',$duration);
+        // converte il formato
+        $endDateString = $startDate->format('Y-m-d H:i:s');
+        // aggiunge le ore
+        $endDate = Carbon::parse($endDateString)->addHours($numDuration[0]);
 
         // verifica se la sponsorship è ancora attiva
         $isExpired = Carbon::now()->greaterThan($endDate);
@@ -110,16 +115,14 @@ class MainController extends Controller
             return Inertia::render('Dashboard/Sponsorship', [
                 'sponsorship' => $sponsorshipAll,
                 'id' => $id,
-                'date' => $sponsorship,
-                'sponsorshipBool' => false
+                'endDate' => ''
             ]);
         } else {
             // la sponsorship è ancora attiva
             return Inertia::render('Dashboard/Sponsorship', [
                 'sponsorship' => $sponsorshipAll,
                 'id' => $id,
-                'date' => null,
-                'sponsorshipBool' => true
+                'endDate' => $endDate
             ]);
         }  
     } else {
@@ -127,8 +130,7 @@ class MainController extends Controller
         return Inertia::render('Dashboard/Sponsorship', [
             'sponsorship' => $sponsorshipAll,
             'id' => $id,
-            'date' => null,
-            'sponsorshipBool' => true
+            'endDate' => ''
         ]);
     }
 }
@@ -138,12 +140,24 @@ class MainController extends Controller
         
         $data= $request -> validate([
             'id' => 'required',
-            'sponsorship' => 'required'
+            'sponsorship' => 'required',
+            'endDate' => 'nullable'
         ]);
         $apartment= Apartment::find($data['id']);
         $sponsorship= Sponsorship::find($data['sponsorship']);
+        
+        
+        if($data['endDate'] != ''){   
+            // converte il formato js nel formato per il db
+            $date = explode('T',$data['endDate']);
+            $hour = explode('.', $date[1]);
+            $complate = $date[0]. ' '. $hour[0];
 
-        $apartment->sponsorships()->attach($sponsorship, ['created_at' => Carbon::now()]);
+            // imposta la data di fine come la data do creazione, postixcipando la data di fine
+            $apartment->sponsorships()->attach($sponsorship, ['created_at' => $complate]);
+        }else{
+            $apartment->sponsorships()->attach($sponsorship, ['created_at' => Carbon::now()]);
+        }
 
         return redirect() -> route('dashboard.apartments');
     }
@@ -154,6 +168,7 @@ class MainController extends Controller
             
         ]); 
     }
+    
     public function payment (Request $request){
         $data = $request ->validate([
             'id' => 'required',
