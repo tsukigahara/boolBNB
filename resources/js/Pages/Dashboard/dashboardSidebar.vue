@@ -17,11 +17,27 @@ defineProps({
 <template>
     <div class="sidebar">
         <div class="container">
-            <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                Dashboard
+            <NavLink :href="route('dashboard')" :active="route().current('dashboard')" class="fs-5 white">
+                <div class="row pt-5">
+                    <div class="col-3 text-center fs-5 ">
+                        <i class="fa-solid fa-diagram-project"></i>
+                    </div>
+                    <div class="col-9">
+                        Dashboard
+                    </div>
+                </div>
             </NavLink>
-            <NavLink :href="route('dashboard.apartments')" :active="route().current('dashboard.apartments')">
-                My Apartments
+
+            <NavLink :href="route('dashboard.apartments')" :active="route().current('dashboard.apartments')"
+                class="fs-5 white">
+                <div class="row pt-5">
+                    <div class="col-3 text-center fs-5 white">
+                        <i class="fa-solid fa-building"></i>
+                    </div>
+                    <div class="col-9">
+                        My Apartments
+                    </div>
+                </div>
             </NavLink>
         </div>
     </div>
@@ -38,7 +54,7 @@ defineProps({
     margin: 0 auto;
 }
 
-.white {
+white {
     color: white;
 
     &:hover {
