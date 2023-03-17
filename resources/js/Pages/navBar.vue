@@ -53,6 +53,8 @@ export default {
                             store.advancedfApartments.push(element)
                         }
 
+                        store.searchQuery = "";
+
                     });
                     console.log(store.fApartments)
                 });
