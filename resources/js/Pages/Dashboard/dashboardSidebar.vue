@@ -31,7 +31,7 @@ defineProps({
             <NavLink :href="route('dashboard.apartments')" :active="route().current('dashboard.apartments')"
                 class="fs-5 white">
                 <div class="row pt-5">
-                    <div class="col-3 text-center fs-5 white">
+                    <div class="col-3 text-center fs-5 ">
                         <i class="fa-solid fa-building"></i>
                     </div>
                     <div class="col-9">
@@ -50,11 +50,11 @@ defineProps({
 .sidebar {
     width: 300px;
     height: calc(100vh - 70px);
-    background-color: #fd8ba0;
+    background-color: #0186c2;
     margin: 0 auto;
 }
 
-white {
+.white {
     color: white;
 
     &:hover {
