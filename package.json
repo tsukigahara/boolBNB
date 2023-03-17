@@ -21,6 +21,8 @@
         "@fortawesome/free-solid-svg-icons": "^6.3.0",
         "@fortawesome/vue-fontawesome": "^3.0.3",
         "@popperjs/core": "^2.11.6",
-        "bootstrap": "^5.2.3"
+        "bootstrap": "^5.2.3",
+        "braintree": "^3.13.0",
+        "braintree-web": "^3.92.0"
     }
 }

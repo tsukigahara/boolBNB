@@ -255,3 +255,9 @@ export default {
 
     </AuthenticatedLayout>
 </template>
+
+<style>
+.form-control{
+    height: 3rem;
+}
+</style>
