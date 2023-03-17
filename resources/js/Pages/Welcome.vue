@@ -17,8 +17,6 @@ defineProps({
     <div class="container h-100 vh-100">
 
         <navBar />
-
-        <i class="fa-hat-wizard fa-solid"></i>
         <div class="d-flex flex-wrap overflow-y-auto ms_padding">
 
 
