@@ -15,16 +15,14 @@ const showingNavigationDropdown = ref(false);
 
 <template>
     <div class="contenitore">
-        <div>
-            <dashboardNavbar />
-        </div>
+
+        <dashboardNavbar />
+
         <div class="d-flex">
             <div>
                 <dashboardSidebar />
             </div>
-            <div>
-                <slot />
-            </div>
+            <slot />
         </div>
     </div>
 </template>
