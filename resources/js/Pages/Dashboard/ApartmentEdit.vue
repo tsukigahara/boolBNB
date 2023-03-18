@@ -1,6 +1,6 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
+import DashboardLayout from '@/Layouts/DashboardLayout.vue';
 
 const props = defineProps({
     apartment: Object,
@@ -63,7 +63,7 @@ const submit = () => {
 <template>
     <Head title="My apartments" />
 
-    <AuthenticatedLayout>
+    <DashboardLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">My apartments</h2>
         </template>
@@ -156,5 +156,5 @@ const submit = () => {
                 </form>
             </div>
         </div>
-    </AuthenticatedLayout>
+    </DashboardLayout>
 </template>

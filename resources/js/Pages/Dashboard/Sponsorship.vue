@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
+import DashboardLayout from '@/Layouts/DashboardLayout.vue';
 // import route from 'vendor/tightenco/ziggy/src/js';
 
 const props = defineProps({
@@ -166,7 +167,7 @@ export default {
 <template>
     <Head title="Sponsorship" />
 
-    <AuthenticatedLayout>
+    <DashboardLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Sponsorship</h2>
         </template>
@@ -178,80 +179,83 @@ export default {
                     <h3>L'abbonamento per questo appartamento &egrave; gi&aacute; attivo</h3>
                 </div>
                 <div class="col-6 offset-3">
-            <div class="card bg-light" v-if="sponsorshipBool">
-                <div class="card-header">Informazioni di Pagamento</div>
-                <div class="card-body">
-                    <div class="alert alert-danger" v-if="error">
-                        {{ error }}
-                    </div>
-                    <div class="alert alert-success" v-if="nonce">
-                        Il pagamento &egrave; andato a buon fine!
-                    </div>
-                <form action="/"  v-else >
-
-                    <!-- SPONSORSHIP LIST -->
-                    <table class="table">
-                        <thead>
-                            <tr class="table-dark">
-                                <th scope="col"></th>
-                                <th scope="col">Nome Abbonamento</th>
-                                <th scope="col">Prezzo</th>
-                                <th scope="col">Durata</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(item, index) in sponsorship" :key="index">
-                                <th scope="row">
-                                    <input type="radio" name="sposnorship" :value="item.id" v-model="form.sponsorship" @click="priceGet(item.price)">
-                                </th>
-
-                                <td>
-                                    <label :for="item.name">
-                                        {{ item.name }}
-                                    </label>
-                                </td>
-                                <td>{{ item.price }} &euro;</td>
-                                <td>{{ item.duration }}</td>
-                            </tr>
-
-                        </tbody>
-                    </table>
- 
-
-                        <div class="form-group">
-
-                           
-                            <div >Prezzo: {{ amount }} &euro;</div>
-                        </div>
-                        <hr />
-                        <div class="form-group">
-                            <label>Numero Carta di credito</label>
-                            <div id="creditCardNumber" class="form-control"></div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-6">
-                                    <label>Data di scadenza</label>
-                                    <div id="expireDate" class="form-control"></div>
-                                </div>
-                                <div class="col-6">
-                                    <label>CVV</label>
-                                    <div id="cvv" class="form-control"></div>
-                                </div>
+                    <div class="card bg-light" v-if="sponsorshipBool">
+                        <div class="card-header">Informazioni di Pagamento</div>
+                        <div class="card-body">
+                            <div class="alert alert-danger" v-if="error">
+                                {{ error }}
                             </div>
+                            <div class="alert alert-success" v-if="nonce">
+                                Il pagamento &egrave; andato a buon fine!
+                            </div>
+                            <form action="/" v-else>
+
+                                <!-- SPONSORSHIP LIST -->
+                                <table class="table">
+                                    <thead>
+                                        <tr class="table-dark">
+                                            <th scope="col"></th>
+                                            <th scope="col">Nome Abbonamento</th>
+                                            <th scope="col">Prezzo</th>
+                                            <th scope="col">Durata</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(item, index) in sponsorship" :key="index">
+                                            <th scope="row">
+                                                <input type="radio" name="sposnorship" :value="item.id"
+                                                    v-model="form.sponsorship" @click="priceGet(item.price)">
+                                            </th>
+
+                                            <td>
+                                                <label :for="item.name">
+                                                    {{ item.name }}
+                                                </label>
+                                            </td>
+                                            <td>{{ item.price }} &euro;</td>
+                                            <td>{{ item.duration }}</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+
+                                <div class="form-group">
+
+
+                                    <div>Prezzo: {{ amount }} &euro;</div>
+                                </div>
+                                <hr />
+                                <div class="form-group">
+                                    <label>Numero Carta di credito</label>
+                                    <div id="creditCardNumber" class="form-control"></div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label>Data di scadenza</label>
+                                            <div id="expireDate" class="form-control"></div>
+                                        </div>
+                                        <div class="col-6">
+                                            <label>CVV</label>
+                                            <div id="cvv" class="form-control"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button class="btn btn-primary btn-block mt-3" @click.prevent="pay"
+                                        :disabled="preventPaying">Paga con carta di credito</button>
+                                </div>
+
+                            </form>
+                            <button type="submit" class="btn btn-primary" @click="submit" v-if="nonce">Attiva
+                                abbonamento</button>
                         </div>
-                        <div class="text-center">
-                            <button class="btn btn-primary btn-block mt-3" @click.prevent="pay" :disabled="preventPaying">Paga con carta di credito</button>
-                        </div>
-        
-                    </form>
-                    <button type="submit" class="btn btn-primary" @click="submit" v-if="nonce">Attiva abbonamento</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-               
-            </div>
 
-    </AuthenticatedLayout>
+        </div>
+
+    </DashboardLayout>
 </template>

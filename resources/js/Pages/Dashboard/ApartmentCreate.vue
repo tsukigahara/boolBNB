@@ -1,10 +1,13 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
+import DashboardLayout from '@/Layouts/DashboardLayout.vue';
+
 defineProps({
     services: Array,
     errors: Object,
 });
+
 const form = useForm({
     title: '',
     rooms: 0,
@@ -18,15 +21,17 @@ const form = useForm({
     description: '',
     services_id: [],
 });
+
 const submit = () => {
     form.post(route('dashboard.apartments.store'));
 };
+
 </script>
 
 <template>
     <Head title="New apartment" />
 
-    <AuthenticatedLayout>
+    <DashboardLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Public new apartment</h2>
         </template>
@@ -118,5 +123,5 @@ const submit = () => {
                 </form>
             </div>
         </div>
-    </AuthenticatedLayout>
+    </DashboardLayout>
 </template>
