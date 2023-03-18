@@ -62,7 +62,7 @@ defineProps({
 
 .account {
     border: 1px solid grey;
-    width: 70px;
+    width: auto;
     padding: 5px;
     border-radius: 20px;
     background-color: white;
