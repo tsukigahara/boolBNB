@@ -75,8 +75,6 @@ class MainController extends Controller
                 ->count();
                 $views[] = $view;
         }
-        // $views = View::where('apartment_id', $id) -> count();
-        var_dump($views);
         return Inertia::render('Dashboard/View', [
             'views' => $views
         ]);

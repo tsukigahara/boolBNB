@@ -40,12 +40,8 @@ const chartOptions = ({
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8 shadow bg-body rounded">
                 <a class="btn btn-dark mb-3 mr-3" role="button" href="javascript: history.back()">Go back</a>
-                <div>
-                    NUMBER OF VIEW : {{ views }}
-                </div>
+
                 <Bar :data="chartData" :options="chartOptions"  class="my_chart"/>
-
-
 
             </div>
         </div>
