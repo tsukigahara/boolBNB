@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
+import DashboardLayout from '@/Layouts/DashboardLayout.vue';
 // import route from 'vendor/tightenco/ziggy/src/js';
 
 const props = defineProps({
@@ -170,7 +171,7 @@ export default {
 <template>
     <Head title="Sponsorship" />
 
-    <AuthenticatedLayout>
+    <DashboardLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Sponsorship</h2>
         </template>
@@ -179,9 +180,9 @@ export default {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8 shadow bg-body rounded">
                 <a class="btn btn-dark mb-3 mr-3" role="button" href="javascript: history.back()">Go back</a>
                 <div class="col-6 offset-3">
-                    <div class="card bg-light" >
+                    <div class="card bg-light">
 
-                        <div >La data di scadenza é prevista per il {{ dataOfEndDate[0] }} alle {{ hourOfEndDate[0] }}</div>
+                        <div>La data di scadenza é prevista per il {{ dataOfEndDate[0] }} alle {{ hourOfEndDate[0] }}</div>
                         <div class="card-header">Informazioni di Pagamento</div>
                         <div class="card-body">
                             <div class="alert alert-danger" v-if="error">
@@ -190,7 +191,7 @@ export default {
                             <div class="alert alert-success" v-if="nonce">
                                 Il pagamento &egrave; andato a buon fine!
                             </div>
-                             <form action="/"  v-else >
+                            <form action="/" v-else>
 
                                 <!-- SPONSORSHIP LIST -->
                                 <table class="table">
@@ -208,7 +209,8 @@ export default {
                                     <tbody>
                                         <tr v-for="(item, index) in sponsorship" :key="index">
                                             <th scope="row">
-                                                <input type="radio" name="sposnorship" :value="item.id" v-model="form.sponsorship" @click="priceGet(item.price)">
+                                                <input type="radio" name="sposnorship" :value="item.id"
+                                                    v-model="form.sponsorship" @click="priceGet(item.price)">
                                             </th>
 
                                             <td>
@@ -222,21 +224,21 @@ export default {
 
                                     </tbody>
                                 </table>
-            
+
 
                                 <div class="form-group">
 
-                                    
-                                    <div >Prezzo: {{ amount }} &euro;</div>
+
+                                    <div>Prezzo: {{ amount }} &euro;</div>
                                 </div>
 
                                 <hr />
- 
+
                                 <div class="form-group">
                                     <label>Numero Carta di credito</label>
                                     <div id="creditCardNumber" class="form-control"></div>
                                 </div>
-      
+
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-6">
@@ -251,22 +253,23 @@ export default {
                                 </div>
 
                                 <div class="text-center">
-                                    <button class="btn btn-primary btn-block mt-3" @click.prevent="pay" :disabled="preventPaying">Paga con carta di credito</button>
+                                    <button class="btn btn-primary btn-block mt-3" @click.prevent="pay"
+                                        :disabled="preventPaying">Paga con carta di credito</button>
                                 </div>
-                    
+
                             </form>
-                            <button type="submit" class="btn btn-primary" @click="submit" v-if="nonce">Attiva abbonamento</button>
+                            <button type="submit" class="btn btn-primary" @click="submit" v-if="nonce">Attiva
+                                abbonamento</button>
                         </div>
                     </div>
                 </div>
-            </div>      
+            </div>
         </div>
-    </AuthenticatedLayout>
+    </DashboardLayout>
 </template>
 
 
 <style>
-.form-control{
+.form-control {
     height: 3rem;
-}
-</style>
+}</style>
