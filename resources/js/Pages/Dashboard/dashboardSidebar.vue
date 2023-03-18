@@ -19,10 +19,10 @@ defineProps({
         <div class="container">
             <NavLink :href="route('dashboard')" :active="route().current('dashboard')" class="fs-5 white">
                 <div class="row pt-5">
-                    <div class="col-3 text-center fs-5 ">
+                    <div class="col-lg-3 col-md-12 text-center fs-5 ">
                         <i class="fa-solid fa-diagram-project"></i>
                     </div>
-                    <div class="col-9">
+                    <div class="col-9 title">
                         Dashboard
                     </div>
                 </div>
@@ -31,10 +31,10 @@ defineProps({
             <NavLink :href="route('dashboard.apartments')" :active="route().current('dashboard.apartments')"
                 class="fs-5 white">
                 <div class="row pt-5">
-                    <div class="col-3 text-center fs-5 ">
+                    <div class="col-lg-3 col-md-12 text-center fs-5 ">
                         <i class="fa-solid fa-building"></i>
                     </div>
-                    <div class="col-9">
+                    <div class="col-9 title">
                         My Apartments
                     </div>
                 </div>
@@ -52,6 +52,17 @@ defineProps({
     height: calc(100vh - 70px);
     background-color: #0186c2;
     margin: 0 auto;
+}
+
+@media screen and (max-width: 760px) {
+    .sidebar {
+        width: 100%;
+        height: calc(100vh - 70px);
+    }
+
+    .title {
+        display: none;
+    }
 }
 
 .white {

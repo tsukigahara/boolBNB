@@ -37,7 +37,7 @@ function destroy(id) {
             </div>
 
             <div class="row tabella">
-                <div class="col-3" v-for="apartment in apartments">
+                <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12" v-for="apartment in apartments">
                     <div class="card mb-3">
                         <div class="d-flex justify-content-between">
                             <h5>{{ apartment.title }}</h5>
@@ -96,10 +96,6 @@ function destroy(id) {
 <style lang="scss" scoped>
 .container {
     height: calc(100vh - 70px);
-}
-
-.scroll {
-    overflow: auto;
 }
 
 .card {

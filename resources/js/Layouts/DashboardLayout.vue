@@ -22,7 +22,11 @@ const showingNavigationDropdown = ref(false);
             <div>
                 <dashboardSidebar />
             </div>
-            <slot />
+
+            <div class="main">
+                <slot />
+            </div>
+
         </div>
     </div>
 </template>
@@ -37,5 +41,11 @@ const showingNavigationDropdown = ref(false);
 
 .contenitore {
     height: 100vh;
+}
+
+.main {
+    height: calc(100vh - 70px);
+    width: 100%;
+    overflow: auto;
 }
 </style>
