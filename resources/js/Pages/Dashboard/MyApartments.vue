@@ -59,7 +59,7 @@ function destroy(id) {
 
                                     <li>
                                         <a :href="route('dashbord.apartment.sponsorship', apartment.id)">
-                                            sponsorship
+                                            sponsorizza
                                         </a>
                                     </li>
 
@@ -76,7 +76,7 @@ function destroy(id) {
                             <div class="col-6 mb-2 text-center">
                                 <a class="btn btn-primary" :href="route('dashboard.apartments.edit', apartment.id)"
                                     role="button">
-                                    Edit
+                                    Modifica
                                 </a>
                             </div>
                             <div class="col-6 mb-2 text-center">
