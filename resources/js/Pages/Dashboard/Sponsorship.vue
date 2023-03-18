@@ -22,8 +22,10 @@ const submit = () => {
     });
 };
 
-const dataOfEndDate = props.endDate.split('T');
-const hourOfEndDate = dataOfEndDate[1].split('.');
+console.log(props);
+
+const dataOfEndDate = props.endDate ? props.endDate.split('T') : null;
+const hourOfEndDate = props.endDate ? dataOfEndDate[1].split('.') : null;
 
 
 </script>
@@ -182,7 +184,9 @@ export default {
                 <div class="col-6 offset-3">
                     <div class="card bg-light">
 
-                        <div>La data di scadenza é prevista per il {{ dataOfEndDate[0] }} alle {{ hourOfEndDate[0] }}</div>
+                        <div>La data di scadenza &egrave; prevista per il {{ endDate ? dataOfEndDate[0] : '' }} alle {{
+                            endDate ? hourOfEndDate[0] : null }}
+                        </div>
                         <div class="card-header">Informazioni di Pagamento</div>
                         <div class="card-body">
                             <div class="alert alert-danger" v-if="error">
@@ -272,4 +276,5 @@ export default {
 <style>
 .form-control {
     height: 3rem;
-}</style>
+}
+</style>
