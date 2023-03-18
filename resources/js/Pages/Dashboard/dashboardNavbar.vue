@@ -58,11 +58,19 @@ defineProps({
     width: 100%;
 }
 
+
+
 .account {
     border: 1px solid grey;
     width: 70px;
     padding: 5px;
     border-radius: 20px;
     background-color: white;
+}
+
+@media screen and (max-width: 760px) {
+    .logo {
+        display: none;
+    }
 }
 </style>
