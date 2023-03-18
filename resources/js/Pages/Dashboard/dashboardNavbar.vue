@@ -10,9 +10,9 @@ defineProps({
 </script>
 
 <template>
-    <nav class="navbar">
+    <nav class="navba d-flex align-items-center">
 
-        <div class="container d-flex justify-content-between ">
+        <div class="container">
 
             <div class="row">
                 <div class="col-2">
@@ -20,7 +20,7 @@ defineProps({
                     <img class="logo" src="../../../js/Pages/img/580b57fcd9996e24bc43c513.png" alt="Airbnb">
                     </Link>
                 </div>
-                <div class="col-10 text-end">
+                <div class="col-10 d-flex justify-content-end">
                     <li class="nav-item dropdown account">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -40,15 +40,7 @@ defineProps({
                     </li>
                 </div>
             </div>
-            <div>
-
-            </div>
-
-            <div>
-
-            </div>
         </div>
-
     </nav>
 </template>
 
@@ -57,10 +49,9 @@ defineProps({
 @use "../../../scss/general.scss" as *;
 
 
-.navbar {
+.navba {
     height: 70px;
     background-color: #0079b0;
-    width: 100%;
 }
 
 .logo {
@@ -69,7 +60,9 @@ defineProps({
 
 .account {
     border: 1px solid grey;
+    width: 70px;
     padding: 5px;
     border-radius: 20px;
+    background-color: white;
 }
 </style>
