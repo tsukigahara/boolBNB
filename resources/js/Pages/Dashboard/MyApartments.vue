@@ -68,7 +68,6 @@ function destroy(id) {
                         </div>
                         <div>€{{ apartment.price }}</div>
                         <div>{{ apartment.address }}</div>
-                        <p class="descrizione">{{ apartment.description }}</p>
 
 
 
