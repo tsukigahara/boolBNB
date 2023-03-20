@@ -184,8 +184,8 @@ export default {
                 <div class="col-6 offset-3">
                     <div class="card bg-light">
 
-                        <div>La data di scadenza &egrave; prevista per il {{ endDate ? dataOfEndDate[0] : '' }} alle {{
-                            endDate ? hourOfEndDate[0] : null }}
+                        <div v-if="endDate != ''">La data di scadenza &egrave; prevista per il {{ dataOfEndDate[0] }} alle {{
+                            hourOfEndDate[0] }}
                         </div>
                         <div class="card-header">Informazioni di Pagamento</div>
                         <div class="card-body">
