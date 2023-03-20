@@ -19,7 +19,7 @@ defineProps({
         <div class="container">
             <NavLink :href="route('dashboard')" :active="route().current('dashboard')" class="fs-5 white">
                 <div class="row pt-5">
-                    <div class="col-md-3 col-sm-12 fs-5 ">
+                    <div class="col-3 text-center fs-5 ">
                         <i class="fa-solid fa-diagram-project"></i>
                     </div>
                     <div class="col-9 title">
@@ -35,7 +35,18 @@ defineProps({
                         <i class="fa-solid fa-building"></i>
                     </div>
                     <div class="col-9 title">
-                        My Apartments
+                        I miei appartamenti
+                    </div>
+                </div>
+            </NavLink>
+
+            <NavLink :href="route('dashboard')" :active="route().current('dashboard.apartments')" class="fs-5 white">
+                <div class="row pt-5">
+                    <div class="col-3 text-center fs-5 ">
+                        <i class="fa-solid fa-message"></i>
+                    </div>
+                    <div class="col-9 title">
+                        Messaggi
                     </div>
                 </div>
             </NavLink>
@@ -69,7 +80,7 @@ defineProps({
     color: white;
 
     &:hover {
-        color: red;
+        color: rgb(0, 195, 255);
     }
 }
 </style>

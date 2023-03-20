@@ -30,7 +30,6 @@ defineProps({
                     </div>
                     </Link>
                 </a>
-
             </template>
 
         </div>
