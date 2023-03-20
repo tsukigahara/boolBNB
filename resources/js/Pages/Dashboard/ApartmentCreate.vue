@@ -91,7 +91,7 @@ export default {
                 <a class="btn btn-dark mb-3 mr-3" role="button" href="javascript: history.back()">Indietro</a>
             </div>
 
-            <form class="d-flex" @submit.prevent="submit">
+            <form class="d-flex px-md-2" @submit.prevent="submit">
                 <div class="col">
                     <div class="mb-3">
                         <label for="" class="form-label">Nome appartamento</label>
