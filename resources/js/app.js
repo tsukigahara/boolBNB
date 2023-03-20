@@ -7,6 +7,16 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
+///FONTAWESOME setup////////
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { dom } from "@fortawesome/fontawesome-svg-core";
+dom.watch();
+
+///FONTAWESOME icon import////////
+import { faHatWizard } from '@fortawesome/free-solid-svg-icons'
+library.add(faHatWizard)
+
+
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
 createInertiaApp({

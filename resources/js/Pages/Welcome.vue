@@ -17,24 +17,26 @@ defineProps({
     <div class="container h-100 vh-100">
 
         <navBar />
-        <div class="d-flex flex-wrap overflow-y-auto ms_padding">
-           
 
-        <template v-for="apartment in (store.filterApplied ? store.fApartments : apartments)" >
-            <a href="" class="card_appa pt-2" :class="sponsorshipArray.includes(apartment.id) ? 'order-1' : 'order-2'">
-                <Link :href="route('show', apartment.id)">
-                <div class="pt-3 prova">
-                    <img class="img" src="./img/dl_a01597558.jpg" alt="">
-                    <div class="fw-semibold">{{ apartment.title }}</div>
-                    <div>{{ apartment.adress }}</div>
-                    <div>€ {{ apartment.price }}</div>
-                    <div class="sponsor" v-show="sponsorshipArray.includes(apartment.id)">sponsorizzato</div>
-                </div>
-                </Link>
-            </a>
-        </template>
-    
-            
+        <i class="fa-hat-wizard fa-solid"></i>
+        <div class="d-flex flex-wrap overflow-y-auto ms_padding">
+
+
+            <template v-for="apartment in (store.filterApplied ? store.fApartments : apartments)">
+                <a href="" class="card_appa pt-2" :class="sponsorshipArray.includes(apartment.id) ? 'order-1' : 'order-2'">
+                    <Link :href="route('show', apartment.id)">
+                    <div class="pt-3 prova">
+                        <img class="img" src="./img/dl_a01597558.jpg" alt="">
+                        <div class="fw-semibold">{{ apartment.title }}</div>
+                        <div>{{ apartment.adress }}</div>
+                        <div>€ {{ apartment.price }}</div>
+                        <div class="sponsor" v-show="sponsorshipArray.includes(apartment.id)">sponsorizzato</div>
+                    </div>
+                    </Link>
+                </a>
+            </template>
+
+
         </div>
     </div>
 </template>
