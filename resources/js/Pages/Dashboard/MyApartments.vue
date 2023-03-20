@@ -1,7 +1,7 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { useForm } from '@inertiajs/vue3';
+import DashboardLayout from '@/Layouts/DashboardLayout.vue';
 
 // props
 defineProps({
@@ -24,48 +24,93 @@ function destroy(id) {
 <template>
     <Head title="My apartments" />
 
-    <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">My apartments</h2>
-        </template>
+    <DashboardLayout>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8 shadow bg-body rounded">
-                <!-- bottone per creare nuovo apartament -->
-                <a name="" id="" class="btn btn-primary" :href="route('dashboard.apartments.create')" role="button">Public
-                    new apartment</a>
-                <!-- tabella -->
-                <table class="table table-striped table-bordered my-12">
-                    <thead class="table-dark">
-                        <tr>
-                            <th scope="col">Title</th>
-                            <th scope="col">Address</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Options</th>
-                        </tr>
-                    </thead>
-                    <tbody class="">
-                        <tr v-for="apartment in apartments">
-                            <th scope="row">{{ apartment.title }}</th>
-                            <td>{{ apartment.address }}</td>
-                            <td>{{ apartment.description }}</td>
-                            <td>€{{ apartment.price }}</td>
-                            <td style="white-space: nowrap;">
-                                <a class="btn btn-primary mx-2" :href="route('dashboard.apartments.edit', apartment.id)"
-                                    role="button">Edit</a>
-                                <a class="btn btn-dark mx-2" role="button"
-                                    :href="route('dasbord.apartment.message', apartment.id)">Messages</a>
-                                <a class="btn btn-dark mx-2" role="button"
-                                    :href="route('dasbord.apartment.view', apartment.id)">Views</a>
-                                <a class="btn btn-warning mx-2" role="button"
-                                    :href="route('dashbord.apartment.sponsorship', apartment.id)">Sponsorships</a>
-                                <button type="button" class="btn btn-danger" @click="destroy(apartment.id)">Delete</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="container">
+
+            <div class="ms_navbar d-flex justify-content-between py-3">
+                <h2 class="mb-3">I tuoi appartamenti</h2>
+
+                <a class="btn btn-primary mb-3" :href="route('dashboard.apartments.create')" role="button">
+                    Crea nuovo appartamento
+                </a>
+            </div>
+
+            <div class="row tabella">
+                <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12" v-for="apartment in apartments">
+                    <div class="card mb-3">
+                        <div class="d-flex justify-content-between">
+                            <h5>{{ apartment.title }}</h5>
+                            <div class=" dropdown">
+                                <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-bars"></i>
+                                </a>
+                                <ul class="dropdown-menu ps-2">
+                                    <li>
+                                        <a :href="route('dasbord.apartment.view', apartment.id)">
+                                            Statistiche
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a :href="route('dasbord.apartment.message', apartment.id)">
+                                            Messaggi
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a :href="route('dashbord.apartment.sponsorship', apartment.id)">
+                                            sponsorizza
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div>€{{ apartment.price }}</div>
+                        <div>{{ apartment.address }}</div>
+
+
+
+                        <div class="row pt-3">
+                            <div class="col-6 mb-2 text-center">
+                                <a class="btn btn-primary" :href="route('dashboard.apartments.edit', apartment.id)"
+                                    role="button">
+                                    Modifica
+                                </a>
+                            </div>
+                            <div class="col-6 mb-2 text-center">
+                                <button type="button" class="btn btn-danger" @click="destroy(apartment.id)">
+                                    Elimina
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </AuthenticatedLayout>
+
+    </DashboardLayout>
 </template>
+
+<style lang="scss" scoped>
+.container {
+    height: calc(100vh - 70px);
+}
+
+.card {
+    padding: 10px;
+}
+
+.descrizione {
+    height: 60px;
+}
+
+.ms_navbar {
+    height: 85px;
+}
+
+.tabella {
+    height: calc(100% - 85px);
+    overflow: auto;
+}
+</style>

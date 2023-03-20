@@ -30,22 +30,24 @@ const submit = () => {
  
 <template>
     <div class="container">
-        <navBar />
+        <div class="row">
 
+        
+        <navBar />
 
         <!-- tag corretto -->
         <!-- <img src="{{ apartment.main_image }}" alt="no.img"> -->
 
         <!-- tag di prova -->
-        <img class="ms_img" src="./img/dl_a01597558.jpg" alt="">
+        <img class="ms_img col-12 col-md-6 mx-auto" src="./img/dl_a01597558.jpg" alt="">
 
 
 
 
 
 
-        <div class="row">
-            <div class="col-8">
+        <div class="row mx-0 px-0">
+            <div class="col-12 col-md-8">
                 <h1 class="pt-4 ">{{ apartment.title }} - Host: {{ apartment.user.name }}</h1>
                 <div> {{ apartment.address }}</div>
                 <hr>
@@ -83,10 +85,10 @@ const submit = () => {
                 <div>
                     Servizi:
                 </div>
-
-                <div class="d-flex flex-wrap justify-content-round">
-                    <div class="ms_card" v-for="service in apartment.services">
-                        {{ service.name }} <br>
+                
+                <div class="row gx-3">
+                    <div class="my_service col-6 col-md-3 my-1 p-2" v-for="service in apartment.services">
+                        {{ service.name }}
                     </div>
                 </div>
                 <hr>
@@ -99,7 +101,7 @@ const submit = () => {
             </div>
 
             <!-- colonna messaggi -->
-            <div class="col-4">
+            <div class="col-12 col-md-4">
                 <div class="card mt-4 p-4">
                     <h3 class="pb-3">
                         € {{ apartment.price }} a notte
@@ -107,7 +109,7 @@ const submit = () => {
 
                     <hr>
 
-                    <form class="d-flex" @submit.prevent="submit" v-if="!form.sent">
+                    <form class="d-flex col-12" @submit.prevent="submit" v-if="!form.sent">
                         <div class="col">
                             <div class="mb-3">
                                 <label for="" class="form-label">Nome</label>
@@ -149,7 +151,7 @@ const submit = () => {
         <!-- <h2>latitude: {{ apartment.latitude }}</h2> -->
         <!-- <h2>longitude: {{ apartment.longitude }}</h2> -->
         <!-- <h2>visible: {{ apartment.visible }}</h2> -->
-
+    </div>
     </div>
 </template>
     
@@ -157,22 +159,27 @@ const submit = () => {
 @use "../../scss/app.scss" as *;
 @use "../../scss/general.scss" as *;
 
-.ms_img {
-    margin: 0 auto;
-    margin-top: 20px;
-    width: 50%;
-}
+// .ms_img {
+//     margin: 0 auto;
+//     margin-top: 20px;
+//     width: 50%;
+// }
 
 h1 {
     font-size: 25px;
 }
 
-.ms_card {
-    width: calc((98% / 4) - 10px);
-    margin: 5px;
-    padding: 5px;
+.my_service {
     border: 1px solid grey;
     border-radius: 20px;
+
+}
+
+.ms_card {
+    // width: calc((98% / 4) - 10px);
+    // margin: 5px 0;
+    // padding: 5px;
+
 }
 
 .logo {
