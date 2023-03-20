@@ -25,6 +25,7 @@
         "bootstrap": "^5.2.3",
         "braintree-web": "^3.92.0",
         "chart.js": "^4.2.1",
-        "vue-chartjs": "^5.2.0"
+        "vue-chartjs": "^5.2.0",
+        "braintree": "^3.13.0"
     }
 }

@@ -14,21 +14,22 @@ defineProps({
 <template>
     <Head title="Boolbnb" />
 
-    <div class="container h-100 vh-100">
+    <div class="container ">
 
-        <navBar />
-        <div class="d-flex flex-wrap overflow-y-auto ms_padding">
+        <navBar class="position-sticky top-0 my_navbar"/>
+
+        <div class="d-flex flex-wrap overflow-y-auto ms_padding container-md row row-cols-1 mx-auto">
 
 
             <template v-for="apartment in (store.filterApplied ? store.fApartments : apartments)">
-                <a href="" class="card_appa pt-2" :class="sponsorshipArray.includes(apartment.id) ? 'order-1' : 'order-2'">
+                <a href="" class="card_appa pt-2 col-lg-3 col-md-4 col-12" :class="sponsorshipArray.includes(apartment.id) ? 'order-1' : 'order-2'">
                     <Link :href="route('show', apartment.id)">
-                    <div class="pt-3 prova">
-                        <img class="img" src="./img/dl_a01597558.jpg" alt="">
-                        <div class="fw-semibold">{{ apartment.title }}</div>
-                        <div>{{ apartment.adress }}</div>
-                        <div>€ {{ apartment.price }}</div>
-                        <div class="sponsor" v-show="sponsorshipArray.includes(apartment.id)">sponsorizzato</div>
+                    <div class="pt-3 prova position-relative mb-2">
+                        <img class="img card-img-top" src="./img/dl_a01597558.jpg" alt="">
+                        <div class="fw-semibold pt-2 px-1 text-bold">{{ apartment.title }}</div>
+                        <div class="text-secondary pt-1 px-1 lh-1">{{ apartment.square_meters }} metri quadrati </div>
+                        <div class=" px-1 text-bold">{{ apartment.price }} &euro; <span class="text-secondary">notte</span> </div>
+                        <div class="position-absolute top-3 end-0 mx-2 mt-1 border border-2 rounded-bottom px-2 my_sponsorship fw-bolder  " v-show="sponsorshipArray.includes(apartment.id)">Sponsorizzato</div>
                     </div>
                     </Link>
                 </a>
@@ -44,32 +45,45 @@ defineProps({
 @use "../../scss/app.scss" as *;
 @use "../../scss/general.scss" as *;
 
-.card_appa {
-    width: calc((100% / 4) - 10px);
-    margin: 5px;
-    border-radius: 40px;
-    position: relative;
+.my_sponsorship {
+    color: $white;
 }
 
-.img {
-    border-radius: 10px;
-    width: 300px;
-    height: 300px;
-    object-fit: cover;
+.my_navbar {
+    z-index: 900;
+    background-color: $white;
 }
 
-.prova {
-    position: relative;
+:root {
+    scroll-behavior: smooth;
 }
 
-.sponsor {
-    position: absolute;
-    top: 30px;
-    left: 5px;
-    background-color: gold;
-    border-radius: 10px;
-    padding: 5px;
-}
+// .card_appa {
+//     width: calc((100% / 4) - 10px);
+//     margin: 5px;
+//     border-radius: 40px;
+//     position: relative;
+// }
+
+// .img {
+//     border-radius: 10px;
+//     width: 300px;
+//     height: 300px;
+//     object-fit: cover;
+// }
+
+// .prova {
+//     position: relative;
+// }
+
+// .sponsor {
+//     position: absolute;
+//     top: 30px;
+//     left: 5px;
+//     background-color: gold;
+//     border-radius: 10px;
+//     padding: 5px;
+// }
 </style>
 
 
