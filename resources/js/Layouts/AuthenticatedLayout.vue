@@ -138,5 +138,4 @@ const showingNavigationDropdown = ref(false);
 .logo {
     width: 100px;
 }
-
 </style>
