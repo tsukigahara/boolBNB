@@ -175,12 +175,12 @@ h1 {
 
 }
 
-.ms_card {
+// .ms_card {
     // width: calc((98% / 4) - 10px);
     // margin: 5px 0;
     // padding: 5px;
-
-}
+//
+// }
 
 .logo {
     width: 20%;
