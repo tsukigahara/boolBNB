@@ -21,8 +21,8 @@ defineProps({
         <div class="d-flex flex-wrap overflow-y-auto ms_padding container-md row row-cols-1 mx-auto">
 
 
-            <template v-for="apartment in (store.filterApplied ? store.fApartments : apartments)">
-                <a href="" class="card_appa pt-2 col-lg-3 col-md-4 col-12" :class="sponsorshipArray.includes(apartment.id) ? 'order-1' : 'order-2'">
+            <template v-for="apartment in (store.filterApplied ? store.fApartments : apartments)" >
+                <a href="" class="card_appa pt-2 col-lg-3 col-md-4 col-12" v-if="sponsorshipArray.includes(apartment.id)">
                     <Link :href="route('show', apartment.id)">
                     <div class="pt-3 prova position-relative mb-2">
                         <img class="img card-img-top" src="./img/dl_a01597558.jpg" alt="">
