@@ -31,8 +31,10 @@ defineProps({
                         <div class="text-secondary pt-1 px-1 lh-1">{{ apartment.square_meters }} metri quadrati </div>
                         <div class=" px-1 text-bold">{{ apartment.price }} &euro; <span class="text-secondary">notte</span>
                         </div>
-                        <div class="position-absolute top-3 end-0 mx-2 mt-1 border border-2 rounded-bottom px-2 my_sponsorship fw-bolder  "
-                            v-show="sponsorshipArray.includes(apartment.id)">Sponsorizzato</div>
+                        <div class="position-absolute top-3 end-0 mx-2 mt-1 my_sponsorship fw-bolder"
+                            v-show="sponsorshipArray.includes(apartment.id)">
+                            <i class="fa-solid fa-star"></i>
+                        </div>
                     </div>
                     </Link>
                 </a>
@@ -49,7 +51,7 @@ defineProps({
 @use "../../scss/general.scss" as *;
 
 .my_sponsorship {
-    color: $white;
+    color: gold;
 }
 
 .my_navbar {
