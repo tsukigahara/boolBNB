@@ -19,7 +19,7 @@ defineProps({
         <div class="container">
             <NavLink :href="route('dashboard')" :active="route().current('dashboard')" class="fs-5 white">
                 <div class="row pt-5">
-                    <div class="col-3  text-center fs-5 ">
+                    <div class="col-md-3 col-sm-12 fs-5 ">
                         <i class="fa-solid fa-diagram-project"></i>
                     </div>
                     <div class="col-9 title">
@@ -56,7 +56,7 @@ defineProps({
 
 @media screen and (max-width: 768px) {
     .sidebar {
-        width: 100%;
+        width: 90px;
         height: calc(100vh - 70px);
     }
 
