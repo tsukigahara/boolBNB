@@ -25,7 +25,7 @@ defineProps({
                 <a href="" class="card_appa pt-2 col-lg-3 col-md-4 col-12" v-if="sponsorshipArray.includes(apartment.id)">
                     <Link :href="route('show', apartment.id)">
                     <div class="pt-3 prova position-relative mb-2">
-                        <img class="img card-img-top" src="./img/dl_a01597558.jpg" alt="">
+                        <img class="img card-img-top" :src="'/storage/' + apartment.main_image" alt="">
                         <div class="fw-semibold pt-2 px-1 text-bold">{{ apartment.title }}</div>
                         <div class="text-secondary pt-1 px-1 lh-1">{{ apartment.square_meters }} metri quadrati </div>
                         <div class=" px-1 text-bold">{{ apartment.price }} &euro; <span class="text-secondary">notte</span> </div>
