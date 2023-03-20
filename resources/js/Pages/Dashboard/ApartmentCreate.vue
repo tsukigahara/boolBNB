@@ -63,8 +63,8 @@ export default {
             store.createAddress = suggestion;
 
         },
-        test(elem) {
-            console.log(elem)
+        test() {
+            this.searchAutocomplete(store.createAddress)
         }
 
 
@@ -84,7 +84,6 @@ export default {
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Public new apartment</h2>
         </template>
-
         <div class="container py-3">
             <div class="d-flex justify-content-between">
                 <h2>Compila il form</h2>
@@ -128,7 +127,16 @@ export default {
                     <div class="mb-3">
                         <label for="" class="form-label">Indirizzo</label>
                         <input type="text" name="address" id="" class="form-control" placeholder=""
-                            aria-describedby="helpId" v-model="form.address">
+                            aria-describedby="helpId" v-model="store.createAddress" @input="checkInputLength()">
+                        <div v-if="shouldMakeApiCall" class="campiRicerca">
+                            <ul>
+                                <li class="pulsante" v-for="elem in store.autocompleteArray?.suggestions?.results"
+                                    @click="pickSuggestion(`${elem.address.freeformAddress}+${elem.address.countrySecondarySubdivision}+${elem.address.countrySubdivision}+${elem.address.country}`)">
+                                    {{ elem.address.freeformAddress }} | {{ elem.address.countrySecondarySubdivision }} | {{
+                                        elem.address.countrySubdivision }} | {{ elem.address.country }}
+                                </li>
+                            </ul> 
+                        </div>
                         <div v-if="form.errors.address" class="text-sm text-red-600">{{ form.errors.address
                         }}</div>
                         <div v-if="$page.props.flash.TomTomError" class="text-sm text-red-600">{{
