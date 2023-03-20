@@ -40,7 +40,8 @@ class HandleInertiaRequests extends Middleware
                 ]);
             },
             'flash' => [
-                'TomTomError' => fn () => $request->session()->get('TomTomError')
+                'TomTomError' => fn () => $request->session()->get('TomTomError'),
+                'imageStatus' => fn () => $request->session()->get('imageStatus'),
             ],
         ]);
     }

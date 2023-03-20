@@ -9,8 +9,9 @@ use App\Models\User;
 use App\Models\View;
 use Carbon\Carbon;
 use App\Http\Controllers\SearchController;
+
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class ApartmentController extends Controller
@@ -62,7 +63,7 @@ class ApartmentController extends Controller
     }
 
     // show single apartment by id with relations
-    public function show($id, )
+    public function show($id,)
     {
         $apartment = Apartment::find($id);
 
@@ -71,20 +72,20 @@ class ApartmentController extends Controller
 
         $user = User::all();
         $services = Service::all();
-        
+
         // trova l'ip dell'utente
         $ip_address = request()->ip();
-        $data=[
+        $data = [
             'ip_address' => $ip_address,
         ];
         // crea l'elemento in view
         $views = View::make($data);
-        $views-> apartment()->associate($apartment);
+        $views->apartment()->associate($apartment);
 
         // verifica se la view esiste giá 
-        $apartmentAssociate= View::where('apartment_id', $id)->where('ip_address', $ip_address)-> get() ;
-        if($apartmentAssociate->isEmpty()){
-            $views ->save();
+        $apartmentAssociate = View::where('apartment_id', $id)->where('ip_address', $ip_address)->get();
+        if ($apartmentAssociate->isEmpty()) {
+            $views->save();
         }
 
         return Inertia::render('SingleApartment', [
@@ -109,6 +110,11 @@ class ApartmentController extends Controller
         $apartment->messages()->delete();
         $apartment->sponsorships()->sync([]);
         $apartment->services()->sync([]);
+        //delete stored image
+        $image_path = $apartment->main_image;
+        if (Storage::exists($image_path)) {
+            Storage::delete($image_path);
+        }
         $apartment->delete();
 
         return redirect()->route('dashboard.apartments');
@@ -136,7 +142,7 @@ class ApartmentController extends Controller
             'bathrooms' => 'required|integer|min:0',
             'square_meters' => 'required|integer|min:0',
             'address' => 'required|string|min:0|max:128',
-            'main_image' => 'required|string|min:0|max:128',
+            'main_image' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
             'visible' => 'required|boolean',
             'price' => 'required|integer|min:0',
             'description' => 'nullable|string',
@@ -159,6 +165,13 @@ class ApartmentController extends Controller
         $data['longitude'] = $result->original->lon;
         ///////////////////////////////////////////////////////
 
+        ////store image /////
+        $image_path = $request->file('main_image')->store('main_image', 'public');
+        $data['main_image'] = $image_path;
+        if (isset($image_path)) {
+            session()->flash('imageStatus', 'Image Upload successfully');
+        }
+        ///////////////////////////////////
 
         $apartment = Apartment::make($data);
 
@@ -213,7 +226,7 @@ class ApartmentController extends Controller
             'bathrooms' => 'required|integer|min:0',
             'square_meters' => 'required|integer|min:0',
             'address' => 'required|string|min:0|max:128',
-            'main_image' => 'required|string|min:0|max:128',
+            'main_image' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
             'visible' => 'required|boolean',
             'price' => 'required|integer|min:0',
             'description' => 'nullable|string',
@@ -236,6 +249,12 @@ class ApartmentController extends Controller
         $data['longitude'] = $result->original->lon;
         ///////////////////////////////////////////////////////
 
+        $image_path = $request->file('main_image')->store('main_image', 'public');
+        $data['main_image'] = $image_path;
+        if (isset($image_path)) {
+            session()->flash('imageStatus', 'Image Upload successfully');
+        }
+
         $user = auth()->user();
         $apartment->update($data);
         $apartment->user()->associate($user);
@@ -249,5 +268,4 @@ class ApartmentController extends Controller
 
         return redirect()->route('dashboard.apartments');
     }
-
 }
