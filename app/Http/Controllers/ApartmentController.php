@@ -226,7 +226,7 @@ class ApartmentController extends Controller
             'bathrooms' => 'required|integer|min:0',
             'square_meters' => 'required|integer|min:0',
             'address' => 'required|string|min:0|max:128',
-            'main_image' => 'required|string|min:0|max:128',
+            'main_image' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
             'visible' => 'required|boolean',
             'price' => 'required|integer|min:0',
             'description' => 'nullable|string',
@@ -248,6 +248,12 @@ class ApartmentController extends Controller
         $data['latitude'] = $result->original->lat;
         $data['longitude'] = $result->original->lon;
         ///////////////////////////////////////////////////////
+
+        $image_path = $request->file('main_image')->store('main_image', 'public');
+        $data['main_image'] = $image_path;
+        if (isset($image_path)) {
+            session()->flash('imageStatus', 'Image Upload successfully');
+        }
 
         $user = auth()->user();
         $apartment->update($data);
