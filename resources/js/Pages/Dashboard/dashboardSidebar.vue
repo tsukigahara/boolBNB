@@ -23,7 +23,7 @@ defineProps({
                         <i class="fa-solid fa-diagram-project"></i>
                     </div>
                     <div class="col-9 title">
-                        Dashboard
+                        I miei messaggi
                     </div>
                 </div>
             </NavLink>
@@ -40,16 +40,6 @@ defineProps({
                 </div>
             </NavLink>
 
-            <NavLink :href="route('dashboard')" :active="route().current('dashboard.apartments')" class="fs-5 white">
-                <div class="row pt-5">
-                    <div class="col-3 text-center fs-5 ">
-                        <i class="fa-solid fa-message"></i>
-                    </div>
-                    <div class="col-9 title">
-                        Messaggi
-                    </div>
-                </div>
-            </NavLink>
         </div>
     </div>
 </template>
