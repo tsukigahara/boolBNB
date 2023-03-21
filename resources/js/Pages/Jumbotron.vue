@@ -14,7 +14,7 @@ export default {
     data() {
         return {
             store,
-
+            showDropdown: false,
         }
     },
     methods: {
@@ -75,6 +75,7 @@ export default {
             if (this.shouldMakeApiCall) {
                 this.searchAutocomplete(store.searchQuery)
             }
+            this.showDropdown = true;
         },
         searchAutocomplete(element) {
             const fullAutocompleteAPI = `${store.autocompleteAPI}/${element}`;
@@ -89,7 +90,7 @@ export default {
         },
         pickSuggestion(suggestion) {
             store.searchQuery = suggestion;
-
+            this.showDropdown = false;
         },
         test(elem) {
             console.log(elem)
@@ -99,8 +100,8 @@ export default {
     },
     computed: {
         shouldMakeApiCall() {
-            return store.searchQuery.length >= 1
-        }
+            return store.searchQuery.length >= 2
+        },
     },
     mounted() {
         axios.get(store.servicesAPI)
@@ -131,8 +132,8 @@ export default {
                     <button class="btn btn-success" type="submit"
                         @click.prevent="searchApartments(store.searchQuery, store.searchRadius)"><i
                             class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i></button>
-                    <div v-if="shouldMakeApiCall" class="campiRicerca">
-                        <ul>
+                    <div v-if="showDropdown" class="campiRicerca">
+                        <ul v-if="store.searchQuery ? showDropdown = true : showDropdown = false">
                             <li class="pulsante" v-for="elem in store.autocompleteArray?.suggestions?.results"
                                 @click="pickSuggestion(`${elem.address.freeformAddress}+${elem.address.countrySecondarySubdivision}+${elem.address.countrySubdivision}+${elem.address.country}`)">
                                 {{ elem.address.freeformAddress }} | {{ elem.address.countrySecondarySubdivision }} | {{
