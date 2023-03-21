@@ -21,6 +21,7 @@ class MainController extends Controller
     public function showMessage($id)
     {
         $messages = Message::where('apartment_id', $id)->get();
+        $messages->load('apartment');
         return Inertia::render('Dashboard/Messages', [
             'messages' => $messages
         ]);
@@ -31,12 +32,13 @@ class MainController extends Controller
         $apartment = Apartment::find($id);
 
         $apartment->load('user');
-        
-        $user = User :: all();
+
+        $user = User::all();
 
         return Inertia::render('MessageCreate', [
             "apartment" => $apartment,
-            "user" => $user,        ]);
+            "user" => $user,
+        ]);
     }
 
     public function messageStore(Request $request, $id)
@@ -66,14 +68,15 @@ class MainController extends Controller
 
     ////////////////// VIEWS ////////////////////
 
-        // SHOW
-    public function countView($id){
-        $views =[];
-        for ($mese=1; $mese <= 3; $mese++) { 
+    // SHOW
+    public function countView($id)
+    {
+        $views = [];
+        for ($mese = 1; $mese <= 3; $mese++) {
             $view = View::where('apartment_id', $id)
                 ->whereMonth('created_at', '=', $mese)
                 ->count();
-                $views[] = $view;
+            $views[] = $view;
         }
         return Inertia::render('Dashboard/View', [
             'views' => $views
@@ -83,111 +86,111 @@ class MainController extends Controller
 
     ////////////////// SPONSORSHIP ////////////////////
 
-        public function showSponsorship($id){
-    // ottiene tutte le sponsorship
-    $sponsorshipAll = Sponsorship::all();
+    public function showSponsorship($id)
+    {
+        // ottiene tutte le sponsorship
+        $sponsorshipAll = Sponsorship::all();
 
-    // ottiene l'ultima sponsorship attiva per l'appartamento
-    $sponsorship = optional(
-        Apartment::find($id)->sponsorships()
-        ->withPivot('sponsorship_id', 'created_at')
-        ->orderBy('pivot_created_at', 'desc')
-        ->first()
-    );
+        // ottiene l'ultima sponsorship attiva per l'appartamento
+        $sponsorship = optional(
+            Apartment::find($id)->sponsorships()
+                ->withPivot('sponsorship_id', 'created_at')
+                ->orderBy('pivot_created_at', 'desc')
+                ->first()
+        );
 
-    // verifica che il valore non sia null
-    if (optional($sponsorship)->pivot) {
-        // ottiene l'id della sponsorship
-        $sponsorshipId = optional($sponsorship)->pivot->sponsorship_id;
+        // verifica che il valore non sia null
+        if (optional($sponsorship)->pivot) {
+            // ottiene l'id della sponsorship
+            $sponsorshipId = optional($sponsorship)->pivot->sponsorship_id;
 
-        // ottiene la data di inizio sponsorship
-        $startDate = optional($sponsorship)->pivot->created_at;
+            // ottiene la data di inizio sponsorship
+            $startDate = optional($sponsorship)->pivot->created_at;
 
-        // calcola la data di fine sponsorship
-        $duration = Sponsorship::find($sponsorshipId)->duration;
-        // prende solo l'ora
-        $numDuration =explode(':',$duration);
-        // converte il formato
-        $endDateString = $startDate->format('Y-m-d H:i:s');
-        // aggiunge le ore
-        $endDate = Carbon::parse($endDateString)->addHours($numDuration[0]);
+            // calcola la data di fine sponsorship
+            $duration = Sponsorship::find($sponsorshipId)->duration;
+            // prende solo l'ora
+            $numDuration = explode(':', $duration);
+            // converte il formato
+            $endDateString = $startDate->format('Y-m-d H:i:s');
+            // aggiunge le ore
+            $endDate = Carbon::parse($endDateString)->addHours($numDuration[0]);
 
-        // verifica se la sponsorship è ancora attiva
-        $isExpired = Carbon::now()->greaterThan($endDate);
+            // verifica se la sponsorship è ancora attiva
+            $isExpired = Carbon::now()->greaterThan($endDate);
 
-        if ($isExpired) {
-            // la sponsorship è scaduta
+            if ($isExpired) {
+                // la sponsorship è scaduta
+                return Inertia::render('Dashboard/Sponsorship', [
+                    'sponsorship' => $sponsorshipAll,
+                    'id' => $id,
+                    'endDate' => ''
+                ]);
+            } else {
+                // la sponsorship è ancora attiva
+                return Inertia::render('Dashboard/Sponsorship', [
+                    'sponsorship' => $sponsorshipAll,
+                    'id' => $id,
+                    'endDate' => $endDate
+                ]);
+            }
+        } else {
+            // non ci sono sponsorship attive per l'appartamento
             return Inertia::render('Dashboard/Sponsorship', [
                 'sponsorship' => $sponsorshipAll,
                 'id' => $id,
                 'endDate' => ''
             ]);
-        } else {
-            // la sponsorship è ancora attiva
-            return Inertia::render('Dashboard/Sponsorship', [
-                'sponsorship' => $sponsorshipAll,
-                'id' => $id,
-                'endDate' => $endDate
-            ]);
-        }  
-    } else {
-        // non ci sono sponsorship attive per l'appartamento
-        return Inertia::render('Dashboard/Sponsorship', [
-            'sponsorship' => $sponsorshipAll,
-            'id' => $id,
-            'endDate' => ''
-        ]);
+        }
     }
-}
 
-            
-    public function storeSposnosrship(Request $request){
-        
-        $data= $request -> validate([
+
+    public function storeSposnosrship(Request $request)
+    {
+
+        $data = $request->validate([
             'id' => 'required',
             'sponsorship' => 'required',
             'endDate' => 'nullable'
         ]);
-        $apartment= Apartment::find($data['id']);
-        $sponsorship= Sponsorship::find($data['sponsorship']);
-        
-        
-        if($data['endDate'] != ''){   
+        $apartment = Apartment::find($data['id']);
+        $sponsorship = Sponsorship::find($data['sponsorship']);
+
+
+        if ($data['endDate'] != '') {
             // converte il formato js nel formato per il db
-            $date = explode('T',$data['endDate']);
+            $date = explode('T', $data['endDate']);
             $hour = explode('.', $date[1]);
-            $complate = $date[0]. ' '. $hour[0];
+            $complate = $date[0] . ' ' . $hour[0];
 
             // imposta la data di fine come la data do creazione, postixcipando la data di fine
             $apartment->sponsorships()->attach($sponsorship, ['created_at' => $complate]);
-        }else{
+        } else {
             $apartment->sponsorships()->attach($sponsorship, ['created_at' => Carbon::now()]);
         }
 
-        return redirect() -> route('dashboard.apartments');
+        return redirect()->route('dashboard.apartments');
     }
-    public function verificateSponsorship(){
-        $apartment= Apartment::find(1) ->get();
-        $sposnsorshipId = $apartment->sponsorship()->where('id', );
-        return Inertia::render('Dashboard/Sponsorship' ,[
-            
-        ]); 
+    public function verificateSponsorship()
+    {
+        $apartment = Apartment::find(1)->get();
+        $sposnsorshipId = $apartment->sponsorship()->where('id',);
+        return Inertia::render('Dashboard/Sponsorship', []);
     }
-    
-    public function payment (Request $request){
-        $data = $request ->validate([
+
+    public function payment(Request $request)
+    {
+        $data = $request->validate([
             'id' => 'required',
             'sponsorship' => 'required',
 
         ]);
         $sponsorship = Sponsorship::find($data['sponsorship']);
 
-        return Inertia::render('Dashboard/Payment',[
+        return Inertia::render('Dashboard/Payment', [
             'id' => $data['id'],
-            'sponsorship'=> $data['sponsorship'],
+            'sponsorship' => $data['sponsorship'],
             'price' => $sponsorship
         ]);
     }
-
-    
 }

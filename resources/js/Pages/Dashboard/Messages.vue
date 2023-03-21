@@ -21,16 +21,30 @@ defineProps({
 
     <DashboardLayout>
 
-    <div class="container">
 
-        <a class="btn btn-primary mt-3" role="button" href="javascript: history.back()">Indietro</a>
-
-        <div class="row tabella pt-3">
-            <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12" v-for="message in messages">
-                <div class="card mb-3">
-                    <h5> da {{ message.name }}</h5>
-                    <div>{{ message.email }}</div>
-                    <p>{{ message.message }}</p>
+        <div class="container my-4 shadow p-3 rounded overflow-scroll">
+            <h1>I tuoi messaggi</h1>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a class="btn btn-primary mt-3" role="button" href="javascript: history.back()">Indietro</a>
+            </div>
+            <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 my-3">
+                <div class="col" v-for="message in messages">
+                    <div class="card h-100 shadow">
+                        <div class="card-header">
+                            <h5 class="card-title">{{ message.name }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ message.apartment.title }}</h6>
+                        </div>
+                        <div class="card-body d-flex flex-column justify-content-between">
+                        <p class="card-text">{{ message.message }}</p>
+                        <div>
+                            <a id="" class="btn btn-primary"
+                                :href="`mailto:${message.email}?subject=[BoolBNB] Your beautiful journey at ${message.apartment.title}!&body=Thank you for contacting me ${message.name}, I'm ${$page.props.auth.user.name} of ${message.apartment.title}!`"
+                                role="button">Rispondi</a>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">{{ message.created_at }}</small>
+                    </div>
                 </div>
             </div>
         </div>
@@ -50,23 +64,23 @@ defineProps({
                                     <tr>
                                             <th scope="col">From</th>
                                             <th scope="col">Email</th>
-                                                                                    <th scope="col">Message</th>
-                                                                                    <th scope="col">Options</th>
+                                                                                                                <th scope="col">Message</th>
+                                                                                                                <th scope="col">Options</th>
 
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody class="">
-                                                                                <tr v-for="message in messages">
-                                                                                    <th scope="row">{{ message.name }}</th>
-                                                                                    <td>{{ message.email }}</td>
-                                                                                    <td>{{ message.message }}</td>
-                                                                                    <td style="white-space: nowrap;">
-                                                                                        options here
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                </div> -->
+                                                                                                            </tr>
+                                                                                                        </thead>
+                                                                                                        <tbody class="">
+                                                                                                            <tr v-for="message in messages">
+                                                                                                                <th scope="row">{{ message.name }}</th>
+                                                                                                                <td>{{ message.email }}</td>
+                                                                                                                <td>{{ message.message }}</td>
+                                                                                                                <td style="white-space: nowrap;">
+                                                                                                                    options here
+                                                                                                                </td>
+                                                                                                            </tr>
+                                                                                                        </tbody>
+                                                                                                    </table>
+                                                                                                </div>
+                                                                                            </div> -->
     </DashboardLayout>
 </template>

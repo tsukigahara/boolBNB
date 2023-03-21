@@ -24,32 +24,38 @@ function destroy(id) {
     <Head title="My apartments" />
 
     <DashboardLayout>
-
         <div class="container my-4 shadow p-3 rounded overflow-scroll">
             <h1>I tuoi appartamenti</h1>
-            <Link class="btn btn-primary" :href="route('dashboard.apartments.create')" role="button">
-            Crea annuncio
-            </Link>
-            <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 my-3 overflow-scroll">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <Link class="btn btn-primary btn-lg" :href="route('dashboard.apartments.create')" role="button">
+                Crea annuncio
+                </Link>
+            </div>
+            <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 my-3">
                 <div class="col" v-for="apartment in apartments">
                     <div class="card h-100 shadow">
                         <img :src="'/storage/' + apartment.main_image" :alt="apartment.title">
                         <div class="card-body">
                             <h5 class="card-title">{{ apartment.title }}</h5>
-                            <p class="card-text">{{ apartment.price }}€</p>
-                            <p class="card-text">{{ apartment.address }}</p>
+                            <h6 class="card-subtitle mb-2">{{ apartment.price }}€</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ apartment.address }}</h6>
                         </div>
                         <div class="card-footer bg-body">
-                            <Link class="btn btn-light mr-1" :href="route('dashboard.apartments.edit', apartment.id)"
-                                role="button">
+                            <Link class="btn btn-outline-primary mr-3"
+                                :href="route('dashboard.apartments.edit', apartment.id)" role="button">
                             Modifica
                             </Link>
                             <div class="btn-group dropup">
-                                <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
+                                <button type="button" class="btn btn-outline-primary dropdown-toggle"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     Altro
                                 </button>
                                 <ul class="dropdown-menu">
+                                    <li>
+                                        <Link class="dropdown-item" :href="route('show', apartment.id)">
+                                        Mostra
+                                        </Link>
+                                    </li>
                                     <li>
                                         <Link class="dropdown-item" :href="route('dasbord.apartment.view', apartment.id)">
                                         Statistiche

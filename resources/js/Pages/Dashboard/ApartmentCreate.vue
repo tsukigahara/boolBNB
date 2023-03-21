@@ -67,14 +67,12 @@ const pickSuggestion = (suggestion) => {
 <template>
     <Head title="New apartment" />
 
-    <DashboardLayout @click="suggestionsDropdownCheck = false">
+    <DashboardLayout>
         <div class="container my-4 shadow p-3 rounded overflow-scroll">
-            <div class="d-flex justify-content-between">
-                <h2>Pubblica l'appartamento</h2>
-
+            <h2>Pubblica l'appartamento</h2>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <a class="btn btn-primary mb-3 mr-3" role="button" href="javascript: history.back()">Indietro</a>
             </div>
-
             <form class="d-flex px-md-2" @submit.prevent="submit">
                 <div class="col">
                     <div class="mb-3">
@@ -145,7 +143,7 @@ const pickSuggestion = (suggestion) => {
                     <div class="mb-3">
                         <label for="" class="form-label">Descrizione</label>
                         <textarea name="description" id="" class="form-control" placeholder="" aria-describedby="helpId"
-                            v-model="form.description"></textarea>
+                            v-model="form.description" style="min-height:200px;"></textarea>
                         <div v-if="form.errors.description" class="text-sm text-red-600">{{ form.errors.description
                         }}</div>
                     </div>

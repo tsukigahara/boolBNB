@@ -31,20 +31,15 @@ const chartOptions = ({
 
 
 <template>
-    <Head title="Messagies" />
+    <Head title="Messages" />
 
     <DashboardLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Views</h2>
-        </template>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8 shadow bg-body rounded">
-                <a class="btn btn-dark mb-3 mr-3" role="button" href="javascript: history.back()">Go back</a>
-
-                <Bar :data="chartData" :options="chartOptions" class="my_chart" />
-
+        <div class="container my-4 shadow p-3 rounded overflow-scroll">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a class="btn btn-primary mb-3 mr-3" role="button" href="javascript: history.back()">Indietro</a>
             </div>
+            <Bar :data="chartData" :options="chartOptions" class="my_chart" />
         </div>
     </DashboardLayout>
 </template>

@@ -26,7 +26,8 @@ defineProps({
                 <div class="container">
 
                     <div class="offcanvas-header">
-                        <h2 class="offcanvas-title" id="offcanvasNavbarLabel">Dashboard</h2>
+                        <h2 class="offcanvas-title" id="offcanvasNavbarLabel">Dashboard di {{ $page.props.auth.user.name }}
+                        </h2>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
@@ -45,7 +46,7 @@ defineProps({
                                 <Link :href="route('profile.edit')"> Profilo </Link>
                             </li>
                             <li class="nav-item">
-                                <Link :href="route('logout')" method="post">
+                                <Link class="text-danger" :href="route('logout')" method="post" as="button">
                                 Logout
                                 </Link>
                             </li>
@@ -67,7 +68,9 @@ defineProps({
 }
 
 .nav-item {
-    a {
+
+    a,
+    button {
         font-size: 24px;
         font-weight: 700;
         color: white;
