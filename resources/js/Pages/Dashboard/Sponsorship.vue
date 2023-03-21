@@ -172,9 +172,9 @@ export default {
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-8 shadow bg-body rounded">
+            <div class="container">
                 <a class="btn btn-dark mb-3 mr-3" role="button" href="javascript: history.back()">Go back</a>
-                <div class="col-6 offset-3">
+                <div class="col-mb-6 col-12 ">
                     <div class="card bg-light">
 
                         <div v-if="endDate != ''">La data di scadenza &egrave; prevista per il {{ dataOfEndDate[0] }} alle
@@ -192,43 +192,23 @@ export default {
                             <form action="/" v-else>
 
                                 <!-- SPONSORSHIP LIST -->
-                                <table class="table">
+                            <div class="d-flex justify-content-between my_box">
 
-                                    <thead>
-                                        <tr class="table-dark">
-                                            <th scope="col"></th>
-                                            <th scope="col">Nome Abbonamento</th>
-                                            <th scope="col">Prezzo</th>
-                                            <th scope="col">Durata</th>
-                                        </tr>
-                                    </thead>
+                                <div v-for="(item, index) in sponsorship" :key="index" @click="priceGet(item.price)" class="m-3 my_checkbox">
 
-
-                                    <tbody>
-                                        <tr v-for="(item, index) in sponsorship" :key="index">
-                                            <th scope="row">
-                                                <input type="radio" name="sposnorship" :value="item.id"
-                                                    v-model="form.sponsorship" @click="priceGet(item.price)">
-                                            </th>
-
-                                            <td>
-                                                <label :for="item.name">
-                                                    {{ item.name }}
-                                                </label>
-                                            </td>
-                                            <td>{{ item.price }} &euro;</td>
-                                            <td>{{ item.duration }} ore</td>
-                                        </tr>
-
-                                    </tbody>
-                                </table>
-
-
-                                <div class="form-group">
-
-
-                                    <div>Prezzo: {{ amount }} &euro;</div>
+                                    <input type="radio" name="sposnorship" :id="item.name" :value="item.id"
+                                    v-model="form.sponsorship"  class="btn-check">
+                                    
+                                    <label :for="item.name" class="btn btn-outline-primary my_checkbox">
+                                        <div class="fw-bold">
+                                                {{ item.name }}
+                                        </div>
+                                        <div>{{ item.price }} &euro;</div>
+                                        <div>{{ item.duration }} ore</div>
+                                    </label>
                                 </div>
+                            </div>
+
 
                                 <hr />
 
@@ -270,5 +250,15 @@ export default {
 <style>
 .form-control {
     height: 3rem;
+}
+.my_checkbox{
+    width: 100%;
+}
+@media (max-width: 750px){
+
+    .my_box{
+        flex-direction: column;
+        align-items: center;
+    }
 }
 </style>
