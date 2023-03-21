@@ -119,9 +119,9 @@ export default {
 
 
 <template>
-    <div class="position-relative container_jumbo pt-4 mb-3">
+    <div class="position-relative container_jumbo pt-4 mb-3 row">
 
-        <div class="d-flex flex-column ms_img align-items-center p-4">
+        <div class="d-flex flex-column ms_img align-items-center p-4  col-12">
             <h1 class="title pb-2">Dove vuoi andare?</h1>
 
             <div class="d-flex justify-content-center ms_search" role="search">
