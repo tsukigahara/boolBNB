@@ -1,6 +1,5 @@
 <script setup>
-import { Head } from '@inertiajs/vue3';
-import { useForm } from '@inertiajs/vue3';
+import { Head, useForm, Link } from '@inertiajs/vue3';
 import DashboardLayout from '@/Layouts/DashboardLayout.vue';
 
 // props
@@ -31,9 +30,9 @@ function destroy(id) {
             <div class="ms_navbar d-flex justify-content-between align-items-center">
                 <h2>I tuoi appartamenti</h2>
 
-                <a class="btn btn-primary" :href="route('dashboard.apartments.create')" role="button">
-                    Crea nuovo appartamento
-                </a>
+                <Link class="btn btn-primary" :href="route('dashboard.apartments.create')" role="button">
+                Crea nuovo appartamento
+                </Link>
             </div>
 
             <div class="row tabella">
@@ -49,20 +48,20 @@ function destroy(id) {
                                 </a>
                                 <ul class="dropdown-menu ps-2">
                                     <li>
-                                        <a :href="route('dasbord.apartment.view', apartment.id)">
-                                            Statistiche
-                                        </a>
+                                        <Link :href="route('dasbord.apartment.view', apartment.id)">
+                                        Statistiche
+                                        </Link>
                                     </li>
                                     <li>
-                                        <a :href="route('dasbord.apartment.message', apartment.id)">
-                                            Messaggi
-                                        </a>
+                                        <Link :href="route('dasbord.apartment.message', apartment.id)">
+                                        Messaggi
+                                        </Link>
                                     </li>
 
                                     <li>
-                                        <a :href="route('dashbord.apartment.sponsorship', apartment.id)">
-                                            sponsorizza
-                                        </a>
+                                        <Link :href="route('dashbord.apartment.sponsorship', apartment.id)">
+                                        sponsorizza
+                                        </Link>
                                     </li>
 
                                 </ul>
@@ -78,10 +77,10 @@ function destroy(id) {
 
                         <div class="row pt-3">
                             <div class="col-6 mb-2 text-center">
-                                <a class="btn btn-primary" :href="route('dashboard.apartments.edit', apartment.id)"
+                                <Link class="btn btn-primary" :href="route('dashboard.apartments.edit', apartment.id)"
                                     role="button">
-                                    Modifica
-                                </a>
+                                Modifica
+                                </Link>
                             </div>
                             <div class="col-6 mb-2 text-center">
                                 <button type="button" class="btn btn-danger" @click="destroy(apartment.id)">

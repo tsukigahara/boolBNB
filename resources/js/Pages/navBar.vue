@@ -1,20 +1,10 @@
-<script>
+<script setup>
+import { Link } from '@inertiajs/vue3';
 import Jumbotron from './Jumbotron.vue';
-
-
-export default {
-    components: {
-        Jumbotron,
-    },
-
-    props: {
-        jumbo: Boolean,
-    },
-
-
-}
+defineProps({
+    jumbo: Boolean,
+})
 </script>
-
 <template>
     <nav class="p-3">
         <div class="d-flex justify-content-between align-items-center">
@@ -29,18 +19,18 @@ export default {
                 <ul class="dropdown-menu">
                     <div v-if="$page.props.auth.user">
                         <li>
-                            <a class="dropdown-item" :href="route('dashboard')">
-                                Dashboard</a>
+                            <Link class="dropdown-item" :href="route('dashboard')">
+                            Dashboard</Link>
                         </li>
                     </div>
                     <template v-else>
                         <li>
-                            <a class="dropdown-item" :href="route('register')">
-                                Register</a>
+                            <Link class="dropdown-item" :href="route('register')">
+                            Register</Link>
                         </li>
                         <li>
-                            <a class="dropdown-item" :href="route('login')">
-                                Login</a>
+                            <Link class="dropdown-item" :href="route('login')">
+                            Login</Link>
                         </li>
                     </template>
                 </ul>

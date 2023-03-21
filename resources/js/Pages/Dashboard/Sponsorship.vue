@@ -1,6 +1,6 @@
 <script setup>
 // import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import DashboardLayout from '@/Layouts/DashboardLayout.vue';
 // import route from 'vendor/tightenco/ziggy/src/js';
 
@@ -43,14 +43,13 @@ const currentYear = today.getFullYear();
 const AUTH_KEY = "sandbox_x6d92nj4_dxm5bvfqp4vgjgxf";
 
 export default {
-
     data() {
         return {
-            amount: '',
+            amount: "",
             nonce: "",
             hostedFieldsInstance: false,
             error: ""
-        }
+        };
     },
     computed: {
         preventPaying() {
@@ -62,7 +61,6 @@ export default {
             if (!this.preventPaying) {
                 this.error = "";
                 this.nonce = "";
-
                 let amount = parseFloat(this.amount);
                 this.hostedFieldsInstance.tokenize()
                     .then(payload => {
@@ -71,17 +69,17 @@ export default {
                     })
                     .catch(err => {
                         console.error(err);
-                        if (typeof err.message !== 'undefined') {
+                        if (typeof err.message !== "undefined") {
                             this.error = err.message;
                         }
                         else {
                             this.error = "An error occurred while processing the payment.";
                         }
-                    })
+                    });
             }
         },
         priceGet(value) {
-            this.amount = value
+            this.amount = value;
         },
         initBraintree() {
             client.create({
@@ -92,37 +90,33 @@ export default {
                         client: clientInstance,
                         styles: {
                             input: {
-                                'font-size': '14px',
-                                'font-family': 'Open Sans'
+                                "font-size": "14px",
+                                "font-family": "Open Sans"
                             }
                         },
                         fields: {
                             number: {
-                                selector: '#creditCardNumber',
-                                placeholder: 'Enter Credit Card'
+                                selector: "#creditCardNumber",
+                                placeholder: "Enter Credit Card"
                             },
                             cvv: {
-                                selector: '#cvv',
-                                placeholder: 'Enter CVV'
+                                selector: "#cvv",
+                                placeholder: "Enter CVV"
                             },
                             expirationDate: {
-                                selector: '#expireDate',
-                                placeholder: currentMonth + ' / ' + currentYear
+                                selector: "#expireDate",
+                                placeholder: currentMonth + " / " + currentYear
                             }
                         }
-                    }
-
-
+                    };
                     let promises = [];
                     promises.push(hostedFields.create(options));
                     // promises.push(paypalCheckout.create({ client: clientInstance }));
-
                     return Promise.all(promises);
                 })
                 .then(instances => {
                     this.hostedFieldsInstance = instances[0];
                     //     const paypalInstance = instances[1];
-
                     //     return paypal.Button.render({
                     //         env: 'sandbox',
                     //         style: {
@@ -155,18 +149,17 @@ export default {
                     //             this.error = "An error occurred while processing the paypal payment.";
                     //         }
                     //     }, '#paypalButton')
-
                 })
                 .catch(err => {
                     console.error(err);
                     this.error = "An error occurred while creating the payment form.";
-                })
+                });
         }
     },
     mounted() {
         this.initBraintree();
-
-    }
+    },
+    components: { Link }
 }
 </script>
 

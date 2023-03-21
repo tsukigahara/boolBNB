@@ -1,9 +1,11 @@
-<script>
-
+<script setup>
 import { Head, Link } from '@inertiajs/vue3';
+</script>
+
+<script>
 import { onMounted } from 'vue';
 import { store } from '../store';
-
+import axios from 'axios';
 
 export default {
     name: "navBar",
@@ -171,14 +173,13 @@ export default {
                 <button class="btn btn-success mx-2" type="submit"
                     @click.prevent="searchApartments(store.searchQuery, store.searchRadius)">Search</button>
                 <!-- <button class="btn btn-success mx-2"
-                        @click.prevent="filter()">Filter</button> -->
+                                    @click.prevent="filter()">Filter</button> -->
             </div>
 
             <!-- <button @click.prevent="advancedSearchApartments(store.searchQuery, store.searchRadius)" class="btn btn-outline-success">AdS</button> -->
 
-            <a :href="route('filteredPage')" v-if="!store.isOnFiltered">
-                <button class="btn btn-success ">Advanced Search</button>
-            </a>
+            <Link :href="route('filteredPage')" v-if="!store.isOnFiltered" class="btn btn-success ">Advanced Search
+            </Link>
 
         </div>
 
