@@ -17,7 +17,7 @@ defineProps({
     <div class="container ">
 
         <navBar :jumbo="true" />
-        <div class="d-flex flex-wrap overflow-y-auto ms_padding container-md row row-cols-1 mx-auto">
+        <div class="d-flex flex-wrap overflow-y-auto ms_padding container-md row row-cols-1 mt-3">
             <template v-for="apartment in store.advancedfApartments">
                 <a href="" class="pt-2 col-lg-3 col-md-4 col-12"
                     :class="sponsorshipArray.includes(apartment.id) ? 'order-1' : 'order-2'">
