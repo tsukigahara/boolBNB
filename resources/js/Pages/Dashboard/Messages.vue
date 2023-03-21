@@ -1,6 +1,6 @@
 <script setup>
 // import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import { objectToString } from '@vue/shared';
 import { reactive, onMounted } from '@vue/runtime-core';
 import DashboardLayout from '@/Layouts/DashboardLayout.vue';
@@ -50,23 +50,23 @@ defineProps({
                                     <tr>
                                             <th scope="col">From</th>
                                             <th scope="col">Email</th>
-                                                                            <th scope="col">Message</th>
-                                                                            <th scope="col">Options</th>
+                                                                                    <th scope="col">Message</th>
+                                                                                    <th scope="col">Options</th>
 
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody class="">
-                                                                        <tr v-for="message in messages">
-                                                                            <th scope="row">{{ message.name }}</th>
-                                                                            <td>{{ message.email }}</td>
-                                                                            <td>{{ message.message }}</td>
-                                                                            <td style="white-space: nowrap;">
-                                                                                options here
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div> -->
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody class="">
+                                                                                <tr v-for="message in messages">
+                                                                                    <th scope="row">{{ message.name }}</th>
+                                                                                    <td>{{ message.email }}</td>
+                                                                                    <td>{{ message.message }}</td>
+                                                                                    <td style="white-space: nowrap;">
+                                                                                        options here
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div> -->
     </DashboardLayout>
 </template>
