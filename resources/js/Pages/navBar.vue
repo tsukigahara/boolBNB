@@ -9,7 +9,7 @@ defineProps({
     <nav class="p-3">
         <div class="d-flex justify-content-between align-items-center">
             <a :href="route('welcome')">
-                <img class="logo" src="./img//bool.png" alt="">
+                <img class="logo" src="./img/boolbnb_logo.png" alt="">
             </a>
 
             <div class="dropdown">

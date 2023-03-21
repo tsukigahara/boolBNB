@@ -25,69 +25,66 @@ function destroy(id) {
     <Head title="My apartments" />
 
     <DashboardLayout>
-
-        <div class="container">
-
-            <div class="ms_navbar d-flex justify-content-between align-items-center">
-                <h2>I tuoi appartamenti</h2>
-
-                <Link class="btn btn-primary" :href="route('dashboard.apartments.create')" role="button">
-                Crea nuovo appartamento
+        <div class="container my-4 shadow p-3 rounded overflow-scroll">
+            <h1>I tuoi appartamenti</h1>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <Link class="btn btn-primary btn-lg" :href="route('dashboard.apartments.create')" role="button">
+                Crea annuncio
                 </Link>
             </div>
-
-            <div class="row tabella">
-                <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12" v-for="apartment in apartments">
-                    <div class="card mb-3">
-                        <div class="d-flex justify-content-between">
-                            <h5>{{ apartment.title }}</h5>
-                            <div v-show="sponsorshipArray.includes(apartment.id)">
-                                <i class="fa-solid fa-star"></i>
-                            </div>
-                            <div class=" dropdown">
-                                <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-bars"></i>
-                                </a>
-                                <ul class="dropdown-menu ps-2">
+            <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 my-3">
+                <div class="col" v-for="apartment in apartments">
+                    <div class="card h-100 shadow">
+                        <img :src="'/storage/' + apartment.main_image" :alt="apartment.title">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ apartment.title }}</h5>
+                            <h6 class="card-subtitle mb-2">{{ apartment.price }}€</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ apartment.address }}</h6>
+                        </div>
+                        <div class="card-footer bg-body">
+                            <Link class="btn btn-outline-primary mr-3"
+                                :href="route('dashboard.apartments.edit', apartment.id)" role="button">
+                            Modifica
+                            </Link>
+                            <div class="btn-group dropup">
+                                <button type="button" class="btn btn-outline-primary dropdown-toggle"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Altro
+                                </button>
+                                <ul class="dropdown-menu">
                                     <li>
-                                        <Link :href="route('dasbord.apartment.view', apartment.id)">
+                                        <Link class="dropdown-item" :href="route('show', apartment.id)">
+                                        Mostra
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link class="dropdown-item" :href="route('dasbord.apartment.view', apartment.id)">
                                         Statistiche
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link :href="route('dasbord.apartment.message', apartment.id)">
+                                        <Link class="dropdown-item"
+                                            :href="route('dasbord.apartment.message', apartment.id)">
                                         Messaggi
                                         </Link>
                                     </li>
 
                                     <li>
-                                        <Link :href="route('dashbord.apartment.sponsorship', apartment.id)">
-                                        sponsorizza
+                                        <Link class="dropdown-item"
+                                            :href="route('dashbord.apartment.sponsorship', apartment.id)">
+                                        Sponsorship
                                         </Link>
                                     </li>
-
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <button type="button" class="dropdown-item text-danger"
+                                            @click="destroy(apartment.id)">
+                                            Elimina
+                                        </button>
+                                    </li>
                                 </ul>
-                            </div>
-                        </div>
-                        <div>
-                            <img :src="'/storage/' + apartment.main_image" :alt="apartment.title">
-                        </div>
-                        <div>€{{ apartment.price }}</div>
-                        <div>{{ apartment.address }}</div>
-
-
-
-                        <div class="row pt-3">
-                            <div class="col-6 mb-2 text-center">
-                                <Link class="btn btn-primary" :href="route('dashboard.apartments.edit', apartment.id)"
-                                    role="button">
-                                Modifica
-                                </Link>
-                            </div>
-                            <div class="col-6 mb-2 text-center">
-                                <button type="button" class="btn btn-danger" @click="destroy(apartment.id)">
-                                    Elimina
-                                </button>
                             </div>
                         </div>
                     </div>
@@ -98,32 +95,4 @@ function destroy(id) {
     </DashboardLayout>
 </template>
 
-<style lang="scss" scoped>
-.container {
-    height: calc(100vh - 70px);
-}
-
-.card {
-    padding: 10px;
-}
-
-.descrizione {
-    height: 60px;
-}
-
-.ms_navbar {
-    height: 85px;
-}
-
-.tabella {
-    height: calc(100% - 85px);
-    overflow: auto;
-}
-
-.img {
-    border-radius: 10px;
-    width: 300px;
-    height: 200px;
-    object-fit: cover;
-}
-</style>
+<style lang="scss" scoped></style>

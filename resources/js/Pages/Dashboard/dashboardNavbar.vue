@@ -1,6 +1,8 @@
 <script setup>
 import DropdownLink from '@/Components/DropdownLink.vue';
 import { Link } from '@inertiajs/vue3';
+import NavLink from '@/Components/NavLink.vue';
+
 
 // props
 defineProps({
@@ -10,31 +12,48 @@ defineProps({
 </script>
 
 <template>
-    <nav class="navba d-flex align-items-center">
-
-        <div class="navLogo ">
-            <Link :href="route('welcome')" class="d-flex justify-content-center">
-            <img class="logo" src="../../../js/Pages/img/bool.png" alt="Airbnb">
-            <img class="icona" src="../../Pages/img/Icona.png" alt="">
+    <nav class="navbar bg-light sticky-top">
+        <div class="container">
+            <Link class="navbar-brand" :href="route('welcome')">
+            <img src="../../../js/Pages/img/boolbnb_logo.png" alt="Logo" width="150" class="d-inline-block align-text-top">
             </Link>
-        </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-top my-bg" data-bs-scroll="true" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+                <div class="container">
 
-        <div class="d-flex justify-content-end width me-3">
-            <li class="nav-item dropdown account ">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    {{ $page.props.auth.user.name }}
-                </a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <DropdownLink :href="route('profile.edit')"> Profilo </DropdownLink>
-                    </li>
-                    <li>
-                        <DropdownLink :href="route('logout')" method="post">
-                            Log Out
-                        </DropdownLink>
-                    </li>
-                </ul>
-            </li>
+                    <div class="offcanvas-header">
+                        <h2 class="offcanvas-title" id="offcanvasNavbarLabel">Dashboard di {{ $page.props.auth.user.name }}
+                        </h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <Link :href="route('dashboard.apartments')">
+                                Appartamenti
+                                </Link>
+                            </li>
+                            <li class="nav-item">
+                                <Link :href="route('dashboard')">
+                                Messaggi
+                                </Link>
+                            </li>
+                            <li class="nav-item">
+                                <Link :href="route('profile.edit')"> Profilo </Link>
+                            </li>
+                            <li class="nav-item">
+                                <Link class="text-danger" :href="route('logout')" method="post" as="button">
+                                Logout
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </nav>
 </template>
@@ -43,56 +62,24 @@ defineProps({
 @use "../../../scss/app.scss" as *;
 @use "../../../scss/general.scss" as *;
 
-
-.navba {
-    height: 70px;
-    background-color: white;
-    border-bottom: 2px solid blue;
+.my-bg {
+    background-color: #1aa1ff;
+    color: white;
 }
 
-.navLogo {
-    width: 300px;
-}
+.nav-item {
 
-.width {
-    width: calc(100vw - 300px);
-}
+    a,
+    button {
+        font-size: 24px;
+        font-weight: 700;
+        color: white;
 
-.logo {
-    width: 60%;
-    text-align: center;
-}
-
-.icona {
-    width: 50%;
-    display: none;
-}
-
-
-.account {
-    border: 1px solid grey;
-    width: auto;
-    padding: 5px;
-    border-radius: 20px;
-    background-color: white;
-}
-
-@media screen and (max-width: 768px) {
-
-    .navLogo {
-        width: 90px;
+        &:hover {
+            background-color: rgb(255, 255, 255);
+            color: #1aa1ff;
+        }
     }
 
-    .logo {
-        display: none;
-    }
-
-    .icona {
-        display: inline;
-    }
-
-    .width {
-        width: calc(100vw - 90px);
-    }
 }
 </style>

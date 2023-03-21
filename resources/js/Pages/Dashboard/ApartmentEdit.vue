@@ -109,17 +109,15 @@ const pickSuggestion = (suggestion) => {
 
     <DashboardLayout>
 
-        <div class="container">
-            <div class="d-flex justify-content-between py-3">
-                <h2>Modifica l'appartamento</h2>
-
-                <a class="btn btn-dark mb-3 mr-3" role="button" href="javascript: history.back()">Indietro</a>
+        <div class="container my-4 shadow p-3 rounded overflow-scroll">
+            <h2>Modifica l'appartamento</h2>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a class="btn btn-primary mb-3 mr-3" role="button" href="javascript: history.back()">Indietro</a>
             </div>
-
-            <form class="d-flex px-md-2" @submit.prevent="submit">
+            <form class="d-flex" @submit.prevent="submit">
                 <div class="col">
                     <div class="mb-3">
-                        <label for="" class="form-label">Nome appartamento</label>
+                        <label for="" class="form-label">Titolo</label>
                         <input type="text" name="title" id="" class="form-control" placeholder="" aria-describedby="helpId"
                             v-model="form.title">
                         <div v-if="form.errors.title" class="text-sm text-red-600">{{ form.errors.title }}</div>
@@ -180,20 +178,20 @@ const pickSuggestion = (suggestion) => {
                         }}</div>
                     </div>
                     <div class="mb-3">
-                        <label for="" class="form-label">price</label>
+                        <label for="" class="form-label">Prezzo</label>
                         <input type="number" name="price" id="" class="form-control" placeholder=""
                             aria-describedby="helpId" v-model="form.price">
                         <div v-if="form.errors.price" class="text-sm text-red-600">{{ form.errors.price }}</div>
                     </div>
                     <div class="mb-3">
-                        <label for="" class="form-label">Description</label>
+                        <label for="" class="form-label">Descrizione</label>
                         <textarea name="description" id="" class="form-control" placeholder="" aria-describedby="helpId"
-                            v-model="form.description"></textarea>
+                            v-model="form.description" style="min-height:200px;"></textarea>
                         <div v-if="form.errors.description" class="text-sm text-red-600">{{ form.errors.description }}
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-check-label" for="">SERVICES</label>
+                        <label class="form-check-label" for="">Servizi aggiuntivi</label>
                         <div class="mb-3">
                             <div class="form-check form-check-inline" v-for="service in services" :key="service.id">
                                 <input class="form-check-input" type="checkbox" :value="service.id" id=""

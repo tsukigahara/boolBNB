@@ -167,41 +167,40 @@ export default {
     <Head title="Sponsorship" />
 
     <DashboardLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Sponsorship</h2>
-        </template>
 
-        <div class="py-12">
-            <div class="container">
-                <a class="btn btn-dark mb-3 mr-3" role="button" href="javascript: history.back()">Go back</a>
-                <div class="col-mb-6 col-12 ">
-                    <div class="card bg-light">
+        <div class="container my-4 shadow p-3 rounded overflow-scroll">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a class="btn btn-primary mb-3 mr-3" role="button" href="javascript: history.back()">Indietro</a>
+            </div>
+            <div class="col-mb-6 col-12 ">
+                <div class="card bg-light">
 
-                        <div v-if="endDate != ''">La data di scadenza &egrave; prevista per il {{ dataOfEndDate[0] }} alle
-                            {{
-                                hourOfEndDate[0] }}
+                    <div v-if="endDate != ''">La data di scadenza &egrave; prevista per il {{ dataOfEndDate[0] }} alle
+                        {{
+                            hourOfEndDate[0] }}
+                    </div>
+                    <div class="card-header">Informazioni di Pagamento</div>
+                    <div class="card-body">
+                        <div class="alert alert-danger" v-if="error">
+                            {{ error }}
                         </div>
-                        <div class="card-header">Informazioni di Pagamento</div>
-                        <div class="card-body">
-                            <div class="alert alert-danger" v-if="error">
-                                {{ error }}
-                            </div>
-                            <div class="alert alert-success" v-if="nonce">
-                                Il pagamento &egrave; andato a buon fine!
-                            </div>
-                            <form action="/" v-else>
+                        <div class="alert alert-success" v-if="nonce">
+                            Il pagamento &egrave; andato a buon fine!
+                        </div>
+                        <form action="/" v-else>
 
-                                <!-- SPONSORSHIP LIST -->
+                            <!-- SPONSORSHIP LIST -->
                             <div class="d-flex justify-content-between my_box">
 
-                                <div v-for="(item, index) in sponsorship" :key="index" @click="priceGet(item.price)" class="m-3 my_checkbox">
+                                <div v-for="(item, index) in sponsorship" :key="index" @click="priceGet(item.price)"
+                                    class="m-3 my_checkbox">
 
                                     <input type="radio" name="sposnorship" :id="item.name" :value="item.id"
-                                    v-model="form.sponsorship"  class="btn-check">
-                                    
+                                        v-model="form.sponsorship" class="btn-check">
+
                                     <label :for="item.name" class="btn btn-outline-primary my_checkbox">
                                         <div class="fw-bold">
-                                                {{ item.name }}
+                                            {{ item.name }}
                                         </div>
                                         <div>{{ item.price }} &euro;</div>
                                         <div>{{ item.duration }} ore</div>
@@ -210,35 +209,34 @@ export default {
                             </div>
 
 
-                                <hr />
+                            <hr />
 
-                                <div class="form-group">
-                                    <label>Numero Carta di credito</label>
-                                    <div id="creditCardNumber" class="form-control"></div>
-                                </div>
+                            <div class="form-group">
+                                <label>Numero Carta di credito</label>
+                                <div id="creditCardNumber" class="form-control"></div>
+                            </div>
 
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <label>Data di scadenza</label>
-                                            <div id="expireDate" class="form-control"></div>
-                                        </div>
-                                        <div class="col-6">
-                                            <label>CVV</label>
-                                            <div id="cvv" class="form-control"></div>
-                                        </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label>Data di scadenza</label>
+                                        <div id="expireDate" class="form-control"></div>
+                                    </div>
+                                    <div class="col-6">
+                                        <label>CVV</label>
+                                        <div id="cvv" class="form-control"></div>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="text-center">
-                                    <button class="btn btn-primary btn-block mt-3" @click.prevent="pay"
-                                        :disabled="preventPaying">Paga con carta di credito</button>
-                                </div>
+                            <div class="text-center">
+                                <button class="btn btn-primary btn-block mt-3" @click.prevent="pay"
+                                    :disabled="preventPaying">Paga con carta di credito</button>
+                            </div>
 
-                            </form>
-                            <button type="submit" class="btn btn-primary" @click="submit" v-if="nonce">Attiva
-                                abbonamento</button>
-                        </div>
+                        </form>
+                        <button type="submit" class="btn btn-primary" @click="submit" v-if="nonce">Attiva
+                            abbonamento</button>
                     </div>
                 </div>
             </div>
@@ -251,12 +249,14 @@ export default {
 .form-control {
     height: 3rem;
 }
-.my_checkbox{
+
+.my_checkbox {
     width: 100%;
 }
-@media (max-width: 750px){
 
-    .my_box{
+@media (max-width: 750px) {
+
+    .my_box {
         flex-direction: column;
         align-items: center;
     }
