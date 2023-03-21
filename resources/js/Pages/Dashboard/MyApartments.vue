@@ -38,9 +38,8 @@ function destroy(id) {
             <div class="row tabella">
                 <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12" v-for="apartment in apartments">
                     <div class="card mb-3">
-                        <div class="d-flex justify-content-between flex-column">
-                           
-                            <img :src="'/storage/' + apartment.main_image" :alt="apartment.title" class="img">
+                        <div class="d-flex justify-content-between">
+
                             <h5>{{ apartment.title }}</h5>
                             <div class=" dropdown">
                                 <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
