@@ -5,7 +5,8 @@ import DashboardLayout from '@/Layouts/DashboardLayout.vue';
 // props
 defineProps({
     apartments: Array,
-    sponsorshipArray: Array
+    sponsorshipArray: Array,
+    endDate: String,
 });
 
 // delete
@@ -40,6 +41,9 @@ function destroy(id) {
                             <h5 class="card-title">{{ apartment.title }}</h5>
                             <h6 class="card-subtitle mb-2">{{ apartment.price }}€</h6>
                             <h6 class="card-subtitle mb-2 text-muted">{{ apartment.address }}</h6>
+                            <h6 v-if="sponsorshipArray.includes(apartment.id)" class="card-subtitle mb-2">
+                                <span class="badge rounded-pill text-bg-warning">Sponsorizzato</span>
+                            </h6>
                         </div>
                         <div class="card-footer bg-body">
                             <Link class="btn btn-outline-primary mr-3"
