@@ -21,33 +21,36 @@ defineProps({
                 aria-controls="offcanvasNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="offcanvas offcanvas-start my-bg" tabindex="-1" id="offcanvasNavbar"
+            <div class="offcanvas offcanvas-top my-bg" data-bs-scroll="true" tabindex="-1" id="offcanvasNavbar"
                 aria-labelledby="offcanvasNavbarLabel">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Dashboard</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                        <li class="nav-item">
-                            <Link :href="route('dashboard.apartments')">
-                            Appartamenti
-                            </Link>
-                        </li>
-                        <li class="nav-item">
-                            <Link :href="route('dashboard')">
-                            Messaggi
-                            </Link>
-                        </li>
-                        <li class="nav-item">
-                            <Link :href="route('profile.edit')"> Profilo </Link>
-                        </li>
-                        <li class="nav-item">
-                            <Link :href="route('logout')" method="post">
-                            Logout
-                            </Link>
-                        </li>
-                    </ul>
+                <div class="container">
+
+                    <div class="offcanvas-header">
+                        <h2 class="offcanvas-title" id="offcanvasNavbarLabel">Dashboard</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <Link :href="route('dashboard.apartments')">
+                                Appartamenti
+                                </Link>
+                            </li>
+                            <li class="nav-item">
+                                <Link :href="route('dashboard')">
+                                Messaggi
+                                </Link>
+                            </li>
+                            <li class="nav-item">
+                                <Link :href="route('profile.edit')"> Profilo </Link>
+                            </li>
+                            <li class="nav-item">
+                                <Link :href="route('logout')" method="post">
+                                Logout
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
