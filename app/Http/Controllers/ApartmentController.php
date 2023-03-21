@@ -44,12 +44,14 @@ class ApartmentController extends Controller
 
                 // calcola la data di fine sponsorship
                 $duration = Sponsorship::find($sponsorshipId)->duration;
-                $endDate = Carbon::parse($startDate)->addHours($duration);
+                $numDuration =explode(':',$duration);
+                $endDateString = $startDate->format('Y-m-d H:i:s');
+                $endDate = Carbon::parse($endDateString)->addHours($numDuration[0]);
 
                 // verifica se la sponsorship è ancora attiva
                 $isExpired = Carbon::now()->greaterThan($endDate);
 
-                if ($isExpired) {
+                if (!$isExpired) {
                     // push nell'array degli apopartamenti sponsorizzati
                     $sponsorshipArray[] = $i;
                 }
