@@ -7,7 +7,7 @@ import { Link } from '@inertiajs/vue3';
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
         <div>
             <Link href="/">
-            <img class="logo" src="../pages/img/bool.png" alt="">
+            <img class="logo" src="../pages/img/boolbnb_logo.png" alt="">
             </Link>
         </div>
 

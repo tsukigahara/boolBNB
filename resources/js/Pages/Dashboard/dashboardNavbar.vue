@@ -12,7 +12,7 @@ defineProps({
 </script>
 
 <template>
-    <nav class="navbar bg-light sticky-top">
+    <nav class="navbar bg-light sticky-top shadow-sm">
         <div class="container">
             <Link class="navbar-brand" :href="route('welcome')">
             <img src="../../../js/Pages/img/boolbnb_logo.png" alt="Logo" width="150" class="d-inline-block align-text-top">

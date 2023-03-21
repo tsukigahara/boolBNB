@@ -20,7 +20,7 @@ export default {
     },
     methods: {
         searchApartments(element, range) {
-            let elementSearch = element.replace(' ', '+');
+            let elementSearch = element.replace(/\s/g, '+');
             const fullSearchAPI = `${store.searchAPI}/${elementSearch}/${range}`;
             axios.get(fullSearchAPI)
                 .then(res => {
@@ -133,7 +133,7 @@ export default {
                     <div class="input-group  ">
                         <input type="text" class="form-control" placeholder="Search" aria-label="Search"
                             v-model="store.searchQuery" @input="checkInputLength()">
-                        <button class="btn btn-success" type="submit"
+                        <button class="btn btn-dark" type="submit"
                             @click.prevent="searchApartments(store.searchQuery, store.searchRadius)"><i
                                 class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i></button>
                         <div v-if="showDropdown" class="campiRicerca">
@@ -145,7 +145,7 @@ export default {
                                 </li>
                             </ul>
                         </div>
-                        <Link :href="route('filteredPage')" v-if="!store.isOnFiltered" class="btn btn-success ms-2"><i
+                        <Link :href="route('filteredPage')" v-if="!store.isOnFiltered" class="btn btn-dark ms-2"><i
                             class="fa-solid fa-sliders" style="color: #ffffff;"></i>
                         </Link>
                     </div>
@@ -255,7 +255,6 @@ export default {
     .jumbo {
         height: 100%;
         width: 100%;
-        border-radius: 40px;
         object-fit: cover;
     }
 
@@ -277,7 +276,6 @@ export default {
 
 .ms_img {
     background-image: url('./img/vista-aerea-di-kelingking-beach-nell-isola-di-nusa-penida-bali-in-indonesia.jpg');
-    border-radius: 20px;
     background-size: cover;
     background-position: 50%;
 }

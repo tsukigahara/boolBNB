@@ -12,11 +12,11 @@ defineProps({
 
 
 <template>
-    <Head title="Boolbnb"  />
+    <Head title="Boolbnb" />
 
+    <navBar :jumbo="true" />
     <div class="container ">
 
-        <navBar :jumbo="true" class="position-sticky top-0 my_navbar" />
         <div class="d-flex flex-wrap overflow-y-auto ms_padding container-md row row-cols-1 ">
             <template v-for="apartment in store.advancedfApartments">
                 <a href="" class="pt-2 col-lg-3 col-md-4 col-12"
@@ -42,7 +42,7 @@ defineProps({
 </template>
 
 
-<style lang="scss">
+<style lang="scss" scoped>
 @use "../../scss/app.scss" as *;
 @use "../../scss/general.scss" as *;
 
@@ -71,13 +71,15 @@ defineProps({
 }
 
 .ms_padding {
-    margin-top: 1rem;
+    margin-top: 3rem;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }
 
 @media (max-width: 767px) {
     .ms_padding {
 
-        margin-top: 8rem;
+        margin-top: 9rem;
     }
 
 }

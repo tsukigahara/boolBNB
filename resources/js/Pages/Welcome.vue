@@ -14,9 +14,10 @@ defineProps({
 <template>
     <Head title="Boolbnb" />
 
+    <navBar :jumbo="true" />
+
     <div class="container ">
 
-        <navBar :jumbo="true" class="position-sticky top-0 my_navbar" />
 
         <div class="d-flex flex-wrap overflow-y-auto ms_padding container-md row row-cols-1 mx-auto">
 
