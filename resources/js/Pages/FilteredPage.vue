@@ -16,7 +16,7 @@ defineProps({
 
     <div class="container ">
 
-        <navBar :jumbo="true" />
+        <navBar :jumbo="true" class="position-sticky top-0 my_navbar" />
         <div class="d-flex flex-wrap overflow-y-auto ms_padding container-md row row-cols-1 mt-3">
             <template v-for="apartment in store.advancedfApartments">
                 <a href="" class="pt-2 col-lg-3 col-md-4 col-12"
@@ -45,6 +45,11 @@ defineProps({
 <style lang="scss">
 @use "../../scss/app.scss" as *;
 @use "../../scss/general.scss" as *;
+
+.my_navbar {
+    z-index: 900;
+    background-color: $white;
+}
 
 .my_sponsorship {
     color: gold;

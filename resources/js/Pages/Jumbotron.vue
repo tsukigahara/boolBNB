@@ -142,14 +142,14 @@ export default {
                             </li>
                         </ul>
                     </div>
+                    <Link :href="route('filteredPage')" v-if="!store.isOnFiltered" class="btn btn-success ms-2"><i
+                        class="fa-solid fa-sliders" style="color: #ffffff;"></i>
+                    </Link>
                 </div>
             </div>
                 
 
 
-                <Link :href="route('filteredPage')" v-if="!store.isOnFiltered" class="btn btn-success "><i
-                    class="fa-solid fa-sliders" style="color: #ffffff;"></i>
-                </Link>
 
             </div>
             <div class="container-fluid">
