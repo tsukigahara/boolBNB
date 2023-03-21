@@ -34,11 +34,7 @@ const submit = () => {
 
             <navBar :jumbo="false" />
 
-            <!-- tag corretto -->
-            <!-- <img src="{{ apartment.main_image }}" alt="no.img"> -->
-
-            <!-- tag di prova -->
-            <img class="ms_img col-12 col-md-6 mx-auto" src="./img/dl_a01597558.jpg" alt="">
+        <img class="ms_img col-12 col-md-6 mx-auto" :src="'/storage/' + apartment.main_image" alt="">
 
             <div class="row mx-0 px-0">
                 <div class="col-12 col-md-8">
