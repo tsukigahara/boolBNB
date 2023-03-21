@@ -1,7 +1,7 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+// import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
-import { propsToAttrMap } from '@vue/shared';
+// import { propsToAttrMap } from '@vue/shared';
 const props = defineProps({
     apartment: Object,
     user: Array,

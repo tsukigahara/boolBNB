@@ -1,5 +1,5 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+// import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import DashboardLayout from '@/Layouts/DashboardLayout.vue';
 // import route from 'vendor/tightenco/ziggy/src/js';
@@ -184,8 +184,9 @@ export default {
                 <div class="col-6 offset-3">
                     <div class="card bg-light">
 
-                        <div v-if="endDate != ''">La data di scadenza &egrave; prevista per il {{ dataOfEndDate[0] }} alle {{
-                            hourOfEndDate[0] }}
+                        <div v-if="endDate != ''">La data di scadenza &egrave; prevista per il {{ dataOfEndDate[0] }} alle
+                            {{
+                                hourOfEndDate[0] }}
                         </div>
                         <div class="card-header">Informazioni di Pagamento</div>
                         <div class="card-body">

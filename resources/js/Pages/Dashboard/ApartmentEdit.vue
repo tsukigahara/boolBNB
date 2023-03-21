@@ -1,6 +1,10 @@
 <script setup>
 import { Head, useForm } from '@inertiajs/vue3';
 import DashboardLayout from '@/Layouts/DashboardLayout.vue';
+import { computed } from 'vue'
+import { store } from '../../store';
+import axios from 'axios';
+
 
 const props = defineProps({
     apartment: Object,
@@ -24,6 +28,14 @@ const form = useForm({
     services_id: props.apartment.services,
 });
 
+const submit = () => {
+
+    console.log(form);
+
+    form.post(route('dashboard.apartments.update', props.apartment.id));
+};
+
+// SERVICE ID functions //////////////////////////
 const apartmentHasService = (serviceId) => {
     let present = false;
     props.apartment.services.forEach(element => {
@@ -39,8 +51,6 @@ const apartmentHasService = (serviceId) => {
 
 };
 
-
-
 const pushId = (serviceId) => {
     const serviceIndex = form.services_id.findIndex((service) => service.id === serviceId);
     if (serviceIndex !== -1) {
@@ -50,12 +60,46 @@ const pushId = (serviceId) => {
     }
 };
 
+//autocompleate functions /////////////////////////////////////
 
+store.createAddress = props.apartment.address;
 
-const submit = () => {
+// boolean per il v-if delle suggestioni
+var suggestionsDropdownCheck = false;
 
-    form.post(route('dashboard.apartments.update', props.apartment.id));
+//osserva la lunghezza del input e decide se chiamare tomtom api 
+let autocompleateTrigger = computed(() => {
+    if (store.createAddress.length >= 3) {
+        autocompleate(store.createAddress)
+    }
+    if (store.createAddress.length < 3) {
+        suggestionsDropdownCheck = false;
+    }
+});
+
+//richiesta tomtom api = ritorna in forma di array i suggestions 
+const autocompleate = (string) => {
+    let query = string.replace(/\s/g, '+');
+    const url = `${store.autocompleteAPI}/${query}`;
+    axios.get(url)
+        .then(res => {
+            store.autocompleteArray = res.data.response.data
+            // console.log(store.autocompleteArray)
+        })
+        .catch(err => {
+            console.log(err)
+        });
+    suggestionsDropdownCheck = true;
 };
+
+const pickSuggestion = (suggestion) => {
+    suggestionsDropdownCheck = false;
+    form.address = suggestion;
+    store.createAddress = suggestion;
+}
+
+
+
 </script>
 
 
@@ -105,14 +149,22 @@ const submit = () => {
                             <div v-if="form.errors.square_meters" class="text-sm text-red-600">{{ form.errors.square_meters
                             }}</div>
                         </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Address</label>
+                        <div class="mb-3 suggestions-box">
+                            <label for="" class="form-label">Indirizzo</label>
                             <input type="text" name="address" id="" class="form-control" placeholder=""
-                                aria-describedby="helpId" v-model="form.address">
+                                aria-describedby="helpId" v-model="store.createAddress" @input="autocompleateTrigger">
+                            <div v-if="suggestionsDropdownCheck" class="suggestions-items">
+                                <div class="suggestions-item" v-for="elem in store.autocompleteArray?.suggestions?.results"
+                                    @click="pickSuggestion(`${elem.address.freeformAddress} ${elem.address.countrySecondarySubdivision} ${elem.address.countrySubdivision} ${elem.address.country}`)">
+                                    {{ elem.address.freeformAddress }}, {{ elem.address.countrySecondarySubdivision }}, {{
+                                        elem.address.countrySubdivision }}, {{ elem.address.country }}
+                                </div>
+                            </div>
                             <div class="form-text">
                                 GPS COORDINATES: {{ form.latitude }}, {{ form.longitude }}
                             </div>
-                            <div v-if="form.errors.address" class="text-sm text-red-600">{{ form.errors.address }}</div>
+                            <div v-if="form.errors.address" class="text-sm text-red-600">{{ form.errors.address
+                            }}</div>
                             <div v-if="$page.props.flash.TomTomError" class="text-sm text-red-600">{{
                                 $page.props.flash.TomTomError
                             }}</div>
@@ -160,3 +212,36 @@ const submit = () => {
         </div>
     </DashboardLayout>
 </template>
+
+<style lang="scss" scoped>
+@use "../../../scss/app.scss" as *;
+@use "../../../scss/general.scss" as *;
+
+.suggestions-box {
+    /*the container must be positioned relative:*/
+    position: relative;
+
+    .suggestions-items {
+        position: absolute;
+        border: 1px solid #ced4da;
+        border-top: none;
+        z-index: 99;
+        top: 100%;
+        left: 0;
+        right: 0;
+        max-height: 250px;
+        overflow-y: auto;
+
+        .suggestions-item {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #f5f5f5;
+            border-bottom: 1px solid #d4d4d4;
+
+            &:hover {
+                background-color: #e9e9e9;
+            }
+        }
+    }
+}
+</style>

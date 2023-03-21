@@ -2,7 +2,7 @@
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import navBar from './navBar.vue'
 
-import { propsToAttrMap } from '@vue/shared';
+// import { propsToAttrMap } from '@vue/shared';
 
 const props = defineProps({
     apartment: Object,
@@ -120,7 +120,7 @@ const submit = () => {
                                     <label for="" class="form-label">Scrivi il tuo messaggio</label>
                                     <textarea type="textarea" name="message" class="form-control" placeholder=""
                                         aria-describedby="helpId" v-model="form.message" required>
-                                        </textarea>
+                                            </textarea>
                                 </div>
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-primary me-3">Invia
@@ -171,9 +171,9 @@ h1 {
 }
 
 // .ms_card {
-    // width: calc((98% / 4) - 10px);
-    // margin: 5px 0;
-    // padding: 5px;
+// width: calc((98% / 4) - 10px);
+// margin: 5px 0;
+// padding: 5px;
 //
 // }
 
