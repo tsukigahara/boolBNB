@@ -99,7 +99,7 @@ export default {
     },
     computed: {
         shouldMakeApiCall() {
-            return store.searchQuery.length >= 4
+            return store.searchQuery.length >= 1
         }
     },
     mounted() {
@@ -131,18 +131,18 @@ export default {
                     <button class="btn btn-success" type="submit"
                         @click.prevent="searchApartments(store.searchQuery, store.searchRadius)"><i
                             class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i></button>
-
+                    <div v-if="shouldMakeApiCall" class="campiRicerca">
+                        <ul>
+                            <li class="pulsante" v-for="elem in store.autocompleteArray?.suggestions?.results"
+                                @click="pickSuggestion(`${elem.address.freeformAddress}+${elem.address.countrySecondarySubdivision}+${elem.address.countrySubdivision}+${elem.address.country}`)">
+                                {{ elem.address.freeformAddress }} | {{ elem.address.countrySecondarySubdivision }} | {{
+                                    elem.address.countrySubdivision }} | {{ elem.address.country }}
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
-                <div v-if="shouldMakeApiCall" class="campiRicerca">
-                    <ul>
-                        <li class="pulsante" v-for="elem in store.autocompleteArray?.suggestions?.results"
-                            @click="pickSuggestion(`${elem.address.freeformAddress}+${elem.address.countrySecondarySubdivision}+${elem.address.countrySubdivision}+${elem.address.country}`)">
-                            {{ elem.address.freeformAddress }} | {{ elem.address.countrySecondarySubdivision }} | {{
-                                elem.address.countrySubdivision }} | {{ elem.address.country }}
-                        </li>
-                    </ul>
-                </div>
+
 
                 <Link :href="route('filteredPage')" v-if="!store.isOnFiltered" class="btn btn-success "><i
                     class="fa-solid fa-sliders" style="color: #ffffff;"></i>
@@ -208,13 +208,16 @@ export default {
 }
 
 .campiRicerca {
-    border: 1px solid grey;
-    border-radius: 20px;
-    margin-top: 30px;
-    width: 400px;
-    z-index: 30;
+    border: 1px solid rgb(203, 203, 203);
+    margin-top: 38px;
+    padding: 10px;
+    z-index: 100;
     position: fixed;
     background-color: white;
+
+    ul {
+        padding: 0;
+    }
 }
 
 .pulsante:hover {
@@ -244,6 +247,7 @@ export default {
 
     .ms_search {
         width: 100%;
+        position: relative;
     }
 
     .ms_input {
