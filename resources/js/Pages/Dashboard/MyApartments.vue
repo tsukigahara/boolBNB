@@ -28,10 +28,10 @@ function destroy(id) {
 
         <div class="container">
 
-            <div class="ms_navbar d-flex justify-content-between py-3">
-                <h2 class="mb-3">I tuoi appartamenti</h2>
+            <div class="ms_navbar d-flex justify-content-between align-items-center">
+                <h2>I tuoi appartamenti</h2>
 
-                <a class="btn btn-primary mb-3" :href="route('dashboard.apartments.create')" role="button">
+                <a class="btn btn-primary" :href="route('dashboard.apartments.create')" role="button">
                     Crea nuovo appartamento
                 </a>
             </div>
@@ -40,8 +40,7 @@ function destroy(id) {
                 <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12" v-for="apartment in apartments">
                     <div class="card mb-3">
                         <div class="d-flex justify-content-between">
-                           
-                            <img :src="'/storage/' + apartment.main_image" :alt="apartment.title">
+
                             <h5>{{ apartment.title }}</h5>
                             <div class=" dropdown">
                                 <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -67,6 +66,9 @@ function destroy(id) {
 
                                 </ul>
                             </div>
+                        </div>
+                        <div>
+                            <img :src="'/storage/' + apartment.main_image" :alt="apartment.title">
                         </div>
                         <div>€{{ apartment.price }}</div>
                         <div>{{ apartment.address }}</div>
