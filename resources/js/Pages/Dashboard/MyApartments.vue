@@ -41,7 +41,7 @@ function destroy(id) {
                     <div class="card mb-3">
                         <div class="d-flex justify-content-between flex-column">
                            
-                            <img :src="'/storage/' + apartment.main_image" :alt="apartment.title">
+                            <img :src="'/storage/' + apartment.main_image" :alt="apartment.title" class="img">
                             <h5>{{ apartment.title }}</h5>
                             <div class=" dropdown">
                                 <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -114,5 +114,12 @@ function destroy(id) {
 .tabella {
     height: calc(100% - 85px);
     overflow: auto;
+}
+
+.img {
+    border-radius: 10px;
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
 }
 </style>

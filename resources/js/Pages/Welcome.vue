@@ -22,7 +22,7 @@ defineProps({
 
 
             <template v-for="apartment in (store.filterApplied ? store.fApartments : apartments)" >
-                <a href="" class="card_appa pt-2 col-lg-3 col-md-4 col-12" v-if="sponsorshipArray.includes(apartment.id)">
+                <a href="" class="card_appa pt-2 col-lg-3 col-md-4 col-12" :class="sponsorshipArray.includes(apartment.id) ? 'order-1' : 'order-2'">
                     <Link :href="route('show', apartment.id)">
                     <div class="pt-3 prova position-relative mb-2">
                         <img class="img card-img-top" :src="'/storage/' + apartment.main_image" alt="">
@@ -65,12 +65,12 @@ defineProps({
 //     position: relative;
 // }
 
-// .img {
-//     border-radius: 10px;
-//     width: 300px;
-//     height: 300px;
-//     object-fit: cover;
-// }
+.img {
+    border-radius: 10px;
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+}
 
 // .prova {
 //     position: relative;

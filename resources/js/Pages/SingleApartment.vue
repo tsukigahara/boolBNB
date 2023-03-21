@@ -39,7 +39,7 @@ const submit = () => {
         <!-- <img src="{{ apartment.main_image }}" alt="no.img"> -->
 
         <!-- tag di prova -->
-        <img class="ms_img col-12 col-md-6 mx-auto" src="./img/dl_a01597558.jpg" alt="">
+        <img class="ms_img col-12 col-md-6 mx-auto" :src="'/storage/' + apartment.main_image" alt="">
 
 
 
@@ -176,9 +176,9 @@ h1 {
 }
 
 // .ms_card {
-    // width: calc((98% / 4) - 10px);
-    // margin: 5px 0;
-    // padding: 5px;
+// width: calc((98% / 4) - 10px);
+// margin: 5px 0;
+// padding: 5px;
 //
 // }
 
