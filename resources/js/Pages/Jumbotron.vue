@@ -118,16 +118,22 @@ export default {
 
 
 <template>
-    <div class="position-relative container_jumbo pt-4">
-        <img class="jumbo" src="./img/vista-aerea-di-kelingking-beach-nell-isola-di-nusa-penida-bali-in-indonesia.jpg"
-            alt="">
+    <div class="position-relative container_jumbo pt-4 mb-3">
 
-        <h1 class="title">Dove vuoi andare?</h1>
+        <div class="d-flex flex-column ms_img align-items-center p-4">
+            <h1 class="title pb-2">Dove vuoi andare?</h1>
 
-        <div class="d-flex ms_search" role="search">
-            <div class="position-relative">
-                <input class="form-control search mx-2" type="search" placeholder="Search" aria-label="Search"
-                    v-model="store.searchQuery" @input="checkInputLength()">
+            <div class="d-flex justify-content-center ms_search" role="search">
+
+                <div class="input-group ms_input pe-2">
+                    <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                        v-model="store.searchQuery" @input="checkInputLength()">
+                    <button class="btn btn-success" type="submit"
+                        @click.prevent="searchApartments(store.searchQuery, store.searchRadius)"><i
+                            class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i></button>
+
+                </div>
+
                 <div v-if="shouldMakeApiCall" class="campiRicerca">
                     <ul>
                         <li class="pulsante" v-for="elem in store.autocompleteArray?.suggestions?.results"
@@ -137,51 +143,46 @@ export default {
                         </li>
                     </ul>
                 </div>
-            </div>
 
-            <select class="form-control servizi mx-2" name="radius" id="radius-select" v-model="store.searchRadius"
-                v-if="store.isOnFiltered">
-                <option value="" disabled selected>raggio</option>
-                <option value="20">20km</option>
-                <option value="50">50km</option>
-                <option value="100">100km</option>
-                <option value="300">300km</option>
-                <option value="10000">10000km</option>
-            </select>
-            <div v-if="store.searchServices !== [] && store.isOnFiltered">
-                <div class="dropdown mx-2">
-                    <button class="form-control dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Servizi
-                    </button>
-                    <ul class="dropdown-menu p-1">
-                        <li v-for="service in store.allServices" :key="service.id">
-                            <input type="checkbox" :id="'service-' + service.id" :value="service.id"
-                                v-model="store.searchServices">
-                            <label :for="'service- ' + service.id">
-                                {{ service.name }}
-                            </label>
-                        </li>
-                    </ul>
+                <Link :href="route('filteredPage')" v-if="!store.isOnFiltered" class="btn btn-success "><i
+                    class="fa-solid fa-sliders" style="color: #ffffff;"></i>
+                </Link>
+
+            </div>
+            <div class="d-flex pt-3">
+                <select class="form-control servizi mx-2" name="radius" id="radius-select" v-model="store.searchRadius"
+                    v-if="store.isOnFiltered">
+                    <option value="" disabled selected>raggio</option>
+                    <option value="20">20km</option>
+                    <option value="50">50km</option>
+                    <option value="100">100km</option>
+                    <option value="300">300km</option>
+                    <option value="10000">10000km</option>
+                </select>
+                <div v-if="store.searchServices !== [] && store.isOnFiltered">
+                    <div class="dropdown mx-2">
+                        <button class="form-control dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Servizi
+                        </button>
+                        <ul class="dropdown-menu p-1">
+                            <li v-for="service in store.allServices" :key="service.id">
+                                <input type="checkbox" :id="'service-' + service.id" :value="service.id"
+                                    v-model="store.searchServices">
+                                <label :for="'service- ' + service.id">
+                                    {{ service.name }}
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+                <input class="form-control servizi mx-2" type="number" placeholder="Camere" aria-label="Rooms"
+                    v-model="store.searchRooms" v-if="store.isOnFiltered">
+                <input class="form-control  servizi mx-2" type="number" placeholder="Letti" aria-label="Beds"
+                    v-model="store.searchBeds" v-if="store.isOnFiltered">
             </div>
-            <input class="form-control servizi mx-2" type="number" placeholder="Camere" aria-label="Rooms"
-                v-model="store.searchRooms" v-if="store.isOnFiltered">
-            <input class="form-control  servizi mx-2" type="number" placeholder="Letti" aria-label="Beds"
-                v-model="store.searchBeds" v-if="store.isOnFiltered">
-            <div>
-                <button class="btn btn-success mx-2" type="submit"
-                    @click.prevent="searchApartments(store.searchQuery, store.searchRadius)">Search</button>
-                <!-- <button class="btn btn-success mx-2"
-                                    @click.prevent="filter()">Filter</button> -->
-            </div>
-
-            <!-- <button @click.prevent="advancedSearchApartments(store.searchQuery, store.searchRadius)" class="btn btn-outline-success">AdS</button> -->
-
-            <Link :href="route('filteredPage')" v-if="!store.isOnFiltered" class="btn btn-success ">Advanced Search
-            </Link>
-
         </div>
+
 
     </div>
 </template>
@@ -198,7 +199,8 @@ export default {
 }
 
 .search {
-    width: 400px;
+    width: 30vw;
+
 }
 
 .ms_btn {
@@ -237,20 +239,25 @@ export default {
     }
 
     .title {
-        position: absolute;
-        top: 30px;
-        left: 50%;
-        transform: translate(-50%);
         color: white;
     }
 
     .ms_search {
-        position: absolute;
-        top: 50%;
         width: 100%;
-        left: 50%;
-        transform: translate(-50%);
     }
+
+    .ms_input {
+        width: 40%;
+    }
+
+
+}
+
+.ms_img {
+    background-image: url('./img/vista-aerea-di-kelingking-beach-nell-isola-di-nusa-penida-bali-in-indonesia.jpg');
+    border-radius: 20px;
+    background-size: cover;
+    background-position: 50%;
 }
 </style>
 
