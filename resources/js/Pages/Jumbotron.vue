@@ -17,7 +17,6 @@ export default {
     },
     methods: {
         searchApartments(element, range) {
-            store.advancedfApartments = [];
             const fullSearchAPI = `${store.searchAPI}/${element}/${range}`;
             axios.get(fullSearchAPI)
                 .then(res => {
@@ -27,34 +26,7 @@ export default {
                         serviceRelevancy: 0
                     }));
                     store.filterApplied = true;
-                    store.fApartments.forEach(element => {
-                        if ((element.rooms < parseInt(store.searchRooms)) || (element.beds < parseInt(store.searchBeds))) {
-                            element.passesFilter = false;
-                        }
-                        else {
-
-                            if (store.searchServices.length < 1) {
-                                element.serviceRelevancy++;
-                            }
-                            else {
-                                element.services.forEach(service => {
-                                    if (store.searchServices.includes(service.id)) {
-                                        element.serviceRelevancy++;
-                                    }
-                                });
-                            }
-
-                        }
-                        if (element.serviceRelevancy < 1) {
-                            element.passesFilter = false;
-                        }
-                        if (element.passesFilter == true) {
-                            store.advancedfApartments.push(element)
-                        }
-
-                        store.searchQuery = "";
-
-                    });
+                    this.filter();
                     console.log(store.fApartments)
                 });
         },
@@ -67,6 +39,35 @@ export default {
                 store.isOnFiltered = false
                 store.searchRadius = 20
             }
+        },
+        filter() {
+            store.advancedfApartments = [];
+            store.fApartments.forEach(element => {
+                if ((element.rooms < parseInt(store.searchRooms)) || (element.beds < parseInt(store.searchBeds))) {
+                    element.passesFilter = false;
+                }
+                else {
+
+                    if (store.searchServices.length < 1) {
+                        element.serviceRelevancy++;
+                    }
+                    else {
+                        element.services.forEach(service => {
+                            if (store.searchServices.includes(service.id)) {
+                                element.serviceRelevancy++;
+                            }
+                        });
+                    }
+
+                }
+                if (element.serviceRelevancy < 1) {
+                    element.passesFilter = false;
+                }
+                if (element.passesFilter == true) {
+                    store.advancedfApartments.push(element)
+                }
+
+            });
         },
         checkInputLength() {
             if (this.shouldMakeApiCall) {
@@ -127,7 +128,7 @@ export default {
                     v-model="store.searchQuery" @input="checkInputLength()">
                 <div v-if="shouldMakeApiCall" class="campiRicerca">
                     <ul>
-                        <li class="pulsante" v-for="elem in store.autocompleteArray.suggestions.results"
+                        <li class="pulsante" v-for="elem in store.autocompleteArray?.suggestions?.results"
                             @click="pickSuggestion(`${elem.address.freeformAddress}+${elem.address.countrySecondarySubdivision}+${elem.address.countrySubdivision}+${elem.address.country}`)">
                             {{ elem.address.freeformAddress }} | {{ elem.address.countrySecondarySubdivision }} | {{
                                 elem.address.countrySubdivision }} | {{ elem.address.country }}
@@ -169,6 +170,8 @@ export default {
             <div>
                 <button class="btn btn-success mx-2" type="submit"
                     @click.prevent="searchApartments(store.searchQuery, store.searchRadius)">Search</button>
+                <!-- <button class="btn btn-success mx-2"
+                        @click.prevent="filter()">Filter</button> -->
             </div>
 
             <!-- <button @click.prevent="advancedSearchApartments(store.searchQuery, store.searchRadius)" class="btn btn-outline-success">AdS</button> -->
