@@ -121,57 +121,62 @@ export default {
 
         <h1 class="title">Dove vuoi andare?</h1>
 
-        <div class="d-flex justify-content-between ms_search">
-
-            <div class="d-flex" role="search">
-                <input class="form-control" type="search" placeholder="Search" aria-label="Search"
+        <div class="d-flex ms_search" role="search">
+            <div class="position-relative">
+                <input class="form-control search mx-2" type="search" placeholder="Search" aria-label="Search"
                     v-model="store.searchQuery" @input="checkInputLength()">
                 <div v-if="shouldMakeApiCall" class="campiRicerca">
                     <ul>
                         <li class="pulsante" v-for="elem in store.autocompleteArray.suggestions.results"
-                            @click="pickSuggestion(`${elem.address.freeformAddress}, ${elem.address.countrySecondarySubdivision}, ${elem.address.countrySubdivision}, ${elem.address.country}`)">
-                            {{ elem.address.freeformAddress }}, {{ elem.address.countrySecondarySubdivision }}, {{
-                                elem.address.countrySubdivision }}, {{ elem.address.country }}
+                            @click="pickSuggestion(`${elem.address.freeformAddress}+${elem.address.countrySecondarySubdivision}+${elem.address.countrySubdivision}+${elem.address.country}`)">
+                            {{ elem.address.freeformAddress }} | {{ elem.address.countrySecondarySubdivision }} | {{
+                                elem.address.countrySubdivision }} | {{ elem.address.country }}
                         </li>
                     </ul>
                 </div>
-                <select class="form-control mx-2" name="radius" id="radius-select" v-model="store.searchRadius"
-                    v-if="store.isOnFiltered">
-                    <option value="" disabled selected>Seleziona raggio</option>
-                    <option value="20">20km</option>
-                    <option value="50">50km</option>
-                    <option value="100">100km</option>
-                    <option value="300">300km</option>
-                    <option value="10000">10000km</option>
-                </select>
-                <div v-if="store.searchServices !== [] && store.isOnFiltered">
-                    <div class="dropdown">
-                        <button class="form-control dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Servizi
-                        </button>
-                        <ul class="dropdown-menu p-1">
-                            <li v-for="service in store.allServices" :key="service.id">
-                                <input type="checkbox" :id="'service-' + service.id" :value="service.id"
-                                    v-model="store.searchServices">
-                                <label :for="'service- ' + service.id">
-                                    {{ service.name }}
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <input class="form-control mx-2" type="number" placeholder="Camere" aria-label="Rooms"
-                    v-model="store.searchRooms" v-if="store.isOnFiltered">
-                <input class="form-control me-2" type="number" placeholder="Letti" aria-label="Beds"
-                    v-model="store.searchBeds" v-if="store.isOnFiltered">
-                <button class="btn btn-outline-success" type="submit"
-                    @click.prevent="searchApartments(store.searchQuery, store.searchRadius)">
-                    Search
-                </button>
-                <!-- <button @click.prevent="advancedSearchApartments(store.searchQuery, store.searchRadius)" class="btn btn-outline-success">AdS</button> -->
-
             </div>
+
+            <select class="form-control servizi mx-2" name="radius" id="radius-select" v-model="store.searchRadius"
+                v-if="store.isOnFiltered">
+                <option value="" disabled selected>raggio</option>
+                <option value="20">20km</option>
+                <option value="50">50km</option>
+                <option value="100">100km</option>
+                <option value="300">300km</option>
+                <option value="10000">10000km</option>
+            </select>
+            <div v-if="store.searchServices !== [] && store.isOnFiltered">
+                <div class="dropdown mx-2">
+                    <button class="form-control dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Servizi
+                    </button>
+                    <ul class="dropdown-menu p-1">
+                        <li v-for="service in store.allServices" :key="service.id">
+                            <input type="checkbox" :id="'service-' + service.id" :value="service.id"
+                                v-model="store.searchServices">
+                            <label :for="'service- ' + service.id">
+                                {{ service.name }}
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <input class="form-control servizi mx-2" type="number" placeholder="Camere" aria-label="Rooms"
+                v-model="store.searchRooms" v-if="store.isOnFiltered">
+            <input class="form-control  servizi mx-2" type="number" placeholder="Letti" aria-label="Beds"
+                v-model="store.searchBeds" v-if="store.isOnFiltered">
+            <div>
+                <button class="btn btn-success mx-2" type="submit"
+                    @click.prevent="searchApartments(store.searchQuery, store.searchRadius)">Search</button>
+            </div>
+
+            <!-- <button @click.prevent="advancedSearchApartments(store.searchQuery, store.searchRadius)" class="btn btn-outline-success">AdS</button> -->
+
+            <a :href="route('filteredPage')" v-if="!store.isOnFiltered">
+                <button class="btn btn-success ">Advanced Search</button>
+            </a>
+
         </div>
 
     </div>
@@ -238,6 +243,7 @@ export default {
     .ms_search {
         position: absolute;
         top: 50%;
+        width: 100%;
         left: 50%;
         transform: translate(-50%);
     }

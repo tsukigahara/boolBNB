@@ -22,7 +22,7 @@ defineProps({
 
 
             <template v-for="apartment in (store.filterApplied ? store.fApartments : apartments)">
-                <a href="" class="card_appa pt-2 col-lg-3 col-md-4 col-12"
+                <a href="" class="pt-2 col-lg-3 col-md-4 col-12"
                     :class="sponsorshipArray.includes(apartment.id) ? 'order-1' : 'order-2'">
                     <Link :href="route('show', apartment.id)">
                     <div class="pt-3 prova position-relative mb-2">
