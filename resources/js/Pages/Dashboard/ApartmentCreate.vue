@@ -68,14 +68,11 @@ const pickSuggestion = (suggestion) => {
     <Head title="New apartment" />
 
     <DashboardLayout @click="suggestionsDropdownCheck = false">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Public new apartment</h2>
-        </template>
-        <div class="container py-3">
+        <div class="container my-4 shadow p-3 rounded overflow-scroll">
             <div class="d-flex justify-content-between">
                 <h2>Pubblica l'appartamento</h2>
 
-                <a class="btn btn-dark mb-3 mr-3" role="button" href="javascript: history.back()">Indietro</a>
+                <a class="btn btn-primary mb-3 mr-3" role="button" href="javascript: history.back()">Indietro</a>
             </div>
 
             <form class="d-flex px-md-2" @submit.prevent="submit">
