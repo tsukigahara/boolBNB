@@ -1,10 +1,33 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import { objectToString } from '@vue/shared';
+import { reactive, onMounted } from '@vue/runtime-core';
 import DashboardLayout from '@/Layouts/DashboardLayout.vue';
 
-defineProps({
-    messages: Array,
+
+const props = defineProps({
+    apartments: Object,
+    user: Object,
+    allApartments: Object,
+});
+
+const state = reactive({
+    messageArray: []
+});
+
+
+onMounted(() => {
+    props.apartments.forEach(apartment => {
+        apartment.messages.forEach(message => {
+            const dateString = message.created_at;
+            const date = new Date(dateString);
+            const formattedDate = date.toLocaleString();
+            const apartmentMatch = props.apartments.find(a => a.id === message.apartment_id);
+            state.messageArray.push({ ...message, created_at: formattedDate, apartment: apartmentMatch });
+        });
+    });
+    state.messageArray.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 });
 </script>
 
