@@ -124,17 +124,18 @@ export default {
         <div class="d-flex flex-column ms_img align-items-center p-4  col-12">
             <h1 class="title pb-2">Dove vuoi andare?</h1>
 
-            <div class="d-flex justify-content-center ms_search" role="search">
+            <div class="d-flex justify-content-center ms_search row" role="search">
+                <div class="col-12 col-md-6">
 
-                <div class="input-group ms_input pe-2">
-                    <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                    <div class="input-group  ">
+                        <input type="text" class="form-control" placeholder="Search" aria-label="Search"
                         v-model="store.searchQuery" @input="checkInputLength()">
-                    <button class="btn btn-success" type="submit"
+                        <button class="btn btn-success" type="submit"
                         @click.prevent="searchApartments(store.searchQuery, store.searchRadius)"><i
-                            class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i></button>
-                    <div v-if="showDropdown" class="campiRicerca">
-                        <ul v-if="store.searchQuery ? showDropdown = true : showDropdown = false">
-                            <li class="pulsante" v-for="elem in store.autocompleteArray?.suggestions?.results"
+                        class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i></button>
+                        <div v-if="showDropdown" class="campiRicerca">
+                            <ul v-if="store.searchQuery ? showDropdown = true : showDropdown = false">
+                                <li class="pulsante" v-for="elem in store.autocompleteArray?.suggestions?.results"
                                 @click="pickSuggestion(`${elem.address.freeformAddress}+${elem.address.countrySecondarySubdivision}+${elem.address.countrySubdivision}+${elem.address.country}`)">
                                 {{ elem.address.freeformAddress }} | {{ elem.address.countrySecondarySubdivision }} | {{
                                     elem.address.countrySubdivision }} | {{ elem.address.country }}
@@ -142,7 +143,8 @@ export default {
                         </ul>
                     </div>
                 </div>
-
+            </div>
+                
 
 
                 <Link :href="route('filteredPage')" v-if="!store.isOnFiltered" class="btn btn-success "><i
@@ -150,8 +152,13 @@ export default {
                 </Link>
 
             </div>
-            <div class="d-flex pt-3">
-                <select class="form-control servizi mx-2" name="radius" id="radius-select" v-model="store.searchRadius"
+            <div class="container-fluid">
+
+            
+            <div class="d-flex pt-3 row">
+                <div class="col-12 col-md-3">
+
+                    <select class="form-control servizi " name="radius" id="radius-select" v-model="store.searchRadius"
                     v-if="store.isOnFiltered">
                     <option value="" disabled selected>raggio</option>
                     <option value="20">20km</option>
@@ -160,8 +167,9 @@ export default {
                     <option value="300">300km</option>
                     <option value="10000">10000km</option>
                 </select>
-                <div v-if="store.searchServices !== [] && store.isOnFiltered">
-                    <div class="dropdown mx-2">
+            </div>
+                <div v-if="store.searchServices !== [] && store.isOnFiltered" class="col-12 col-md-3">
+                    <div class="dropdown">
                         <button class="form-control dropdown-toggle" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             Servizi
@@ -177,11 +185,18 @@ export default {
                         </ul>
                     </div>
                 </div>
-                <input class="form-control servizi mx-2" type="number" placeholder="Camere" aria-label="Rooms"
+                <div class="col-12 col-md-3">
+
+                    <input class="form-control servizi " type="number" placeholder="Camere" aria-label="Rooms"
                     v-model="store.searchRooms" v-if="store.isOnFiltered">
-                <input class="form-control  servizi mx-2" type="number" placeholder="Letti" aria-label="Beds"
+                </div>
+                <div class="col-12 col-md-3">
+                    <input class="form-control  servizi " type="number" placeholder="Letti" aria-label="Beds"
+
                     v-model="store.searchBeds" v-if="store.isOnFiltered">
+                </div>
             </div>
+                </div>
         </div>
 
 
@@ -226,9 +241,9 @@ export default {
 
 }
 
-.servizi {
-    width: 50%;
-}
+// .servizi {
+//     width: 50%;
+// }
 
 .container_jumbo {
     height: 180px;
@@ -251,9 +266,9 @@ export default {
         position: relative;
     }
 
-    .ms_input {
-        width: 40%;
-    }
+    // .ms_input {
+    //     width: 40%;
+    // }
 
 
 }
