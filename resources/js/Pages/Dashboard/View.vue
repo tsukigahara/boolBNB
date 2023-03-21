@@ -17,7 +17,7 @@ const chartData = ({
     datasets: [
         {
             label: 'Views',
-            backgroundColor: '#f87979',
+            backgroundColor: '#1aa1ff',
             data: [props.views[0], props.views[1], props.views[2]]
         }
     ]
