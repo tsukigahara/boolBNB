@@ -40,10 +40,10 @@ function destroy(id) {
                 <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12" v-for="apartment in apartments">
                     <div class="card mb-3">
                         <div class="d-flex justify-content-between">
-                            <div v-show="sponsorshipArray.includes(apartment.id)">
-                                sponsorizzato
-                            </div>
                             <h5>{{ apartment.title }}</h5>
+                            <div v-show="sponsorshipArray.includes(apartment.id)">
+                                <i class="fa-solid fa-star"></i>
+                            </div>
                             <div class=" dropdown">
                                 <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa-solid fa-bars"></i>
