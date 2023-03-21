@@ -15,11 +15,13 @@ export default {
         return {
             store,
             showDropdown: false,
+
         }
     },
     methods: {
         searchApartments(element, range) {
-            const fullSearchAPI = `${store.searchAPI}/${element}/${range}`;
+            let elementSearch = element.replace(' ', '+');
+            const fullSearchAPI = `${store.searchAPI}/${elementSearch}/${range}`;
             axios.get(fullSearchAPI)
                 .then(res => {
                     store.fApartments = res.data.response.data.filteredApartments.map(obj => ({
@@ -78,7 +80,8 @@ export default {
             this.showDropdown = true;
         },
         searchAutocomplete(element) {
-            const fullAutocompleteAPI = `${store.autocompleteAPI}/${element}`;
+            let query = element.replace(/\s/g, '+');
+            const fullAutocompleteAPI = `${store.autocompleteAPI}/${query}`;
             axios.get(fullAutocompleteAPI)
                 .then(res => {
                     store.autocompleteArray = res.data.response.data
@@ -89,7 +92,7 @@ export default {
                 });
         },
         pickSuggestion(suggestion) {
-            store.searchQuery = suggestion;
+            store.searchQuery = suggestion.replace('+', ' ');
             this.showDropdown = false;
         },
         test(elem) {
@@ -136,9 +139,9 @@ export default {
                         <div v-if="showDropdown" class="campiRicerca">
                             <ul v-if="store.searchQuery ? showDropdown = true : showDropdown = false">
                                 <li class="pulsante" v-for="elem in store.autocompleteArray?.suggestions?.results"
-                                @click="pickSuggestion(`${elem.address.freeformAddress}+${elem.address.countrySecondarySubdivision}+${elem.address.countrySubdivision}+${elem.address.country}`)">
-                                {{ elem.address.freeformAddress }} | {{ elem.address.countrySecondarySubdivision }} | {{
-                                    elem.address.countrySubdivision }} | {{ elem.address.country }}
+                                @click="pickSuggestion(`${elem.address.freeformAddress} ${elem.address.countrySubdivision} ${elem.address.country}`)">
+                                {{ elem.address.freeformAddress }}, {{ elem.address.countrySecondarySubdivision }}, {{
+                                    elem.address.countrySubdivision }}, {{ elem.address.country }}
                             </li>
                         </ul>
                     </div>
